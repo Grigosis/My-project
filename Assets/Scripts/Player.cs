@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
-    public LayerMask whatCanBeCleakedOn;
+    public LayerMask Ground;
     private NavMeshAgent myAgent;
     public Animator anim;
     public bool isRunning;
@@ -48,9 +48,8 @@ public class Player : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0))
         {
-            Ray myRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitinfo;
-            if (Physics.Raycast(myRay, out hitinfo, 100, whatCanBeCleakedOn))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hitinfo, 100, Ground))
             {
                 myAgent.SetDestination(hitinfo.point);
             }
@@ -65,18 +64,5 @@ public class Player : MonoBehaviour
         {
           Run();
         }
-        
-       
-        
-
-        
-        
-
-
-        
-         
-
-        
-
     }
 }
