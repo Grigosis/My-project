@@ -14,19 +14,23 @@ namespace SecondCycleGame
 
         private Animator _anim;
 
-        private MoveState _currentState;
-        public MoveState run;
-        public MoveState crouch;
+        private MoveStateData _currentState;
+        //private MoveType _moveType;
+        public MoveStateData run;
+        public MoveStateData crouch;
 
         public bool isMoving;
 
         private void Start()
         {
             myAgent = GetComponent<NavMeshAgent>();
-            myAgent.speed = _walkSpeed;
-            _anim = transform.Find("Model").GetComponent<Animator>();
+            //myAgent.speed = _walkSpeed;
+            //_anim = transform.Find("Model").GetComponent<Animator>();
+            _anim = GetComponent<Animator>();
 
             myAgent.updateRotation = false;
+            myAgent.updatePosition = true;
+            //myAgent.updateUpAxis = false;
         }
         private void Update()
         {
@@ -57,11 +61,11 @@ namespace SecondCycleGame
             isMoving = value;
             _anim.SetBool("isMoving", value);
         }
-        public void SetState(MoveState state)
+        public void SetMoveType(MoveStateData state)
         {
             if(_currentState == state)
             {
-                myAgent.speed = _walkSpeed;
+                //myAgent.speed = _walkSpeed;
                 _anim.SetBool(_currentState.animatorBoolName, false);
                 _currentState = null;
                 return;
@@ -71,7 +75,7 @@ namespace SecondCycleGame
                 _anim.SetBool(_currentState.animatorBoolName, false);
             }
             _currentState = state;
-            myAgent.speed = state.speed;
+            //myAgent.speed = state.speed;
             _anim.SetBool(_currentState.animatorBoolName, true);
         }
     }

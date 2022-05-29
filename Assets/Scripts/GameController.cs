@@ -1,31 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace SecondCycleGame
 {
     public class GameController : MonoBehaviour
     {
+        private static GameController _instance;
         private Context _context;
+        private Controls _controls; 
         public Unit player;
-        public LayerMask Ground;
+        public CameraController cameraController;
 
         void Awake()
         {
-            _context = new Context();
+            if (_instance == null) _instance = this;
+            else
+            {
+                Destroy(this);
+                return;
+            }
 
-            _context.inputs.Controls.LMB.canceled += ctx => OnMoveButtonClick();
-            _context.inputs.Controls.Run.performed += ctx => OnRunButtonClick();
-            _context.inputs.Controls.Crouch.performed += ctx => OnCrouchButtonClick();
+            _context = new Context();
+            _controls = new Controls(this);
+
+            cameraController.Initialize(_controls.inputs);
         }
         private void OnEnable()
         {
-            _context.inputs.Enable();
+            _controls.inputs.Enable();
         }
         private void OnDisable()
         {
-            _context.inputs.Disable();
+            _controls?.inputs.Disable();
+        }
+        private void OnDestroy()
+        {
+            _controls?.OnTearDown();
         }
         void Start()
         {
@@ -33,27 +46,7 @@ namespace SecondCycleGame
         }
         void Update()
         {
-        
+            _controls.Update();
         }
-
-        private void OnMoveButtonClick()
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-            if (Physics.Raycast(ray, out RaycastHit hitinfo, 100, Ground))
-            {
-                player.MoveToPosition(hitinfo.point);
-            }
-        }
-        private void OnRunButtonClick()
-        {
-            //player.Run(!player.isRunning);
-            player.SetState(player.run);
-        }
-        private void OnCrouchButtonClick()
-        {
-            //player.Crouch(!player.isCrouching);
-            player.SetState(player.crouch);
-        }
-
     }
 }

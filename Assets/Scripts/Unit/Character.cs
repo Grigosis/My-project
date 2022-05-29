@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace SecondCycleGame
 {
-    public class Context
+    public class Character : Unit
     {
+        public Portrait portrait;
+        public List<Character> group;
     }
 }
