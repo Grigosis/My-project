@@ -6,36 +6,48 @@ namespace SecondCycleGame
 {
     public sealed class PlayersGroup
     {
-        public readonly List<Character> team;
+        private readonly List<Character> team;
         public const byte MAX_TEAM_SIZE = 4;
-        public readonly List<Character> group1;
-        public readonly List<Character> group2;
 
-        public PlayersGroup(List<Character> characters)
+        private Character MainCharacter => team[0];
+        public Character SelectedCharacter { get; private set; }
+
+        public PlayersGroup()
         {
-            //team = new Character[MAX_TEAM_SIZE];
-            team = characters;
-            group1 = new List<Character>();
-            group2 = new List<Character>();
+            team = new List<Character>();
 
-            foreach (var character in team)
-            {
-                group1.Add(character);
-                //character.groupIndex = 1;
-            }
+            var data = Resources.Load<CharacterData>("Data/CharacterData");
+            team.Add(new Character(this, data));
+
+            MainCharacter.model.transform.position = new Vector3(-3, 0, -8);
+            SelectedCharacter = MainCharacter;
         }
 
-        //public void Place(Character character, List<Character> newGroup, int index)
-        //{
-        //    newGroup.Insert(index, character);
-        //    character.group = newGroup;
-        //}
-        //public void Remove(Character character)
-        //{
-        //    character.group.Remove(character);
-        //    character.group = null;
-        //}
+        public bool TryAddToTeam(Character character)
+        {
+            if (team.Count >= MAX_TEAM_SIZE)
+            {
+                Debug.LogWarning("max team size: 4");
+                return false;
+            }
+            if (team.Contains(character))
+            {
+                Debug.LogWarning("same character cant be added");
+                return false;
+            }
 
+            var subgroup = MainCharacter.SubGroup;
+            if (subgroup == null)
+            {
+                subgroup = new SubGroup();
+                MainCharacter.JoinSubGroup(subgroup);
+            }
+            character.JoinSubGroup(subgroup);
+
+            //create interactableportrait
+            Sort();
+            return true;
+        }
         private void Sort()
         {
             var queue = new List<Character>(team);
@@ -43,7 +55,7 @@ namespace SecondCycleGame
             {
                 var character = queue[0];
                 queue.RemoveAt(0);
-                if(character.group == null)
+                if(character.SubGroup == null)
                 {
                     //character set position
 
@@ -53,7 +65,7 @@ namespace SecondCycleGame
                 {
                     foreach (var item in queue)
                     {
-                        if(item.group == character.group)
+                        if(item.SubGroup == character.SubGroup)
                         {
                             //item set position
                             queue.Remove(item);

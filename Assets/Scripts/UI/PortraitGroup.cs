@@ -9,21 +9,20 @@ namespace SecondCycleGame
     [RequireComponent(typeof(RectTransform))]
     public class PortraitGroup : MonoBehaviour
     {
-        public Canvas canvas;
         public byte offset = 10;
         public Vector2 portraitSize = new Vector2(80, 100);
-        //[SerializeField] private RectTransform _group1;
-        //[SerializeField] private RectTransform _group2;
-        private List<Portrait> _portraits;
-        public Portrait draggingPortrait;
+        private List<InteractablePortrait> _portraits;
+        //public InteractablePortrait draggingPortrait;
+        public InteractablePortrait selectedPortrait;
+
+        public Canvas Canvas { get; private set; }
 
         private void Start()
         {
-            _portraits = new List<Portrait>();
-            //children.Add(_group1);
-            //children.Add(_group2);
+            _portraits = new List<InteractablePortrait>();
+            Canvas = GetComponentInParent<Canvas>();
 
-            foreach (var portrait in transform.GetComponentsInChildren<Portrait>())
+            foreach (var portrait in transform.GetComponentsInChildren<InteractablePortrait>())
             {
                 _portraits.Add(portrait);
                 portrait.SetDefaultAnchors();

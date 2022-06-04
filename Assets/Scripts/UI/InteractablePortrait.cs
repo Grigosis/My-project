@@ -7,11 +7,13 @@ using UnityEngine.UI;
 namespace SecondCycleGame
 {
     [RequireComponent(typeof(RectTransform), typeof(Image))]
-    public class Portrait : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler
+    public class InteractablePortrait : MonoBehaviour,
+        IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
     {
         private PortraitGroup portraitGroup;
         private RectTransform _rectTransform;
         private Image _image;
+        private Character _character;
         public RectTransform RectTransform => _rectTransform;
 
         private void Awake()
@@ -27,6 +29,11 @@ namespace SecondCycleGame
         {        
         }
 
+        public void Initialize(Character character)
+        {
+            _character = character;
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
             if(eventData.clickCount == 2)
@@ -37,10 +44,12 @@ namespace SecondCycleGame
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            transform.SetParent(portraitGroup.canvas.transform);
+            _character.LeaveSubGroup();
+
+            transform.SetParent(portraitGroup.Canvas.transform);
             SetDragAnchors();
-            portraitGroup.RecalculateAll();
-            portraitGroup.draggingPortrait = this;
+            //portraitGroup.RecalculateAll();
+            //portraitGroup.draggingPortrait = this;
             _image.raycastTarget = false;
         }
         public void OnDrag(PointerEventData eventData)
@@ -52,17 +61,17 @@ namespace SecondCycleGame
         }
         public void OnEndDrag(PointerEventData eventData)
         {
-            portraitGroup.draggingPortrait = null;
+            transform.SetParent(portraitGroup.transform);
             _image.raycastTarget = true;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            print("enter");
-            if(portraitGroup.draggingPortrait != null && portraitGroup.draggingPortrait != this)
-            {
-
-            }
+            portraitGroup.selectedPortrait = this;
+        }
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            portraitGroup.selectedPortrait = null;
         }
 
         public void SetDefaultAnchors()
@@ -75,6 +84,5 @@ namespace SecondCycleGame
             _rectTransform.anchorMax = Vector2.zero;
             _rectTransform.anchorMin = Vector2.zero;
         }
-
     }
 }

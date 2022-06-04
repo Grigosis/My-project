@@ -9,15 +9,15 @@ namespace SecondCycleGame
 {
     public sealed class Controls
     {
-        private readonly GameController _gameController;
+        private readonly PlayersGroup _playersGroup;
         public readonly InputActions inputs;
         public readonly LayerMask ground;
         private bool _doRelease;
         public bool IsMouseOverUI => EventSystem.current.IsPointerOverGameObject();
 
-        public Controls(GameController gameController)
+        public Controls(PlayersGroup playersGroup)
         {
-            _gameController = gameController;
+            _playersGroup = playersGroup;
             inputs = new InputActions();
             ground = LayerMask.GetMask("Ground");
             SubscribeOnEvents();
@@ -56,18 +56,20 @@ namespace SecondCycleGame
                     Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
                     if (Physics.Raycast(ray, out RaycastHit hitinfo, 100, ground))
                     {
-                        _gameController.player.MoveToPosition(hitinfo.point);
+                        _playersGroup.SelectedCharacter.model.MoveToPosition(hitinfo.point);
                     }
                 }
             }
         }
         private void OnRunButtonClick()
         {
-            _gameController.player.SetMoveType(_gameController.player.run);
+            //_gameController.player.SetMoveType(_gameController.player.run);
+            _playersGroup.SelectedCharacter.model.ToggleRun();
         }
         private void OnCrouchButtonClick()
         {
-            _gameController.player.SetMoveType(_gameController.player.crouch);
+            //_gameController.player.SetMoveType(_gameController.player.crouch);
+            _playersGroup.SelectedCharacter.model.ToggleCrouch();
         }
 
         public void OnTearDown()

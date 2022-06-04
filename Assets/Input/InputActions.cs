@@ -175,7 +175,7 @@ namespace SecondCycleGame
                 {
                     ""name"": """",
                     ""id"": ""86ac19d1-2c54-4bcc-8021-31fce01b81c9"",
-                    ""path"": ""<Mouse>/scroll"",
+                    ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""MouseAndKeyboard"",

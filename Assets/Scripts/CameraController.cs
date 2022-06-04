@@ -11,7 +11,6 @@ namespace SecondCycleGame
     {
         #region Fields
         private InputActions _inputs;
-        private Camera _camera;
         public Vector3 _newPosition;
         [Header("MOVE")]
         [SerializeField] private int _moveAcceleration = 10;
@@ -19,42 +18,42 @@ namespace SecondCycleGame
         private const float MOVE_STOP_AMOUNT = 0.0001f;
         private bool _isMoving;
         [Header("ZOOM")]
-        [SerializeField] [Range(25, 60)] private int _maxZoom = 50;
-        [SerializeField] [Range(0.01f, 0.2f)] private float _zoomSpeed = 0.1f;
-        private const int MIN_ZOOM = 20;
-        [SerializeField] [Range(0, 1)] private float _zoomAmount;
-        private Vector3 _newZoomPosition;
+        [SerializeField] [Range(2, 6)] private int _minZoom = 4;
+        [SerializeField] [Range(7, 15)] private int _maxZoom = 10;
+        [SerializeField] [Range(1, 5)] private float _zoomSpeed = 2;
+        private float _zoomAmount;
+        private bool _isZooming;
+
         public CinemachineVirtualCamera vCamera;
 
         private readonly Vector3 _cameraForward = new Vector3(1, 0, 1);
         private readonly Vector3 _cameraRight = new Vector3(0.7f, 0, -0.7f);
-        public Vector2 inputDir;
         #endregion
 
         #region Properties
         private bool IsMoveInputsActive => _inputs.Camera.Move.inProgress;
+        private float SpeedZoomModifier => _zoomAmount / _maxZoom;
         #endregion
 
         void Start()
         {
             _newPosition = vCamera.transform.position;
-            SetCameraZoom(0.5f);
-
+            //SetCameraZoom(0.5f);
+            _zoomAmount = vCamera.m_Lens.OrthographicSize;
         }
         void Update()
         {
             if (_isMoving) Move();
-            //Zoom();
+            ZoomUpdate();
         }
 
 
         public void Initialize(InputActions inputs)
         {
             _inputs = inputs;
-            _camera = Camera.main;
 
             _inputs.Camera.Move.started += ctx => _isMoving = true;
-            _inputs.Camera.Zoom.performed += ZoomCamera;
+            _inputs.Camera.Zoom.performed += ctx => CameraZoom(ctx.ReadValue<float>());
         }
 
         #region Move
@@ -76,8 +75,7 @@ namespace SecondCycleGame
             if (_inputs.Camera.Move.inProgress)
             {
                 var direction = _inputs.Camera.Move.ReadValue<Vector2>();
-                inputDir = direction;
-                _newPosition += (_cameraForward * direction.y + _cameraRight * direction.x) * Time.deltaTime * _keyboardMoveSpeed;
+                _newPosition += (_cameraForward * direction.y + _cameraRight * direction.x) * Time.deltaTime * _keyboardMoveSpeed * SpeedZoomModifier;
             }
         }
 
@@ -90,20 +88,23 @@ namespace SecondCycleGame
         #endregion
 
         #region Zoom
-        private void ZoomCamera(InputAction.CallbackContext callback)
+        public void CameraZoom(float value)
         {
-            SetCameraZoom(_zoomAmount - Mathf.Sign(callback.ReadValue<float>()) * _zoomSpeed);
+            _zoomAmount = Mathf.Clamp(_zoomAmount - Mathf.Sign(value), _minZoom, _maxZoom);
+            _isZooming = true;
         }
-        private void SetCameraZoom(float value)
+        public void ZoomUpdate()
         {
-            _zoomAmount = Mathf.Clamp01(value);
-            _newZoomPosition = Vector3.Lerp(new Vector3(0, MIN_ZOOM, -MIN_ZOOM), new Vector3(0, _maxZoom, -_maxZoom), _zoomAmount);
-        }
-        private void Zoom()
-        {
-            _camera.transform.localPosition = Vector3.Lerp(_camera.transform.localPosition, _newZoomPosition, Time.deltaTime * 5);
-            //var angle = Mathf.Lerp(10, 45, curve.Evaluate(_zoomAmount));
-            //_camera.transform.rotation = Quaternion.Lerp(_camera.transform.rotation, Quaternion.Euler(angle, 0, 0), Time.deltaTime * 5);
+            if (_isZooming)
+            {
+                vCamera.m_Lens.OrthographicSize = Mathf.Lerp(vCamera.m_Lens.OrthographicSize, _zoomAmount, Time.deltaTime * _zoomSpeed);
+
+                if (Mathf.Abs(_zoomAmount - vCamera.m_Lens.OrthographicSize) < 0.001f)
+                {
+                    _isZooming = false;
+                    vCamera.m_Lens.OrthographicSize = _zoomAmount;
+                }
+            }
         }
         #endregion
     }

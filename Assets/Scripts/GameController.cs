@@ -11,8 +11,8 @@ namespace SecondCycleGame
         private static GameController _instance;
         private Context _context;
         private Controls _controls; 
-        public Unit player;
         public CameraController cameraController;
+        private PlayersGroup _playersGroup;
 
         void Awake()
         {
@@ -24,7 +24,8 @@ namespace SecondCycleGame
             }
 
             _context = new Context();
-            _controls = new Controls(this);
+            _playersGroup = new PlayersGroup();
+            _controls = new Controls(_playersGroup);
 
             cameraController.Initialize(_controls.inputs);
         }
@@ -42,7 +43,6 @@ namespace SecondCycleGame
         }
         void Start()
         {
-        
         }
         void Update()
         {
