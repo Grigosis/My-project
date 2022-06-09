@@ -32,6 +32,7 @@ namespace SecondCycleGame
         public void Initialize(Character character)
         {
             _character = character;
+            _image.sprite = character.data.Portrait;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -40,11 +41,16 @@ namespace SecondCycleGame
             {
                 print("camera follow");
             }
+            else
+            {
+                print("select");
+            }
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _character.LeaveSubGroup();
+            if (_character.GroupMember.SubGroup != null)
+                _character.GroupMember.LeaveSubGroup();
 
             transform.SetParent(portraitGroup.Canvas.transform);
             SetDragAnchors();

@@ -8,16 +8,19 @@ namespace SecondCycleGame
     {
         private readonly List<Character> team;
         public const byte MAX_TEAM_SIZE = 4;
+        public readonly Transform uiTransform;
 
         private Character MainCharacter => team[0];
         public Character SelectedCharacter { get; private set; }
 
-        public PlayersGroup()
+        public PlayersGroup(Transform UITransform)
         {
             team = new List<Character>();
+            uiTransform = UITransform;
 
             var data = Resources.Load<CharacterData>("Data/CharacterData");
-            team.Add(new Character(this, data));
+            team.Add(new Character(data));
+            MainCharacter.AddToPlayersGroup(this);
 
             MainCharacter.model.transform.position = new Vector3(-3, 0, -8);
             SelectedCharacter = MainCharacter;
@@ -36,15 +39,15 @@ namespace SecondCycleGame
                 return false;
             }
 
-            var subgroup = MainCharacter.SubGroup;
+            var subgroup = MainCharacter.GroupMember.SubGroup;
             if (subgroup == null)
             {
                 subgroup = new SubGroup();
-                MainCharacter.JoinSubGroup(subgroup);
+                MainCharacter.GroupMember.JoinSubGroup(subgroup);
             }
-            character.JoinSubGroup(subgroup);
+            character.AddToPlayersGroup(this);
+            character.GroupMember.JoinSubGroup(subgroup);
 
-            //create interactableportrait
             Sort();
             return true;
         }
@@ -55,7 +58,7 @@ namespace SecondCycleGame
             {
                 var character = queue[0];
                 queue.RemoveAt(0);
-                if(character.SubGroup == null)
+                if(character.GroupMember.SubGroup == null)
                 {
                     //character set position
 
@@ -65,7 +68,7 @@ namespace SecondCycleGame
                 {
                     foreach (var item in queue)
                     {
-                        if(item.SubGroup == character.SubGroup)
+                        if(item.GroupMember.SubGroup == character.GroupMember.SubGroup)
                         {
                             //item set position
                             queue.Remove(item);

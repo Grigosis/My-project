@@ -13,6 +13,7 @@ namespace SecondCycleGame
         private Controls _controls; 
         public CameraController cameraController;
         private PlayersGroup _playersGroup;
+        public Transform groupUI;
 
         void Awake()
         {
@@ -24,7 +25,7 @@ namespace SecondCycleGame
             }
 
             _context = new Context();
-            _playersGroup = new PlayersGroup();
+            _playersGroup = new PlayersGroup(groupUI);
             _controls = new Controls(_playersGroup);
 
             cameraController.Initialize(_controls.inputs);

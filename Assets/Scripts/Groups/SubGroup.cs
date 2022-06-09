@@ -28,7 +28,7 @@ namespace SecondCycleGame
             if(_characters.Count == 1)
             {
                 //OnAutoClear?.Invoke(_characters[0]);
-                _characters[0].LeaveSubGroup();
+                _characters[0].GroupMember.LeaveSubGroup();
             }
         }
         public void Clear()
