@@ -7,46 +7,34 @@ using UnityEngine.InputSystem;
 
 namespace SecondCycleGame
 {
-    public sealed class Controls
+    public static class Controls
     {
-        private readonly PlayersGroup _playersGroup;
-        public readonly InputActions inputs;
-        public readonly LayerMask ground;
-        private bool _doRelease;
-        public bool IsMouseOverUI => EventSystem.current.IsPointerOverGameObject();
+        public static readonly InputActions inputs;
+        private static readonly LayerMask _Ground;
+        private static bool _doRelease;
+        public static bool IsMouseOverUI => EventSystem.current.IsPointerOverGameObject();
+        public static Action<Vector3> OnGroundClick;
 
-        public Controls(PlayersGroup playersGroup)
+        static Controls()
         {
-            _playersGroup = playersGroup;
             inputs = new InputActions();
-            ground = LayerMask.GetMask("Ground");
-            SubscribeOnEvents();
+            _Ground = LayerMask.GetMask("Ground");
         }
 
-        public void Update()
+        public static void Update()
         {
             LeftMousePress();
             if(_doRelease) LeftMouseRelease();
         }
 
-        private void SubscribeOnEvents()
-        {
-            inputs.Controls.Run.performed += ctx => OnRunButtonClick();
-            inputs.Controls.Crouch.performed += ctx => OnCrouchButtonClick();
-        }
-        private void UnsubscribeEvents()
-        {
-            inputs.Controls.Run.performed -= ctx => OnRunButtonClick();
-            inputs.Controls.Crouch.performed -= ctx => OnCrouchButtonClick();
-        }
-        private void LeftMousePress()
+        private static void LeftMousePress()
         {
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 _doRelease = !IsMouseOverUI;
             }
         }
-        private void LeftMouseRelease()
+        private static void LeftMouseRelease()
         {
             if (Mouse.current.leftButton.wasReleasedThisFrame)
             {
@@ -54,27 +42,12 @@ namespace SecondCycleGame
                 if(!IsMouseOverUI)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-                    if (Physics.Raycast(ray, out RaycastHit hitinfo, 100, ground))
+                    if (Physics.Raycast(ray, out RaycastHit hitinfo, 100, _Ground))
                     {
-                        _playersGroup.SelectedCharacter.model.MoveToPosition(hitinfo.point);
+                        OnGroundClick?.Invoke(hitinfo.point);
                     }
                 }
             }
-        }
-        private void OnRunButtonClick()
-        {
-            //_gameController.player.SetMoveType(_gameController.player.run);
-            _playersGroup.SelectedCharacter.model.ToggleRun();
-        }
-        private void OnCrouchButtonClick()
-        {
-            //_gameController.player.SetMoveType(_gameController.player.crouch);
-            _playersGroup.SelectedCharacter.model.ToggleCrouch();
-        }
-
-        public void OnTearDown()
-        {
-            UnsubscribeEvents();
         }
     }
 }

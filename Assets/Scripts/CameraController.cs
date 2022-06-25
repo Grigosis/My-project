@@ -10,7 +10,6 @@ namespace SecondCycleGame
     public class CameraController : MonoBehaviour
     {
         #region Fields
-        private InputActions _inputs;
         public Vector3 _newPosition;
         [Header("MOVE")]
         [SerializeField] private int _moveAcceleration = 10;
@@ -31,12 +30,13 @@ namespace SecondCycleGame
         #endregion
 
         #region Properties
-        private bool IsMoveInputsActive => _inputs.Camera.Move.inProgress;
+        private bool IsMoveInputsActive => Controls.inputs.Camera.Move.inProgress;
         private float SpeedZoomModifier => _zoomAmount / _maxZoom;
         #endregion
 
         void Start()
         {
+            Initialize();
             _newPosition = vCamera.transform.position;
             //SetCameraZoom(0.5f);
             _zoomAmount = vCamera.m_Lens.OrthographicSize;
@@ -48,12 +48,10 @@ namespace SecondCycleGame
         }
 
 
-        public void Initialize(InputActions inputs)
+        public void Initialize()
         {
-            _inputs = inputs;
-
-            _inputs.Camera.Move.started += ctx => _isMoving = true;
-            _inputs.Camera.Zoom.performed += ctx => CameraZoom(ctx.ReadValue<float>());
+            Controls.inputs.Camera.Move.started += ctx => _isMoving = true;
+            Controls.inputs.Camera.Zoom.performed += ctx => CameraZoom(ctx.ReadValue<float>());
         }
 
         #region Move
@@ -72,18 +70,18 @@ namespace SecondCycleGame
         }
         private void KeyboardMove()
         {
-            if (_inputs.Camera.Move.inProgress)
+            if (Controls.inputs.Camera.Move.inProgress)
             {
-                var direction = _inputs.Camera.Move.ReadValue<Vector2>();
+                var direction = Controls.inputs.Camera.Move.ReadValue<Vector2>();
                 _newPosition += (_cameraForward * direction.y + _cameraRight * direction.x) * Time.deltaTime * _keyboardMoveSpeed * SpeedZoomModifier;
             }
         }
 
         public void MoveTo(Vector3 position, float time)
         {
-            _inputs.Camera.Disable();
+            Controls.inputs.Camera.Disable();
             _newPosition = position;
-            transform.DOMove(position, time).onKill = _inputs.Camera.Enable;
+            transform.DOMove(position, time).onKill = Controls.inputs.Camera.Enable;
         }
         #endregion
 

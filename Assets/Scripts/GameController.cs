@@ -8,16 +8,15 @@ namespace SecondCycleGame
 {
     public class GameController : MonoBehaviour
     {
-        private static GameController _instance;
+        private static GameController s_instance;
         private Context _context;
-        private Controls _controls; 
         public CameraController cameraController;
         private PlayersGroup _playersGroup;
         public Transform groupUI;
 
         void Awake()
         {
-            if (_instance == null) _instance = this;
+            if (s_instance == null) s_instance = this;
             else
             {
                 Destroy(this);
@@ -26,28 +25,28 @@ namespace SecondCycleGame
 
             _context = new Context();
             _playersGroup = new PlayersGroup(groupUI);
-            _controls = new Controls(_playersGroup);
-
-            cameraController.Initialize(_controls.inputs);
         }
         private void OnEnable()
         {
-            _controls.inputs.Enable();
+            Controls.inputs.Enable();
         }
         private void OnDisable()
         {
-            _controls?.inputs.Disable();
+            Controls.inputs.Disable();
         }
         private void OnDestroy()
         {
-            _controls?.OnTearDown();
+            if(s_instance == this)
+            {
+                s_instance = null;
+            }
         }
         void Start()
         {
         }
         void Update()
         {
-            _controls.Update();
+            Controls.Update();
         }
     }
 }

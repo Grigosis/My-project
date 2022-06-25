@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Character
   _portrait: {fileID: 21300000, guid: 83b39b0223a6a35498b62024e147bc25, type: 3}
-  _prefab: {fileID: 8726126393852948038, guid: e14b5732580903f4588ff6fc50e944aa, type: 3}
+  _prefab: {fileID: 2759189378332830279, guid: e14b5732580903f4588ff6fc50e944aa, type: 3}
   _portraitPrefab: {fileID: 6580811559263773863, guid: 43e641dc75688f0419c083c474fc3612, type: 3}

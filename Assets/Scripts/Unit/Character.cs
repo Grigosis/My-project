@@ -10,8 +10,8 @@ namespace SecondCycleGame
 
         public Character(CharacterData characterData) : base(characterData)
         {
-            model.tag = "Player";
-            model.gameObject.layer = LayerMask.NameToLayer("PlayerUnit");
+            behaviour.tag = "Player";
+            behaviour.gameObject.layer = LayerMask.NameToLayer("PlayerUnit");
         }
 
         public void AddToPlayersGroup(PlayersGroup group)

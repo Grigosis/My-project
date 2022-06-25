@@ -10,7 +10,7 @@ namespace SecondCycleGame
         public const byte MAX_TEAM_SIZE = 4;
         public readonly Transform uiTransform;
 
-        private Character MainCharacter => team[0];
+        public readonly Character MainCharacter;
         public Character SelectedCharacter { get; private set; }
 
         public PlayersGroup(Transform UITransform)
@@ -19,13 +19,23 @@ namespace SecondCycleGame
             uiTransform = UITransform;
 
             var data = Resources.Load<CharacterData>("Data/CharacterData");
-            team.Add(new Character(data));
-            MainCharacter.AddToPlayersGroup(this);
 
-            MainCharacter.model.transform.position = new Vector3(-3, 0, -8);
+            MainCharacter = new Character(data);
+            team.Add(MainCharacter);
+            //MainCharacter.AddToPlayersGroup(this);
+
+            MainCharacter.behaviour.transform.position = new Vector3(-3, 0, -8);
             SelectedCharacter = MainCharacter;
+
+
+            ControlsSubscribe();
         }
 
+        private void ControlsSubscribe()
+        {
+            Controls.OnGroundClick += MoveSelected;
+
+        }
         public bool TryAddToTeam(Character character)
         {
             if (team.Count >= MAX_TEAM_SIZE)
@@ -77,6 +87,10 @@ namespace SecondCycleGame
                     //add double offset
                 }
             }
+        }
+        private void MoveSelected(Vector3 position)
+        {
+            SelectedCharacter.behaviour.MoveToPosition(position);
         }
     }
 }
