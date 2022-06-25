@@ -1,0 +1,191 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7537618178071072305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: server 2
+  m_EditorClassIdentifier: 
+  isSelected: 1
+  rect:
+    serializedVersion: 2
+    x: 11
+    y: 244
+    width: 244.43951
+    height: 242.24176
+  guiRect:
+    serializedVersion: 2
+    x: 0
+    y: 256
+    width: 256
+    height: 256
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 349.1156
+    y: 622.17
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 493.1156
+    y: 478.17
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 365.1156
+    y: 494.17
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: dc8ae41506995ec4f8c06847ee00bdd1, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: c13b0563baae3924f804498d634de5f7, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 735986ae983e35c46b67cbcd500780a8, type: 3}
+  modelGroups:
+  - name: rOWUTu
+    meshes:
+    - {fileID: 3336943557756049262, guid: 199561bb8a5afbd4db0f74f7fc3a7fa6, type: 3}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 892d1a7aeb4cc284dbf62e69e125db52, type: 3}
+  m_Name: furniture
+  m_EditorClassIdentifier: 
+  textureQuads:
+  - {fileID: 8080296873746942658}
+  - {fileID: 5931484257469690324}
+  - {fileID: -7537618178071072305}
+  selectedTextureQuad: {fileID: -7537618178071072305}
+  showTextures: 1
+  exportSettings: {fileID: 11400000, guid: 1dd88f59642af884793c069782f44618, type: 2}
+  textureAtlasSize: {x: 512, y: 512}
+  textureGroupRegistration:
+  - name: Albedo
+  - name: Normal
+  - name: Occlusion
+--- !u!114 &5931484257469690324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: server 1
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 250
+    height: 250
+  guiRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 256
+    height: 256
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 637.15704
+    y: 357.4519
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 781.15704
+    y: 213.45192
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 653.15704
+    y: 229.45192
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 495bfc82c5437734cb291ccb4f93f5c2, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 0cec1ba5af7bdfc4aaae621f9ed64135, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 09c1ed21ac2d21a49a36a151b2d9f7b0, type: 3}
+  modelGroups:
+  - name: jgLMYd
+    meshes:
+    - {fileID: 4328337293460660291, guid: 742fb6dc13e575448b312d5e2933225d, type: 3}
+--- !u!114 &8080296873746942658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: PC
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 246
+    y: 14
+    width: 250.3404
+    height: 246.08511
+  guiRect:
+    serializedVersion: 2
+    x: 256
+    y: 0
+    width: 256
+    height: 256
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 893.15704
+    y: 357.4519
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 1037.157
+    y: 213.45192
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 909.15704
+    y: 229.45192
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: a4bab1233d0a967479ce37d189d13088, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 08ab3586445bf0a41ad50e297f66466a, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: e5cc0345599519d4b98a1691f5297cea, type: 3}
+  modelGroups:
+  - name: GMQnAF
+    meshes:
+    - {fileID: -5055765814056443606, guid: 85982e6e913c9a040a0b852b88c86782, type: 3}
