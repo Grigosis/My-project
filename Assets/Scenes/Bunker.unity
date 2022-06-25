@@ -465,7 +465,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (2)
@@ -2016,7 +2016,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (11)
@@ -2345,7 +2345,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (4)
@@ -2606,7 +2606,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (1)
@@ -2801,7 +2801,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (13)
@@ -3162,7 +3162,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (9)
@@ -3665,7 +3665,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (14)
@@ -4120,7 +4120,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (10)
@@ -4242,7 +4242,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 75199129f11fafd46ad1b8d8ded6501b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 30022f0b01b0a954180aa7d23ed5df04, type: 2}
+      objectReference: {fileID: 2100000, guid: f3e015fbb25af2c488c08e34ff40fe75, type: 2}
     - target: {fileID: 919132149155446097, guid: 75199129f11fafd46ad1b8d8ded6501b, type: 3}
       propertyPath: m_Name
       value: Bunker lab
@@ -5637,7 +5637,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (8)
@@ -6393,7 +6393,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (3)
@@ -6649,7 +6649,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (16)
@@ -7059,7 +7059,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (15)
@@ -7510,7 +7510,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (12)
@@ -7754,7 +7754,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b609a9a3c26d1644e9c00ed504cc658c, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c84e1cefae3ac48bf5ae9b3f89d555, type: 3}
       propertyPath: m_Name
       value: bunker corridor (7)
