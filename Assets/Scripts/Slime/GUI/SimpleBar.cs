@@ -7,17 +7,16 @@ namespace ROR.Core
         public Slider slider;
         public Image fill;
 
-        public double maxValue {
-            get => slider.maxValue;
-            set { slider.maxValue = (float)value;}
+        public void SetValues(double now, double max, float min = 0)
+        {
+            SetValues((float)now, (float)max, (float)min);
         }
-
-        public void setColor(Color color){
-            fill.color = color;
-        }
-
-        public void setValue(double newValue){
-            slider.value = (float)newValue;
+        
+        public void SetValues(float now, float max, float min = 0)
+        {
+            slider.maxValue = max;
+            slider.minValue = min;
+            slider.value = now;
         }
     }
 }

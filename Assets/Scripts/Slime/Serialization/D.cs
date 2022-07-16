@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Assets.Scripts.Sugar;
 using ROR.Lib;
+using UnityEngine;
+using Vector2 = System.Numerics.Vector2;
+using Vector3 = System.Numerics.Vector3;
 
 namespace ROR.Core.Serialization
 {
@@ -15,6 +17,9 @@ namespace ROR.Core.Serialization
         private static D _instance;
         private readonly Dictionary<string, Definition> Definitions = new Dictionary<string, Definition>();
         private readonly Dictionary<Type, List<Definition>> DefinitionsByType = new Dictionary<Type, List<Definition>>();
+        
+        private static string ExtraPath = "Assets/XmlData/";//"Assets/Resources/Data/"
+        private string AbsolutePathToResources;
         
         public static D Instance
         {
@@ -32,25 +37,55 @@ namespace ROR.Core.Serialization
             }
         }
 
-        private string AbsolutePathToResources;
+        
         public void Init()
         {
-            AbsolutePathToResources = Path.GetFullPath(".").Replace("Temp\\Bin\\Debug", "")+"\\";
+            AbsolutePathToResources = Path.GetFullPath(".")+"/";
             //D:\Unity\ssh\Temp\Bin\Debug\Assets\Resources\Data
+            
+           
             WriteToFile("test.tst", GetExportXML());
+            
             using (new Measure("Known types"))
             {
                 var kt = KnownTypes;
             }
             using (new Measure("Load all"))
             {
-                LoadAll(ExtraPath);
+                LoadAll("");
             }
         }
         
-        static Definition GetExportXML()
+        static Definitions GetExportXML()
         {
-            return new Definition();
+            var d = new Definitions();
+            d.DefinitionList = new SerializableList<Definition>();
+            
+            d.DefinitionList.Add(new LivingEntityDefinition()
+            {
+                EquippedItems = new string[] { "Item/WTF"}, 
+                Id = "LivingEntity/Hero", 
+                Skills = new []{ "Skill/SimpleAttack"},
+            });
+            
+            
+            d.DefinitionList.Add(new SkillDefinition()
+            {
+                Id = "Skill/SimpleAttack",
+                Attacks = new ElementAttack[]
+                {
+                    new ElementAttack("CRUSH", 0.5f),
+                    new ElementAttack("FIRE", 0.5f)
+                }
+            });
+            
+            
+            d.DefinitionList.Add(new EquipmentDefinition()
+            {
+                Id = "Item/BaseWeapon"
+            });
+            
+            return d;
         }
         
        
@@ -75,13 +110,19 @@ namespace ROR.Core.Serialization
 
         public void Register(Definition d)
         {
+            Debug.Log("Register:" + d.Id);
             Definitions.Add(d.Id, d);
             DefinitionsByType.GetOrCreate(D.Instance.GetType()).Add(d);
         }
 
         public T Get<T>(string Id) where T : Definition
         {
-            return Definitions[Id] as T;
+            if(Definitions.TryGetValue(Id, out var def))
+            {
+                return def as T;
+            }
+
+            throw new Exception($"Definition with id [{Id}] not found");
         }
         
         public void GetAll<T>(ICollection<T> where) where T : Definition
@@ -95,17 +136,15 @@ namespace ROR.Core.Serialization
             }
         }
 
-        private static string ExtraPath = "XmlData/";//"Assets/Resources/Data/"
+       
         
-        public void WriteToFile(string fname, Definition definition)
-        {
-            WriteToFile(AbsolutePathToResources+ExtraPath+fname, new Definitions()  { DefinitionList = new SerializableList<Definition>() { definition }});
-        }
+        
        
 
         private void LoadAll(string folder)
         {
-            var files = Directory.GetFiles(AbsolutePathToResources + folder, "*.xml", SearchOption.AllDirectories);
+            Debug.Log("InitDefinitions:" + AbsolutePathToResources+ExtraPath+folder);
+            var files = Directory.GetFiles(AbsolutePathToResources+ExtraPath+folder, "*.xml", SearchOption.AllDirectories);
             var list = new List<Definition>();
             
             Parallel.ForEach(files, (file) =>
@@ -118,7 +157,7 @@ namespace ROR.Core.Serialization
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
-                    //Debug.LogError("Error in file: " + file + " : " + e);
+                    Debug.LogError("Error in file: " + file + " : " + e);
                     return;
                 }
 
@@ -136,6 +175,10 @@ namespace ROR.Core.Serialization
         }
 
 
+        public void WriteToFile(string fname, Definition definition)
+        {
+            WriteToFile(fname, new Definitions()  { DefinitionList = new SerializableList<Definition>() { definition }});
+        }
         
         public void WriteToFile(string filePath, object objectToWrite, bool append = false) 
         {
@@ -143,7 +186,7 @@ namespace ROR.Core.Serialization
             try
             {
                 var serializer = GetSerializer(objectToWrite.GetType());
-                writer = new StreamWriter(filePath, append);
+                writer = new StreamWriter(AbsolutePathToResources+ExtraPath+filePath, append);
                 serializer.Serialize(writer, objectToWrite);
             }
             catch (Exception e)
@@ -156,9 +199,15 @@ namespace ROR.Core.Serialization
                     writer.Close();
             }
         }
-        
-        public T ReadFromFile<T>(string filePath) 
+
+        private T ReadFrom<T>(string filePath)
         {
+            return ReadFromFile<T>(AbsolutePathToResources+ExtraPath+filePath);
+        }
+        
+        private T ReadFromFile<T>(string filePath) 
+        {
+            Debug.Log("ReadFrom:" + filePath);
             TextReader reader = null;
             try
             {

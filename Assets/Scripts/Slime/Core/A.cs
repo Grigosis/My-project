@@ -1,17 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Xml.Serialization;
 using RPGFight.Core;
 using UnityEngine;
 
 namespace RPGFight
 {
+    /// <summary>
+    /// Default values must be always be 0
+    /// That means HitChance = 0 - equals 100% hit chance
+    /// </summary>
     public class Attrs
     {
         [XmlAttribute] public double HP_NOW = 0;
         [XmlAttribute] public double HP_MAX = 0;
+        [XmlAttribute] public double HP_MAX_MLT = 0;
         [XmlAttribute] public double HP_REGEN = 0;
         [XmlAttribute] public double EP_NOW = 0;
         [XmlAttribute] public double EP_MAX = 0;
+        [XmlAttribute] public double EP_MAX_MLT = 0;
         [XmlAttribute] public double EP_REGEN = 0;
         [XmlAttribute] public double HIT_CLOSE_RANGE = 0;
         [XmlAttribute] public double HIT_FAR_RANGE = 0;
@@ -20,33 +28,87 @@ namespace RPGFight
         [XmlAttribute] public double CRIT_CHANCE = 0;
         [XmlAttribute] public double CRIT_MLT = 0;
         [XmlAttribute] public double MOVESPEED = 0;
+        [XmlAttribute] public double MOVESPEED_MLT = 0;
         [XmlAttribute] public double INITIATIVE = 0;
 
-        public Stats STATS;
-        public Perks PERKS;
+        public Stats STATS = new Stats();
+        public Perks PERKS = new Perks();
+        public Element CRUSH = new Element();
+        public Element PIERCE = new Element();
+        public Element CUT = new Element();
+        public Element FIRE = new Element();
+        public Element COLD = new Element();
+        public Element POISON = new Element();
+        public Element GRAVI = new Element();
 
-        public Element CRUSH;
-        public Element PIERCE;
-        public Element CUT;
-        public Element FIRE;
-        public Element COLD;
-        public Element POISON;
-        public Element GRAVI;
+        public Attrs() { }
 
-        public static Attrs NewWithSubs()
+
+        private static Dictionary<string, FieldInfo> Infos = new Dictionary<string, FieldInfo>(); 
+        static Attrs()
         {
-            var attrs = new Attrs();
-            attrs.STATS = new Stats();
-            attrs.PERKS = new Perks();
-            attrs.CRUSH = new Element();
-            attrs.PIERCE = new Element();
-            attrs.CUT = new Element();
-            attrs.FIRE = new Element();
-            attrs.COLD = new Element();
-            attrs.POISON = new Element();
-            attrs.GRAVI = new Element();
+            var infos1 = typeof(Attrs).GetFields(BindingFlags.Instance | BindingFlags.Public);
+            var infos2 = typeof(Element).GetFields(BindingFlags.Instance | BindingFlags.Public);
+            var infos3 = typeof(Stats).GetFields(BindingFlags.Instance | BindingFlags.Public);
+            var infos4 = typeof(Perks).GetFields(BindingFlags.Instance | BindingFlags.Public);
 
-            return attrs;
+            var infos = new List<FieldInfo>();
+            infos.AddRange(infos1);
+            infos.AddRange(infos2);
+            infos.AddRange(infos3);
+            infos.AddRange(infos4);
+            
+            foreach (var kv in infos)
+            {
+                Infos[kv.Name] = kv;
+            }
+        }
+        
+        /// <summary>
+        /// Warning, using reflection. SLOW!
+        /// </summary>
+        public double GetByName(string name)
+        {
+            var parts = name.Split(new string[] {"."}, StringSplitOptions.None);
+
+            if (!Infos.TryGetValue(parts[0], out var fieldInfo))
+            {
+                throw new Exception("FieldNotFound:" + name);
+            }
+
+            var value = fieldInfo.GetValue(this);
+
+            if (parts.Length == 1)
+            {
+                if (value is double)
+                {
+                    return (double)value;
+                }
+                else
+                {
+                    throw new Exception("FieldIsNotDouble:" + name);
+                }
+            }
+            
+            if (!Infos.TryGetValue(parts[1], out var fieldInfo2))
+            {
+                throw new Exception("2nsFieldNotFound:" + name);
+            }
+            
+            var value2 = fieldInfo2.GetValue(this);
+            if (value2 is double)
+            {
+                return (double)value2;
+            }
+            else
+            {
+                throw new Exception("2ndFieldIsNotDouble:" + name);
+            }
+        }
+        
+        public Attrs(Attrs copyFrom)
+        {
+            Sum(copyFrom);
         }
 
         public void CalculateFinalValues()
@@ -56,8 +118,6 @@ namespace RPGFight
                 Balance.CalculateFinalValues(this);
             }
         }
-
-
 
         public void Sum(Attrs other)
         {
@@ -76,16 +136,15 @@ namespace RPGFight
             MOVESPEED  += other.MOVESPEED;
             INITIATIVE  += other.INITIATIVE;
 
-            STATS.Sum(other.STATS);
-            PERKS.Sum(other.PERKS);
-
-            CRUSH.Sum(other.CRUSH);
-            PIERCE.Sum(other.PIERCE);
-            CUT.Sum(other.CUT);
-            FIRE.Sum(other.FIRE);
-            COLD.Sum(other.COLD);
-            POISON.Sum(other.POISON);
-            GRAVI.Sum(other.GRAVI);
+            STATS?.Sum(other.STATS);
+            PERKS?.Sum(other.PERKS);
+            CRUSH?.Sum(other.CRUSH);
+            PIERCE?.Sum(other.PIERCE);
+            CUT?.Sum(other.CUT);
+            FIRE?.Sum(other.FIRE);
+            COLD?.Sum(other.COLD);
+            POISON?.Sum(other.POISON);
+            GRAVI?.Sum(other.GRAVI);
         }
 
         public Element GetElement(int attackId)
@@ -122,13 +181,13 @@ namespace RPGFight
         {
             switch (attackId)
             {
-                case 0: return Color.red;
-                case 1: return Color.red;
+                case 0: return Color.yellow;
+                case 1: return Color.gray;
                 case 2: return Color.red;
-                case 3: return Color.red;
-                case 4: return Color.red;
-                case 5: return Color.red;
-                case 6: return Color.red;
+                case 3: return new Color (1f, 0.7f,0f);
+                case 4: return Color.blue;
+                case 5: return Color.green;
+                case 6: return new Color (0.5f, 0, 0.9f);
                 default: throw new Exception($"Element with name [{attackId}] not found");
             }
         }
@@ -181,8 +240,20 @@ namespace RPGFight
         [XmlAttribute] public double SPECIAL_1 = 0;
         [XmlAttribute] public double SPECIAL_2 = 0;
 
+        public Element() { }
+
+        public Element(Element copyFrom)
+        {
+            Sum(copyFrom);
+        }
+        
         public void Sum(Element other)
         {
+            if (other == null)
+            {
+                return;
+            }
+
             ATK_MIN_ABS += other.ATK_MIN_ABS;
             ATK_MAX_ABS += other.ATK_MAX_ABS;
             ATK_MIN_MLT += other.ATK_MIN_MLT;
@@ -213,6 +284,11 @@ namespace RPGFight
 
         public void Sum(Stats other)
         {
+            if (other == null)
+            {
+                return;
+            }
+            
             STR += other.STR;
             AGI += other.AGI;
             END += other.END;
@@ -253,6 +329,11 @@ namespace RPGFight
 
         public void Sum(Perks other)
         {
+            if (other == null)
+            {
+                return;
+            }
+
             CLOSE_WEAPON += other.CLOSE_WEAPON;
             RANGED_WEAPON += other.RANGED_WEAPON;
             SCI_WEAPON += other.SCI_WEAPON;
@@ -282,7 +363,7 @@ namespace RPGFight
         public ChangeAttrs(Attrs attrs)
         {
             Attrs = attrs;
-            HP_Ratio = attrs.HP_NOW / Attrs.HP_MAX;
+            HP_Ratio = Attrs.HP_MAX == 0 ? 0 : Attrs.HP_NOW / Attrs.HP_MAX;
         }
 
         public void Dispose()

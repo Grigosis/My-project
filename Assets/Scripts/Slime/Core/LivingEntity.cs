@@ -1,40 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.MyUnity;
+using ROR.Core.Serialization;
 using RPGFight;
 using RPGFight.Core;
+using UnityEngine;
 
 namespace ROR.Core
 {
+    public class SkillEnitity
+    {
+        public SkillDefinition Definition;
+        
+    }
     public class LivingEntity : IEffectable, IEntity
     {
         public long EntityId { get; set; }
 
         public int Team;
         public EffectBar EffectBar { get; private set; } = new EffectBar();
-        public Attrs FinalStats;
+        
+        public Attrs FinalStats = new Attrs();
+        private Attrs SumAttrs = new Attrs();
+
+        public SkillEnitity[] Skills = new SkillEnitity[0];
+        
+
+        private Attrs BaseStats;
+        private Attrs UpgradedAttrs;
+        private Attrs EquipmentAttrs;
+        
         
         public bool IsImmune = false;
         public bool IsDead = false;
         public string DebugName = "";
 
         public IEntityController Controller;
+
+        public GameObject GameObjectLink;
+        
         public LivingEntity()
         {
-           
-        }
-        
-        protected virtual void Start()
-        {
-            Entities.Add(this);
-            
-            FinalStats = Attrs.NewWithSubs();
+            FinalStats = new Attrs();
             EffectBar.Init(this);
-        }
-        
-        void Update()
-        {
-            EffectBar.Update(1);
+            Entities.Add(this);
+
+            FinalStats.HP_MAX = 10;
+            FinalStats.HP_NOW = 5;
+            FinalStats.EP_MAX = 5;
+            FinalStats.EP_NOW = 3;
+            
         }
 
         public event Action<LivingEntity> OnDeath; 
@@ -53,6 +68,7 @@ namespace ROR.Core
             if (amount > 0)
             {
                 FinalStats.HP_NOW = Math.Min(FinalStats.HP_NOW + amount, FinalStats.HP_MAX);
+                DI.CreateFloatingText(this, $"{amount}", Color.green);
             }
         }
 
@@ -69,25 +85,42 @@ namespace ROR.Core
             if (IsImmune) return;
             if (IsDead) return;
 
-
             if (damage.Damage > 0)
             {
                 FinalStats.HP_NOW = FinalStats.HP_NOW - damage.Damage;
 
-                DI.CreateFloatingText(this, $"{damage}", Attrs.GetElementColor(damage.Id));
-
+                var txt = $"{damage.Damage:F0}";
+                DI.CreateFloatingText(this, txt, Attrs.GetElementColor(damage.Id));
+                
                 if (FinalStats.HP_NOW <= 0)
                 {
                     Die();
                 }
-            }
+            };
         }
 
 
-        public void InitAttrs(Attrs attributes)
+        public void InitFromDefinition(Attrs baseAttrs, Attrs upgradedAttrs, Attrs equipmentAttrs, SkillDefinition[] skillDefinitions)
         {
-            FinalStats = Attrs.NewWithSubs();
-            FinalStats.Sum(attributes);
+            BaseStats = baseAttrs;
+            UpgradedAttrs = upgradedAttrs;
+            EquipmentAttrs = equipmentAttrs;
+            
+
+            SumAttrs.Sum(baseAttrs);
+            SumAttrs.Sum(upgradedAttrs);
+            SumAttrs.Sum(equipmentAttrs);
+            
+            FinalStats = new Attrs(SumAttrs);
+            FinalStats.CalculateFinalValues();
+
+            Skills = new SkillEnitity[skillDefinitions.Length];
+            for (var i = 0; i < skillDefinitions.Length; i++)
+            {
+                var sd = skillDefinitions[i];
+                Skills[i] = new SkillEnitity();
+                Skills[i].Definition = sd;
+            }
         }
 
         public override string ToString()

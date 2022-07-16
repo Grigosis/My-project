@@ -7,10 +7,6 @@ using Random = System.Random;
 
 namespace RPGFight.Core
 {
-    public class H
-    {
-
-    }
     public class Balance
     {
         public static void UseDamageSkill(LivingEntity dealer, LivingEntity receiver, SkillDefinition definition, Random seed = null)
@@ -56,10 +52,10 @@ namespace RPGFight.Core
 
         public static double CalculateDamage(Element attack, Element defence, Random seed)
         {
-            var min = attack.ATK_MIN_ABS * attack.ATK_MIN_MLT;
-            var max = attack.ATK_MAX_ABS * attack.ATK_MAX_MLT;
+            var min = attack.ATK_MIN_ABS * (1 + attack.ATK_MIN_MLT);
+            var max = attack.ATK_MAX_ABS * (1 + attack.ATK_MAX_MLT);
             var dmg = seed.Between(min, max) * (1 + defence.DEF_MLT) - defence.DEF_ABS;
-            Math.Max(1, dmg);
+            dmg = Math.Max(1, dmg);
             return dmg;
         }
 

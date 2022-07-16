@@ -7,21 +7,17 @@ namespace SecondCycleGame
 {
     public class Battle : MonoBehaviour
     {
+        public GameObject START;
+        public GameObject END;
         // Start is called before the first frame update
         void Start()
         {
         
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
-
         public void NextTurn()
         {
-            FloatingText.Create(Vector3.zero, "Hello World", Color.red, 30f);
+            
         }
     }
 }

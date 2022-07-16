@@ -1,7 +1,4 @@
-﻿using System;
-using ROR.Core;
-using ROR.Core.Serialization;
-using RPGFight.Core;
+﻿using ROR.Core.Serialization;
 
 namespace RPGFight
 {
@@ -11,14 +8,14 @@ namespace RPGFight
         private static void InitDefault()
         {
             var l1 = new LivingStateInBattle();
-            l1.Attributes = Attrs.NewWithSubs();
+            l1.Attributes = new Attrs();
             l1.x = 1;
             l1.y = 2;
 
             l1.Attributes.CUT.ATK_MAX_MLT = 999;
 
             var l2 = new LivingStateInBattle();
-            l2.Attributes = Attrs.NewWithSubs();
+            l2.Attributes = new Attrs();
             l2.x = 1;
             l2.y = 2;
 
@@ -48,7 +45,7 @@ namespace RPGFight
             D.Instance.WriteToFile("XmlData/definitions.xml", defs, false);
         }
 
-        static void Main(string[] args)
+        /*static void Main(string[] args)
         {
             //InitDefault();
             var defs = D.Instance.ReadFromFile<Definitions>("XmlData/definitions.xml");
@@ -84,6 +81,6 @@ namespace RPGFight
 
 
             Console.WriteLine("Hello World!");
-        }
+        }*/
     }
 }
