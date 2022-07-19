@@ -24,5 +24,6 @@ namespace ROR.Core
        [SerializeField] public GameObject pfDamagePopup;
        [SerializeField] public Animation floatingAnimation;
        [SerializeField] public GameObject pfShip;
+       [SerializeField] public GameObject mapCell;
     }
 }

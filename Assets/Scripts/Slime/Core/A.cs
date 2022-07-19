@@ -33,6 +33,7 @@ namespace RPGFight
 
         public Stats STATS = new Stats();
         public Perks PERKS = new Perks();
+        public Perks UNLOCKABLE_PERKS = new Perks();
         public Element CRUSH = new Element();
         public Element PIERCE = new Element();
         public Element CUT = new Element();

@@ -4,16 +4,17 @@ using ROR.Core.Serialization;
 using RPGFight;
 using RPGFight.Core;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace SecondCycleGame
 {
     public class BattleLivingEntity : MonoBehaviour, IMouseReceiver, IAttributeProvider
     {
         public LivingEntity LivingEntity;
+
+
         public String DefintionId;
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             if (DefintionId != null)
             {
@@ -24,7 +25,7 @@ namespace SecondCycleGame
             {
                 LivingEntity = new LivingEntity();
             }
-
+            
             
             LivingEntity.GameObjectLink = gameObject;
         }
@@ -55,8 +56,6 @@ namespace SecondCycleGame
                 Destroy(DebugInfo.gameObject);
                 DebugInfo = null;
             }
-
-            
         }
 
         public void OnMouseDown(GameObject gameObject)
@@ -70,7 +69,7 @@ namespace SecondCycleGame
 
         private void UseSkill(BattleLivingEntity other)
         {
-            Balance.UseDamageSkill(LivingEntity, other.LivingEntity, LivingEntity.Skills[0].Definition);
+            Balance.UseDamageSkill(this, other, LivingEntity.Skills[0].Definition);
         }
 
         public void OnMouseUp(GameObject gameObject)
@@ -81,6 +80,21 @@ namespace SecondCycleGame
         public Attrs GetAttributes()
         {
             return LivingEntity.FinalStats;
+        }
+
+        public Vector3 GetHeadPosition()
+        {
+            return Vector3.back;
+        }
+        
+        public Vector3 GetFeetPosition()
+        {
+            return Vector3.back;
+        }
+        
+        public Vector3 GetTorsoPosition()
+        {
+            return Vector3.back;
         }
     }
 }

@@ -3,7 +3,7 @@ using RPGFight;
 
 namespace ROR.Core.Serialization
 {
-    public class LivingEntityDefinition : Definition
+    public class LivingEntityDefinition : BaseDefinition
     {
         /// <summary>
         /// То что игрока по умолчанию. 

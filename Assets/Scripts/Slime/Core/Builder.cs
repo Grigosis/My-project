@@ -24,7 +24,7 @@ namespace RPGFight.Core
                 skillDefinitions[i] = D.Instance.Get<SkillDefinition>(stateInBattle.Skills[i]);
             }
             
-            livingEntity.InitFromDefinition(stateInBattle.BaseAttributes, stateInBattle.UpgradedAttributes, attrs, skillDefinitions);
+            livingEntity.InitFromDefinition(stateInBattle.Icon, stateInBattle.BaseAttributes, stateInBattle.UpgradedAttributes, attrs, skillDefinitions);
             return livingEntity;
         }
     }

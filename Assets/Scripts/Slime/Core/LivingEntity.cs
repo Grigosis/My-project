@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.MyUnity;
+using Assets.Scripts.Slime.Core;
+using Assets.Scripts.Slime.Core.BattleMap;
+using Assets.Scripts.Slime.Sugar;
 using ROR.Core.Serialization;
 using RPGFight;
 using RPGFight.Core;
+using SecondCycleGame;
+using UnityEditor;
 using UnityEngine;
+using Battle = SecondCycleGame.Battle;
+using Random = System.Random;
 
 namespace ROR.Core
 {
     public class SkillEnitity
     {
         public SkillDefinition Definition;
-        
     }
     public class LivingEntity : IEffectable, IEntity
     {
@@ -19,7 +25,8 @@ namespace ROR.Core
 
         public int Team;
         public EffectBar EffectBar { get; private set; } = new EffectBar();
-        
+        public string Portrait { get; set; }
+
         public Attrs FinalStats = new Attrs();
         private Attrs SumAttrs = new Attrs();
 
@@ -35,9 +42,11 @@ namespace ROR.Core
         public bool IsDead = false;
         public string DebugName = "";
 
+        public BattleMapCell Cell;
+        public Battle Battle;
         public IEntityController Controller;
-
         public GameObject GameObjectLink;
+        public event Action<LivingEntity> OnDeath;
         
         public LivingEntity()
         {
@@ -49,11 +58,39 @@ namespace ROR.Core
             FinalStats.HP_NOW = 5;
             FinalStats.EP_MAX = 5;
             FinalStats.EP_NOW = 3;
-            
         }
 
-        public event Action<LivingEntity> OnDeath; 
         
+        static Random RAND = new Random();
+        public void Attach(Battle battle, BattleMapCell cell)
+        {
+            Battle = battle;
+            Cell = cell;
+            //var frame = (int)((1-FinalStats.INITIATIVE.Clamp(0, 0.9999))*Battle.FramesInTurn);
+            var frame = (int)(RAND.NextDouble()*Battle.FramesInTurn);
+            MoveAt(frame);
+            //MoveAt(frame+Battle.FramesInTurn);
+            //MoveAt(frame+Battle.FramesInTurn*2);
+        }
+
+        public void OnTurnAcquired()
+        {
+            Debug.Log("OnTurnAcquired");
+            if (IsDead)
+            {
+                //TODO Logic of switching
+                return;
+            }
+            
+            MoveAt(Battle.FramesInTurn);
+            Battle.SetCurrentPlayer(this);
+        }
+
+        public void MoveAt(int deltaFrames)
+        {
+            Battle.Timeline.Add(deltaFrames, new TimelineEvent(OnTurnAcquired, TimelineActions.PLAYER_TURN, this));
+        }
+
         public void Die()
         {
             IsDead = true;
@@ -100,8 +137,9 @@ namespace ROR.Core
         }
 
 
-        public void InitFromDefinition(Attrs baseAttrs, Attrs upgradedAttrs, Attrs equipmentAttrs, SkillDefinition[] skillDefinitions)
+        public void InitFromDefinition(String portrait, Attrs baseAttrs, Attrs upgradedAttrs, Attrs equipmentAttrs, SkillDefinition[] skillDefinitions)
         {
+            Portrait = portrait;
             BaseStats = baseAttrs;
             UpgradedAttrs = upgradedAttrs;
             EquipmentAttrs = equipmentAttrs;

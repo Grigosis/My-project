@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using ROR.Core;
 using ROR.Core.Serialization;
+using SecondCycleGame;
 using UnityEngine;
 using Random = System.Random;
 
@@ -9,27 +9,22 @@ namespace RPGFight.Core
 {
     public class Balance
     {
-        public static void UseDamageSkill(LivingEntity dealer, LivingEntity receiver, SkillDefinition definition, Random seed = null)
+        public static void UseDamageSkill(BattleLivingEntity dealer, BattleLivingEntity receiver, SkillDefinition definition, Random seed = null)
         {
             seed ??= new Random();
 
-            if (!CalculateHit(dealer.FinalStats, receiver.FinalStats, definition, seed))
+            var hit = CalculateHit(dealer, receiver, definition);
+            if (seed.NextDouble() < 0)
             {
-                DI.CreateFloatingText(dealer, "MISS", Color.red);
+                DI.CreateFloatingText(dealer.LivingEntity, $"MISS [{hit*100:F0}]", Color.red);
                 return;
             }
 
-            var damages = CalculateDamage(dealer.FinalStats, receiver.FinalStats, definition.Attacks, seed);
-            receiver.Damage(damages, dealer);
+            var damages = CalculateDamage(dealer.LivingEntity.FinalStats, receiver.LivingEntity.FinalStats, definition.Attacks, seed);
+            receiver.LivingEntity.Damage(damages, dealer);
         }
 
-        private static bool CalculateHit(Attrs dealer, Attrs receiver, SkillDefinition definition, Random seed)
-        {
-            var hitChance = definition.IsRangedAttack ? dealer.HIT_FAR_RANGE : receiver.HIT_CLOSE_RANGE;
-            var dodgeChance = definition.IsRangedAttack ? dealer.DODGE_FAR_RANGE : receiver.DODGE_CLOSE_RANGE;
-            var value = seed.NextDouble()*((1+hitChance)*definition.HitChanceMlt-dodgeChance);
-            return value > 0;
-        }
+        
 
         private static List<ElementDamage> CalculateDamage(Attrs dealer, Attrs receiver, ElementAttack[] attacks, Random seed)
         {
@@ -48,6 +43,24 @@ namespace RPGFight.Core
             }
 
             return outAttacks;
+        }
+
+        public static double CalculateHit(BattleLivingEntity dealer, BattleLivingEntity receiver, SkillDefinition definition)
+        {
+            double hit = CalculateHit (dealer.LivingEntity.FinalStats, receiver.LivingEntity.FinalStats, definition);
+
+
+            var hits = Physics.RaycastAll(dealer.GetHeadPosition(), receiver.GetHeadPosition());
+
+            return hit;
+        }
+        
+        private static double CalculateHit(Attrs dealer, Attrs receiver, SkillDefinition definition)
+        {
+            var hitChance = definition.IsRangedAttack ? dealer.HIT_FAR_RANGE : receiver.HIT_CLOSE_RANGE;
+            var dodgeChance = definition.IsRangedAttack ? dealer.DODGE_FAR_RANGE : receiver.DODGE_CLOSE_RANGE;
+            var value = ((1+hitChance)*definition.HitChanceMlt-dodgeChance);
+            return value;
         }
 
         public static double CalculateDamage(Element attack, Element defence, Random seed)
