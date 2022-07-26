@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DefinitionList>
+    <Definition xsi:type="SkillDefinition" Id="Skill/Slime-SimpleAttack" IsRangedAttack="false" HitChanceMlt="1"  Icon="Icons/Icon1">
+      <Name />
+      <Icon />
+      <Description />
+      <Type />
+      <Attacks>
+        <Attack Name="CRUSH" Percent="0.5" />
+        <Attack Name="FIRE" Percent="0.5" />
+      </Attacks>
+    </Definition>
+	<Definition xsi:type="SkillDefinition" Id="Skill/Slime-HeavyAttack" IsRangedAttack="false" HitChanceMlt="0.7"  Icon="Icons/Icon2">
+      <Name />
+      <Icon />
+      <Description />
+      <Type />
+      <Attacks>
+        <Attack Name="CRUSH" Percent="1.5" />
+      </Attacks>
+    </Definition>
+  </DefinitionList>
+</Definitions>
