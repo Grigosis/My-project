@@ -1,25 +1,39 @@
 ﻿using Assets.Scripts.Slime.Core.Algorythms;
 using Assets.Scripts.Slime.Core.BattleMap.Logic.Interfaces;
 using ROR.Core;
+using RPGFight;
+using RPGFight.Core;
 using SecondCycleGame;
 using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
 {
-    public class CellTargetSelector : ATargetSelector
+    public class MovementTargetSelector : ATargetSelector
     {
+        
         public override void BeginSelection(BattleMapCellController controller, Battle battle, LivingEntity caster, SkillEntity skillEntity)
         {
             base.BeginSelection(controller, battle, caster, skillEntity);
-            
-            
-            var range = skillEntity.GetRange();
-            battle.BattleMap.Foreach(caster.Cell, range, cell => controller.GetOrCreate(new Vector2Int(cell.X, cell.Y)));
+            var cells = DI.GetCellsAvailableForMovement(battle.BattleMap, new Vector2Int(caster.Cell.X, caster.Cell.Y), Balance.GetMovepoints(caster));
+            foreach (var move in cells)
+            {
+                controller.GetOrCreate(new Vector2Int(move.X, move.Y));
+            }
         }
 
         protected override SkillTarget GetSkillTarget(GameObject gameObject)
         {
-            return gameObject.GetComponentInParent<BattleLivingEntity>()?.LivingEntity;
+            var wrapper = gameObject.GetComponentInParent<MapCellWrapper>();
+            if (wrapper != null)
+            {
+                var cell = m_battle.BattleMap[wrapper.X, wrapper.Y];
+                if (cell != null)
+                {
+                    return cell;
+                }
+            }
+            
+            return null;
         }
     }
 }

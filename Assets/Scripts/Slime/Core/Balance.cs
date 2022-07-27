@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ROR.Core;
 using ROR.Core.Serialization;
-using SecondCycleGame;
 using UnityEngine;
 using Random = System.Random;
 
@@ -9,19 +9,19 @@ namespace RPGFight.Core
 {
     public class Balance
     {
-        public static void UseDamageSkill(BattleLivingEntity dealer, BattleLivingEntity receiver, SkillDefinition definition, Random seed = null)
+        public static void UseDamageSkill(LivingEntity dealer, LivingEntity receiver, SkillDefinition definition, Random seed = null)
         {
             seed ??= new Random();
 
             var hit = CalculateHit(dealer, receiver, definition);
             if (seed.NextDouble() < 0)
             {
-                DI.CreateFloatingText(dealer.LivingEntity, $"MISS [{hit*100:F0}]", Color.red);
+                DI.CreateFloatingText(dealer, $"MISS [{hit*100:F0}]", Color.red);
                 return;
             }
 
-            var damages = CalculateDamage(dealer.LivingEntity.FinalStats, receiver.LivingEntity.FinalStats, definition.Attacks);
-            receiver.LivingEntity.Damage(damages, dealer, seed);
+            var damages = CalculateDamage(dealer.FinalStats, receiver.FinalStats, definition.Attacks);
+            receiver.Damage(damages, dealer, seed);
         }
 
         
@@ -42,9 +42,9 @@ namespace RPGFight.Core
             return outAttacks;
         }
 
-        public static double CalculateHit(BattleLivingEntity dealer, BattleLivingEntity receiver, SkillDefinition definition)
+        public static double CalculateHit(LivingEntity dealer, LivingEntity receiver, SkillDefinition definition)
         {
-            double hit = CalculateHit (dealer.LivingEntity.FinalStats, receiver.LivingEntity.FinalStats, definition);
+            double hit = CalculateHit (dealer.FinalStats, receiver.FinalStats, definition);
             return hit;
         }
         
@@ -73,6 +73,11 @@ namespace RPGFight.Core
             attrs.HP_MAX += attrs.STATS.STR * 10;
             attrs.EP_MAX += attrs.STATS.AGI / 5;
             attrs.CRIT_CHANCE += attrs.STATS.PER / 5;
+        }
+
+        public static float GetMovepoints(LivingEntity caster)
+        {
+            return (float)(caster.FinalStats.EP_NOW * (1 + caster.FinalStats.MOVESPEED_MLT)) + 3;
         }
     }
 }

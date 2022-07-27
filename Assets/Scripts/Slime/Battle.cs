@@ -12,6 +12,7 @@ namespace SecondCycleGame
         public const int FramesInTurn = 100;
         public LivingEntity CurrentLivingEntityTurn;
         public BattleMap BattleMap;
+        public BattleMapUnityWrapper BattleUnity;
         public Timeline Timeline = new Timeline(FramesInTurn*10);
 
         public List<LivingEntity> GetEnemies(LivingEntity entity)

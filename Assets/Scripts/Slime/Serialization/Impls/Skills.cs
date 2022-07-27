@@ -18,13 +18,17 @@ namespace ROR.Core.Serialization
         }
     }
 
-
-
     public class SkillDefinition : BaseDefinition
     {
         [XmlArrayItem("Attack")]
         public ElementAttack[] Attacks;
 
+        [XmlAttribute]
+        public string TargetSelector;
+        
+        [XmlAttribute]
+        public string Implementation;
+        
         [XmlAttribute]
         public bool IsRangedAttack;
 

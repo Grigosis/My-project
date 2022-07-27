@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using Assets.Scripts.Slime.Core.Algorythms;
-using ROR.Core;
-using RPGFight.Core;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Slime.Core.BattleMap.Logic.Interfaces;
+using UnityEngine;
+using Random = System.Random;
 
 namespace Assets.Scripts.Slime.Core.Skills
 {
-    public class DefaultAttack : ISkillImplementation
+    public class DefaultMove : ISkillImplementation
     {
         public void CastSkill(SkillEntity skillEntity, List<SkillTarget> targets, Random seed)
         {
             var entity = skillEntity.Owner;
+            var cell = (BattleMapCell)targets[0];
 
-            foreach (var target in targets)
+            if (cell == null)
             {
-                if (target is LivingEntity livingEntity)
-                {
-                    Balance.UseDamageSkill(skillEntity.Owner, livingEntity, skillEntity.Definition, seed);
-                }
+                Debug.LogError($"Cell is == [{targets[0]}]");
+                return;
             }
-            
+            entity.Cell = cell;
+            entity.GameObjectLink.transform.localPosition = entity.Battle.BattleUnity.battleMapCellController.GetCellPosition(cell.X, cell.Y);
         }
     }
 }

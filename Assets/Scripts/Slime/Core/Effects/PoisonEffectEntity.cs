@@ -1,5 +1,4 @@
 using ROR.Core.Serialization;
-using RPGFight.Core;
 
 namespace ROR.Core
 {

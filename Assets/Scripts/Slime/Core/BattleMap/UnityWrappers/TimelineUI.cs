@@ -3,8 +3,6 @@ using Assets.Scripts.Slime.GUI;
 using Assets.Scripts.Slime.Sugar;
 using ROR.Core;
 using RPGFight.Core;
-using TMPro;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.UI;
 using Battle = SecondCycleGame.Battle;
@@ -47,10 +45,10 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             buffer.Clear();
             tl.Foreach((xx) => buffer.Add(xx), 3*Battle.FramesInTurn+1);
 
-            foreach (var timelineEvent in buffer)
-            {
-                Debug.Log(timelineEvent.Frame);
-            }
+            //foreach (var timelineEvent in buffer)
+            //{
+            //    Debug.Log(timelineEvent.Frame);
+            //}
 
             float x = Gap;
             foreach (var timelineEvent in buffer)

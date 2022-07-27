@@ -1,4 +1,3 @@
-using Assets.Scripts.Slime.Core.BattleMap;
 using UnityEngine;
 
 namespace SecondCycleGame
@@ -9,27 +8,27 @@ namespace SecondCycleGame
 
         private void OnMouseEnter()
         {
-            (ClickableReceiver.GetComponent<IMouseReceiver>())?.OnMouseEnter(gameObject);
+            (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseEnter(gameObject);
         }
  
         private void OnMouseOver()
         {
-            (ClickableReceiver.GetComponent<IMouseReceiver>())?.OnMouseOver(gameObject);
+            (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseOver(gameObject);
         }
 
         private void OnMouseExit()
         {
-            (ClickableReceiver.GetComponent<IMouseReceiver>())?.OnMouseExit(gameObject);
+            (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseExit(gameObject);
         }
 
         private void OnMouseDown()
         {
-            (ClickableReceiver.GetComponent<IMouseReceiver>())?.OnMouseDown(gameObject);
+            (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseDown(gameObject);
         }
 
         private void OnMouseUp()
         {
-            (ClickableReceiver.GetComponent<IMouseReceiver>())?.OnMouseUp(gameObject);
+            (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseUp(gameObject);
         }
     }
 }

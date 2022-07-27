@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.MyUnity;
 using Assets.Scripts.Slime.Core;
-using Assets.Scripts.Slime.Core.Algorythms;
+using Assets.Scripts.Slime.Core.BattleMap.Logic.Interfaces;
 using ROR.Core.Serialization;
 using RPGFight;
 using RPGFight.Core;
@@ -152,7 +152,7 @@ namespace ROR.Core
             for (var i = 0; i < skillDefinitions.Length; i++)
             {
                 var sd = skillDefinitions[i];
-                var se = new SkillEntity(sd);
+                var se = new SkillEntity(this, sd);
                 SkillBar.Add(se);
             }
         }

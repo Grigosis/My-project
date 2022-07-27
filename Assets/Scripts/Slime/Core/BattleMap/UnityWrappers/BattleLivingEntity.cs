@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace SecondCycleGame
 {
-    public class BattleLivingEntity : MonoBehaviour, IMouseReceiver, IAttributeProvider
+    public class BattleLivingEntity : MonoBehaviour, IAttributeProvider
     {
         public LivingEntity LivingEntity;
 
@@ -33,6 +33,7 @@ namespace SecondCycleGame
 
         private FloatingText DebugInfo;
         
+        /*
         public void OnMouseEnter(GameObject gameObject)
         {
             
@@ -66,16 +67,19 @@ namespace SecondCycleGame
                 UseSkill(cmp);
             }
         }
-
-        private void UseSkill(BattleLivingEntity other)
-        {
-            Balance.UseDamageSkill(this, other, LivingEntity.SkillBar.SkillEntities[0].Definition);
-        }
-
+        
         public void OnMouseUp(GameObject gameObject)
         {
             
         }
+        */
+
+        private void UseSkill(BattleLivingEntity other)
+        {
+            Balance.UseDamageSkill(this.LivingEntity, other.LivingEntity, LivingEntity.SkillBar.SkillEntities[0].Definition);
+        }
+
+        
 
         public Attrs GetAttributes()
         {

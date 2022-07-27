@@ -2,6 +2,11 @@ using UnityEngine;
 
 namespace SecondCycleGame
 {
+    public interface IMouseReceiverProxy
+    {
+        IMouseReceiver GetMouseReceiver();
+    }
+    
     public interface IMouseReceiver
     {
         void OnMouseEnter(GameObject gameObject);

@@ -9,8 +9,9 @@
 			<STATS STR="10" AGI="10" END="0" INT="0" WIL="0" PER="0" />
 		  </UpgradedAttributes>
 		  <Skills>
+			<Id>Skill/Slime-SimpleMove</Id>
 			<Id>Skill/Slime-SimpleAttack</Id>
-			<Id>Skill/Slime-HeavyAttack</Id>
+			<Id>Skill/Slime-SplashAttack</Id>
 		  </Skills>
 		  <EquippedItems>
 			<Id>Item/Slime-BaseWeapon</Id>
@@ -26,6 +27,7 @@
 		  </BaseAttributes>
 		  <Skills>
 			<Id>Skill/Slime-SimpleAttack</Id>
+			<Id>Skill/Slime-SimpleMove</Id>
 		  </Skills>
 		  <EquippedItems>
 			<Id>Item/Slime-BaseWeapon</Id>

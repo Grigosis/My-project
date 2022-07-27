@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Slime.Core.Algorythms.Pathfinding;
 using GemCraft2;
 using GemCraft2.Pathfinding;
-using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core.Algorythms
 {
@@ -16,6 +15,10 @@ namespace Assets.Scripts.Slime.Core.Algorythms
         
         public bool CanMove(P from, P to)
         {
+            if (from.x == to.x && from.y == to.y)
+            {
+                return true;
+            }
             
             var cell = battleMap[to.x, to.y];
             if (cell == null)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.Scripts.Slime.Core.Algorythms;
 using Assets.Scripts.Slime.Core.BattleMap;
+using Assets.Scripts.Slime.Core.BattleMap.Logic.Interfaces;
 using ROR.Core;
 using UnityEngine;
 
