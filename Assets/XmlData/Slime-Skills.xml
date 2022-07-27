@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DefinitionList>
+	<Definition xsi:type="SkillDefinition" Id="Skill/Slime-SimpleMove" IsRangedAttack="false" HitChanceMlt="1"  Icon="Icons/Icon3" 
+	TargetSelector="Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors.MovementTargetSelector"
+	Implementation="Assets.Scripts.Slime.Core.Skills.DefaultMove">
+      <Name />
+      <Icon />
+      <Description />
+      <Type />
+      <Attacks>
+        <Attack Name="CRUSH" Percent="0.5" />
+        <Attack Name="FIRE" Percent="0.5" />
+      </Attacks>
+    </Definition>
+    <Definition xsi:type="SkillDefinition" Id="Skill/Slime-SimpleAttack" IsRangedAttack="false" HitChanceMlt="1"  Icon="Icons/Icon1" 
+	TargetSelector="Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors.UnitTargetSelector"
+	Implementation="Assets.Scripts.Slime.Core.Skills.DefaultAttack">
+      <Name />
+      <Icon />
+      <Description />
+      <Type />
+      <Attacks>
+        <Attack Name="CRUSH" Percent="0.5" />
+        <Attack Name="FIRE" Percent="0.5" />
+      </Attacks>
+    </Definition>
+	<Definition xsi:type="SkillDefinition" Id="Skill/Slime-SplashAttack" IsRangedAttack="false" HitChanceMlt="0.7"  Icon="Icons/Icon2" 
+	TargetSelector="Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors.CellTargetSelector" 
+	Implementation="Assets.Scripts.Slime.Core.Skills.DefaultAttack"
+	>
+      <Name />
+      <Icon />
+      <Description />
+      <Type />
+      <Attacks>
+        <Attack Name="CRUSH" Percent="1.5" />
+      </Attacks>
+    </Definition>
+  </DefinitionList>
+</Definitions>
