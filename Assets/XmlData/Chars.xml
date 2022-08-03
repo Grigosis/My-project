@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <DefinitionList>
-		<Definition xsi:type="LivingEntityDefinition" Id="LivingEntity/Hero">
+		<Definition xsi:type="LivingEntityDefinition" Id="LivingEntity/Hero" Icon="Icons/Icon1">
 		  <BaseAttributes HP_NOW="100" HP_MAX="100" EP_NOW="6" EP_MAX="6">
 			<STATS STR="1" AGI="1" END="1" INT="1" WIL="1" PER="1" />
 		  </BaseAttributes>
@@ -20,10 +20,13 @@
 		  </EquippedItems>
 		</Definition>
 		
-		<Definition xsi:type="LivingEntityDefinition" Id="LivingEntity/Enemy">
-		  <BaseAttributes HP_NOW="100" HP_MAX="100" EP_NOW="6" EP_MAX="6">
+		<Definition xsi:type="LivingEntityDefinition" Id="LivingEntity/Enemy"  Icon="Icons/Icon2">
+		  <BaseAttributes HP_NOW="100" HP_MAX="100" EP_NOW="6" EP_MAX="6" INITIATIVE="0.5">
 			<STATS STR="1" AGI="1" END="1" INT="1" WIL="1" PER="1" />
 		  </BaseAttributes>
+		  <UpgradedAttributes INITIATIVE="0.5">
+			<STATS STR="10" AGI="10" END="0" INT="0" WIL="0" PER="0" />
+		  </UpgradedAttributes>
 		  <Skills>
 			<Id>Skill/SimpleAttack</Id>
 		  </Skills>
