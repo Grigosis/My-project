@@ -11,6 +11,7 @@ namespace RPGFight
     /// Default values must be always be 0
     /// That means HitChance = 0 - equals 100% hit chance
     /// </summary>
+    [System.Serializable]
     public class Attrs
     {
         [XmlAttribute] public double HP_NOW = 0;
@@ -230,6 +231,7 @@ namespace RPGFight
         }
     }
 
+    [System.Serializable]
     public class Element
     {
         [XmlAttribute] public double ATK_MIN_ABS = 0;
@@ -274,6 +276,7 @@ namespace RPGFight
         }
     }
 
+    [System.Serializable]
     public class Stats
     {
         [XmlAttribute] public double STR = 0;
@@ -319,6 +322,7 @@ namespace RPGFight
         }
     }
 
+    [System.Serializable]
     public class Perks
     {
         [XmlAttribute] public double CLOSE_WEAPON;

@@ -6,5 +6,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap
     {
         public int X;
         public int Y;
+        public string Debug;
+        public Vector2Int from;
     }
 }

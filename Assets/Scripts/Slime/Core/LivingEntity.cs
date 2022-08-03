@@ -21,7 +21,7 @@ namespace ROR.Core
         public string Portrait { get; set; }
 
         public Attrs FinalStats = new Attrs();
-        private Attrs SumAttrs = new Attrs();
+        public Attrs SumAttrs = new Attrs();
 
         public SkillBar SkillBar = new SkillBar();
 
@@ -157,6 +157,12 @@ namespace ROR.Core
             }
         }
 
+        public void ApplyAttrs()
+        {
+            FinalStats = new Attrs(SumAttrs);
+            FinalStats.CalculateFinalValues();
+        } 
+        
         public override string ToString()
         {
             return $"LivingEntity{EntityId}/{DebugName} Dead={IsDead} Immune={IsImmune}\r\n{FinalStats}";

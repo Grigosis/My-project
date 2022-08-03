@@ -16,7 +16,10 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
         protected int TargetAmount = 1;
         protected BattleMapCellController m_controller;
         protected SkillEntity m_skillEntity;
+        protected LivingEntity m_caster;
         protected Battle m_battle;
+
+        public virtual void Update() { }
         
         public virtual void BeginSelection(BattleMapCellController controller, Battle battle, LivingEntity caster, SkillEntity skillEntity)
         {
@@ -24,19 +27,31 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
             m_controller = controller;
             m_skillEntity = skillEntity;
             m_battle = battle;
+            m_caster = caster;
             controller.ClearAll();
         }
         
         public virtual void EndSelection()
         {
-            Debug.LogError("EndSelection:"+this.GetType());
-            m_controller.ClearAll();
-            SkillTargets.Clear();
-            m_controller = null;
-            OnSelected = null;
+            try
+            {
+                m_controller.ClearAll();
+                SkillTargets.Clear();
+                m_controller = null;
+                OnSelected = null;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(this.GetType()+" "+e);
+            }
+            
         }
         
-        public void OnMouseEnter(GameObject gameObject) { }
+        protected void Invoke (List<SkillTarget> skillTarget) {
+            OnSelected?.Invoke(skillTarget);
+        }
+        
+        public virtual void OnMouseEnter(GameObject gameObject) { }
         public void OnMouseOver(GameObject gameObject) { }
         public void OnMouseExit(GameObject gameObject) { }
         
@@ -64,7 +79,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
             {
                 if (SkillTargets.Count == TargetAmount)
                 {
-                    OnSelected?.Invoke(SkillTargets.ToList());
+                    Invoke(SkillTargets.ToList());
                     EndSelection();
                 }
             }

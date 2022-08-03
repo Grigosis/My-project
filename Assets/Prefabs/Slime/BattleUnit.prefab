@@ -47,6 +47,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1efcba2b434709447b5f2d976dffc796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CustomAttributes:
+    HP_NOW: 0
+    HP_MAX: 0
+    HP_MAX_MLT: 0
+    HP_REGEN: 0
+    EP_NOW: 0
+    EP_MAX: 0
+    EP_MAX_MLT: 0
+    EP_REGEN: 0
+    HIT_CLOSE_RANGE: 0
+    HIT_FAR_RANGE: 0
+    DODGE_CLOSE_RANGE: 0
+    DODGE_FAR_RANGE: 0
+    CRIT_CHANCE: 0
+    CRIT_MLT: 0
+    MOVESPEED: 0
+    MOVESPEED_MLT: 0
+    INITIATIVE: 0
+    STATS:
+      STR: 0
+      AGI: 0
+      END: 0
+      INT: 0
+      WIL: 0
+      PER: 0
+    PERKS:
+      CLOSE_WEAPON: 0
+      RANGED_WEAPON: 0
+      SCI_WEAPON: 0
+      HACKING: 0
+      TECH: 0
+      MEDICINE: 0
+    UNLOCKABLE_PERKS:
+      CLOSE_WEAPON: 0
+      RANGED_WEAPON: 0
+      SCI_WEAPON: 0
+      HACKING: 0
+      TECH: 0
+      MEDICINE: 0
+    CRUSH:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    PIERCE:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    CUT:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    FIRE:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    COLD:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    POISON:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    GRAVI:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
   DefintionId: 
 --- !u!1001 &1616024993648585834
 PrefabInstance:
@@ -107,7 +209,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Unit
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2759189378332830279, guid: e14b5732580903f4588ff6fc50e944aa, type: 3}
+    - {fileID: 2759189378332830272, guid: e14b5732580903f4588ff6fc50e944aa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e14b5732580903f4588ff6fc50e944aa, type: 3}
 --- !u!1 &8031091948222693932 stripped
 GameObject:

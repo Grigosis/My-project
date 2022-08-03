@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Assets.Scripts.Slime.Core;
@@ -20,10 +21,32 @@ namespace ROR.Core
             }
         }
         public KeyCode Key = KeyCode.None;
+        
         public Sprite Image{
             get => gameObject.GetComponent<Image>().sprite;
             set => gameObject.GetComponent<Image>().sprite = value;
         }
+
+        public bool m_isSelected = false;
+
+        public bool IsSelected
+        {
+            get => m_isSelected;
+            set
+            {
+                if (m_isSelected != value)
+                {
+                    m_isSelected = value;
+                    OnSelectedChanged();
+                }
+            }
+        }
+
+        private void OnSelectedChanged()
+        {
+            SelectedGuiElement.enabled = IsSelected;
+        }
+
 
         public Sprite DefaultSprite;
     
@@ -32,26 +55,28 @@ namespace ROR.Core
         public Text m_timerText;
         public Image m_codeTextBg;
         public Text m_codeText;
-    
+        public Image SelectedGuiElement;
+
+        public event Action<SkillBtn> OnClicked; 
+        
+        public void OnClick()
+        {
+            Debug.LogWarning("OnOnClick1");
+            OnClicked?.Invoke(this);
+        }
+        
         void Start()
         {
             gameObject.GetComponent<Image>().sprite = m_skill == null ? DefaultSprite : Image = R.Load<Sprite>(m_skill.Definition.Icon);
-
-            //if(Controls.kkToString.ContainsKey(Key)){
-            //    
-            //    
-            //    m_codeText.text = Controls.kkToString[Key];
-            //    m_codeTextBg.rectTransform.sizeDelta = new Vector2(m_codeText.preferredWidth * m_codeText.transform.localScale.x + 2, m_codeTextBg.rectTransform.sizeDelta.y);
-            //} else {
-            //    m_codeText.enabled = false;
-            //    m_codeTextBg.enabled = false;
-            //}
+            OnSelectedChanged();
         }
     
         // Update is called once per frame
         void Update(){
             if (m_skill == null)
             {
+                m_progressbar.enabled = false;
+                m_timerText.enabled = false;
                 return;
             }
             
@@ -67,8 +92,9 @@ namespace ROR.Core
                 m_codeText.enabled = false;
                 m_codeTextBg.enabled = false;
             }
+
             
-            if(m_skill.Cooldown <= 0){
+            if (m_skill.Cooldown <= 0) {
                 m_progressbar.enabled = false;
                 m_timerText.enabled = false;
             } else {

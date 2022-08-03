@@ -1,16 +1,108 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Slime.Core.BattleMap.UnityWrappers;
+using Assets.Scripts.Slime.Sugar;
 using ROR.Core;
 using SecondCycleGame;
 using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core.BattleMap
 {
+
+    public struct Vector2D
+    {
+        public double x;
+        public double y;
+
+        public Vector2D(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        public static Vector2D operator + (Vector2D a, Vector2D b)
+        {
+            return new Vector2D(a.x+ b.x, a.y + b.y);
+        }
+        
+        public static Vector2D operator - (Vector2D a, Vector2D b)
+        {
+            return new Vector2D(a.x- b.x, a.y - b.y);
+        }
+        
+        public static Vector2D operator / (Vector2D a, double mlt)
+        {
+            return new Vector2D(a.x / mlt, a.y / mlt);
+        }
+        
+        public static Vector2D operator * (Vector2D a, double mlt)
+        {
+            return new Vector2D(a.x * mlt, a.y * mlt);
+        }
+
+        public double magnitude => Math.Sqrt(x * x + y * y);
+    }
+    
+    public class ConvexShape
+    {
+        public List<Vector2D> Points = new List<Vector2D>();
+        
+        public bool Intersects(Vector2D start, Vector2D end)
+        {
+            for (var index = 0; index < Points.Count; index++)
+            {
+                var point = Sugar.Sugar.LineIntersectPoint(start, end, Points[index], Points[(index+1)%Points.Count]);
+                if (point.HasValue)
+                {
+                    if (Sugar.Sugar.PointBelongsToLine(Points[index], Points[(index+1)%Points.Count], point.Value))//start, end
+                    {
+                        //Debug.Log(Points[index]+ " " + Points[(index+1)%Points.Count] + " " + point.Value);
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+        
+        public bool Intersects2(Vector2D start, Vector2D end)
+        {
+            for (var index = 0; index < Points.Count; index++)
+            {
+                var point = Sugar.Sugar.LineIntersectPoint(start, end, Points[index], Points[(index+1)%Points.Count]);
+                if (point.HasValue)
+                {
+                    if (Sugar.Sugar.PointBelongsToLine(Points[index], Points[(index+1)%Points.Count], point.Value) && Sugar.Sugar.PointBelongsToLine(start, end, point.Value))//start, end //
+                    {
+                        //Debug.Log("Intersects2:"+start+" " + end + " => " +Points[index]+ " " + Points[(index+1)%Points.Count] + " : " + point.Value);
+                        return true;
+                    }
+                }
+
+                //return false;
+            }
+
+            return false;
+        }
+    }
+    
+
+    public enum Intersection
+    {
+        Intersects,
+        Touch,
+        DontIntersects
+    }
+    
     public class BattleMap
     {
         private BattleMapCell[,] Cells;
         public int W;
         public int H;
+
+        public List<ConvexShape> Walls = new List<ConvexShape>();
 
         public List<MapObject> Objects = new List<MapObject>();
         public List<LivingEntity> AllLivingEntities = new List<LivingEntity>();
@@ -81,11 +173,18 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             
             foreach (var cover in mo.Covers)
             {
-                var cell = this[cover.Position];
-                if (cell != null)
+                //if (cover.Type == CoverEnum.Large)
+                //{
+                //    //Walls.Add();
+                //}
+                //else
                 {
-                    //Debug.LogError("Register cover" + cover.Position + " " + cover.Direction);
-                    cell.Covers.Add(cover);
+                    var cell = this[cover.Position];
+                    if (cell != null)
+                    {
+                        //Debug.LogError("Register cover" + cover.Position + " " + cover.Direction);
+                        cell.Covers.Add(cover);
+                    } 
                 }
             }
         }
@@ -99,6 +198,25 @@ namespace Assets.Scripts.Slime.Core.BattleMap
 
 
             Foreach(minX, maxX, minY, maxY, action);
+        }
+
+        public bool IntersectsWall(Vector2Int from, Vector2Int to)
+        {
+            foreach (var wall in Walls)
+            {
+                if (wall.Intersects2(new Vector2D(from.x + 0.5f, from.y+0.5f), new Vector2D(to.x + 0.5f, to.y+0.5f)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        public void Foreach(Vector2Int a, Vector2Int b, Action<BattleMapCell> action)
+        {
+            Foreach(a.x, b.x, a.y, b.y, action);
         }
         
         public void Foreach(int minX, int maxX, int minY, int maxY, Action<BattleMapCell> action)
@@ -122,5 +240,19 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             unit.Attach(Battle, cell);
             cell.Entity = unit;
         }
+
+        public void AddWall(WallUnityWrapper wall)
+        {
+            ConvexShape shape = new ConvexShape();
+            foreach (var gameObject in wall.Points)
+            {
+                var pos =  gameObject.transform.TransformToParentLocal(gameObject.transform.localPosition);
+                shape.Points.Add(new Vector2D((int)pos.x+0.5f, (int)pos.z+0.5f));
+            }
+            
+            Walls.Add(shape);
+        }
+        
+        
     }
 }

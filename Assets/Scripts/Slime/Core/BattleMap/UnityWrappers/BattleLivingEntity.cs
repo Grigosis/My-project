@@ -10,7 +10,8 @@ namespace SecondCycleGame
     public class BattleLivingEntity : MonoBehaviour, IAttributeProvider
     {
         public LivingEntity LivingEntity;
-
+        public Attrs CustomAttributes;
+        
 
         public String DefintionId;
         // Start is called before the first frame update
@@ -25,11 +26,17 @@ namespace SecondCycleGame
             {
                 LivingEntity = new LivingEntity();
             }
+
+            CustomAttributes = LivingEntity.SumAttrs;
             
             
             LivingEntity.GameObjectLink = gameObject;
         }
 
+        void OnValidate()
+        {
+            LivingEntity?.ApplyAttrs();
+        }
 
         private FloatingText DebugInfo;
         
