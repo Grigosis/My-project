@@ -77,6 +77,8 @@ namespace ROR.Core
             {
                 m_progressbar.enabled = false;
                 m_timerText.enabled = false;
+                m_codeText.enabled = false;
+                m_codeTextBg.enabled = false;
                 return;
             }
             

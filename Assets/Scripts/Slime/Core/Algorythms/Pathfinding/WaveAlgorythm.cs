@@ -90,6 +90,7 @@ namespace GemCraft2.Pathfinding
             //THIS IS NOT CORRECT, AS IT USING UNKNOWN 8-WAY picker.
             
             var v = GetValue(x, y);
+            
             if (v < 0) return null;
             if (v == 0) return list;
 
@@ -113,8 +114,9 @@ namespace GemCraft2.Pathfinding
         }
 
         
-        public List<P> FindWaysBack(int x, int y, List<P> list)
+        public List<P> FindWaysBack(int x, int y, List<P> list = null)
         {
+            if (list == null) list = new List<P>();
             //THIS IS NOT CORRECT, AS IT USING UNKNOWN 8-WAY picker.
             
             var v = GetValue(x, y);

@@ -17,9 +17,14 @@ namespace Assets.Scripts.Slime.Core
             Owner = owner;
         }
 
-        public int GetRange()
+        public int GetMinRange()
         {
-            return 10;
+            return Definition.MinRange;
+        }
+        
+        public int GetMaxRange()
+        {
+            return Definition.MaxRange;
         }
     }
 }

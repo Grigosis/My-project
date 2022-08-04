@@ -60,6 +60,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap
         {
             Debug.Log("CurrentTargetSelectorOnOnSelected");
             CurrentSelectedSkill.Implementation.CastSkill(CurrentSelectedSkill, obj, new Random());
+            CurrentTargetSelector = null;
             NextUnit();
         }
 

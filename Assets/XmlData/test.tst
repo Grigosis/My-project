@@ -36,7 +36,7 @@
         <Id>Item/WTF</Id>
       </EquippedItems>
     </Definition>
-    <Definition xsi:type="SkillDefinition" Id="Skill/SimpleAttack" Icon="" IsRangedAttack="false" HitChanceMlt="1">
+    <Definition xsi:type="SkillDefinition" Id="Skill/SimpleAttack" Icon="" IsRangedAttack="false" HitChanceMlt="1" MinRange="0" MaxRange="1" Cooldown="10">
       <Name />
       <Description />
       <Type />
@@ -44,7 +44,6 @@
         <Attack Name="CRUSH" Percent="0.5" />
         <Attack Name="FIRE" Percent="0.5" />
       </Attacks>
-      <Cooldown>10</Cooldown>
     </Definition>
     <Definition xsi:type="EquipmentDefinition" Id="Item/BaseWeapon">
       <Attributes HP_NOW="0" HP_MAX="0" HP_MAX_MLT="0" HP_REGEN="0" EP_NOW="0" EP_MAX="0" EP_MAX_MLT="0" EP_REGEN="0" HIT_CLOSE_RANGE="0" HIT_FAR_RANGE="0" DODGE_CLOSE_RANGE="0" DODGE_FAR_RANGE="0" CRIT_CHANCE="0" CRIT_MLT="0" MOVESPEED="0" MOVESPEED_MLT="0" INITIATIVE="0">

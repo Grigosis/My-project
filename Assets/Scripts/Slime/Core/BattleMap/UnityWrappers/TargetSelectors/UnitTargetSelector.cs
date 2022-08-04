@@ -21,27 +21,22 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
         protected override SkillTarget GetSkillTarget(GameObject gameObject)
         {
             var wrapper = gameObject.GetComponentInParent<BattleLivingEntity>();
-            return wrapper?.LivingEntity;
+            if (wrapper != null)
+            {
+                var to = wrapper.LivingEntity.Cell.Position;
+                if (!m_battle.BattleMap.IntersectsWall(new Vector2Int(m_caster.Cell.X, m_caster.Cell.Y), to))
+                {
+                    return wrapper?.LivingEntity;
+                }
+            }
+            return null;
         }
         
-        public override void Update()
+        
+        
+        public override void Do()
         {
-            base.Update();
-            if ((int)m_caster.GameObjectLink.transform.localPosition.x != lastX || (int)m_caster.GameObjectLink.transform.localPosition.z != lastY)
-            {
-                Do();
-            }
-        }
-
-        private int lastX = 0; 
-        private int lastY = 0; 
-        private void Do()
-        {
-            
-            lastX = (int)m_caster.GameObjectLink.transform.localPosition.x;
-            lastY = (int)m_caster.GameObjectLink.transform.localPosition.z;
             m_controller.ClearAll();
-
             var cells = m_battle.getAllLivingEntities();
             var from = new Vector2Int(lastX, lastY);
             foreach (var move in cells)
@@ -49,10 +44,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
                 var to = new Vector2Int(move.Cell.X, move.Cell.Y);
                 if (!m_battle.BattleMap.IntersectsWall(from, to))
                 {
-                    var mapCellWrapper = m_controller.GetOrCreate(to);
-                    mapCellWrapper.from = from;
-                    var _renderer = mapCellWrapper.gameObject.GetComponentInChildren<Renderer>();
-                    _renderer.material.color = Color.gray;
+                    m_controller.GetOrCreate(to, from, Color.gray);
                 }
             }
         }

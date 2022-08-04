@@ -15,6 +15,8 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
             Invoke(new List<SkillTarget>() {caster});
         }
 
+        public override void Do() { }
+
         protected override SkillTarget GetSkillTarget(GameObject gameObject)
         {
             return null;

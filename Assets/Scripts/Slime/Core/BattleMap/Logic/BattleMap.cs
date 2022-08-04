@@ -189,16 +189,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             }
         }
 
-        public void Foreach(BattleMapCell cell, int range, Action<BattleMapCell> action)
-        {
-            var minX = cell.X - range;
-            var maxX = cell.X - range;
-            var minY = cell.Y - range;
-            var maxY = cell.Y - range;
-
-
-            Foreach(minX, maxX, minY, maxY, action);
-        }
+        
 
         public bool IntersectsWall(Vector2Int from, Vector2Int to)
         {
@@ -213,10 +204,40 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             return false;
         }
 
+        public void Foreach(BattleMapCell cell, int range, Action<BattleMapCell> action)
+        {
+            var minX = cell.X - range;
+            var maxX = cell.X - range;
+            var minY = cell.Y - range;
+            var maxY = cell.Y - range;
+
+
+            Foreach(minX, maxX, minY, maxY, action);
+        }
+        
+        public void Foreach(BattleMapCell cell, int minRange, int maxRange, Action<BattleMapCell> action)
+        {
+            var minX = cell.X - maxRange;
+            var maxX = cell.X + maxRange;
+            var minY = cell.Y - maxRange;
+            var maxY = cell.Y + maxRange;
+
+            var excludeMinX = cell.X - (minRange-1);
+            var excludeMaxX = cell.X + (minRange-1);
+            var excludeMinY = cell.Y - (minRange-1);
+            var excludeMaxY = cell.Y + (minRange-1);
+
+            Foreach(minX, maxX, minY, maxY, excludeMinX, excludeMaxX, excludeMinY, excludeMaxY, action);
+        }
 
         public void Foreach(Vector2Int a, Vector2Int b, Action<BattleMapCell> action)
         {
             Foreach(a.x, b.x, a.y, b.y, action);
+        }
+        
+        public void Foreach(Vector2Int a, Vector2Int b, Vector2Int excludeA, Vector2Int excludeB, Action<BattleMapCell> action)
+        {
+            Foreach(a.x, b.x, a.y, b.y, excludeA.x, excludeB.x, excludeA.y, excludeB.y, action);
         }
         
         public void Foreach(int minX, int maxX, int minY, int maxY, Action<BattleMapCell> action)
@@ -230,6 +251,26 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             {
                 for (int y = minY; y <= maxY; y++)
                 {
+                    action(this[x,y]);
+                }
+            }
+        }
+        
+        public void Foreach(int minX, int maxX, int minY, int maxY, int excludeMinX, int excludeMaxX, int excludeMinY, int excludeMaxY, Action<BattleMapCell> action)
+        {
+            minX = Math.Max(minX, 0);
+            maxX = Math.Max(minX, Math.Min(W-1, maxX));
+            minY = Math.Max(minY, 0);
+            maxY = Math.Max(minY, Math.Min(H-1, maxY));
+
+            for (int x = minX; x <= maxX; x++)
+            {
+                for (int y = minY; y <= maxY; y++)
+                {
+                    if (excludeMinX <= x && x <= excludeMaxX && excludeMinY <= y && y <= excludeMaxY)
+                    {
+                        continue;
+                    }
                     action(this[x,y]);
                 }
             }

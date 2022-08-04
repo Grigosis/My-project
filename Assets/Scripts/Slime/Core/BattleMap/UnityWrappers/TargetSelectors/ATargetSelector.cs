@@ -18,8 +18,20 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
         protected SkillEntity m_skillEntity;
         protected LivingEntity m_caster;
         protected Battle m_battle;
+        
+        protected int lastX = 0; 
+        protected int lastY = 0;
+        protected bool m_dirty = true;
 
-        public virtual void Update() { }
+
+        public virtual void Update()
+        {
+            if (m_dirty)
+            {
+                m_dirty = false;
+                Do();
+            }
+        }
         
         public virtual void BeginSelection(BattleMapCellController controller, Battle battle, LivingEntity caster, SkillEntity skillEntity)
         {
@@ -29,8 +41,22 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
             m_battle = battle;
             m_caster = caster;
             controller.ClearAll();
+            SetXY(m_caster.Cell.X, m_caster.Cell.Y);
+            Do();
         }
-        
+
+        public void SetXY(int X, int Y)
+        {
+            if (lastX != X || lastY != Y)
+            {
+                lastX = X;
+                lastY = Y;
+                m_dirty = true;
+            }
+        }
+
+        public abstract void Do();
+
         public virtual void EndSelection()
         {
             try

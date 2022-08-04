@@ -24,7 +24,11 @@ namespace Assets.Scripts.Slime.Core
         public MapCellWrapper UnityCell;
 
         private Renderer _renderer;
-        
+        public Vector2Int Position
+        {
+            get => new Vector2Int(X, Y);
+        }
+
         public void Color(Color newColor)
         {
             if (_renderer == null)

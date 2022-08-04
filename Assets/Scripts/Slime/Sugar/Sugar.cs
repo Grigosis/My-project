@@ -80,6 +80,12 @@ namespace Assets.Scripts.Slime.Sugar
         //        (minX <= test.x && test.x <= maxX) ||
         //        (minY <= test.y && test.y <= maxY);
         //}
+
+        public static void Color(this MonoBehaviour behaviour, Color color)
+        {
+            var _renderer = behaviour.gameObject.GetComponentInChildren<Renderer>();
+            _renderer.material.color = color;
+        }
         
         public static bool PointBelongsToLine(Vector2D a, Vector2D b, Vector2D test)
         {
