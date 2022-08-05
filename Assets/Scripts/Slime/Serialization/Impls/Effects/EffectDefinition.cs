@@ -5,7 +5,7 @@ namespace ROR.Core.Serialization
         public float Duration = -1;
         public float TickInterval = 0;
         public int MaxStacks = -1;
-        public SClass<EffectEntity> EntityClass;
+        public SClass<EffectEntity> Class;
 
         public bool IsInfiniteStacks => MaxStacks < 0;
         public bool IsInfiniteDuration => Duration < 0;

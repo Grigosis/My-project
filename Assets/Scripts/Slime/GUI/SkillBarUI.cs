@@ -36,7 +36,6 @@ namespace ROR.Core
             var btns = GetComponentsInChildren<SkillBtn>();
             for (var i = 0; i < btns.Length; i++)
             {
-                Debug.LogWarning("Sub");
                 btns[i].OnClicked += OnOnClick;
             }
         }
@@ -69,7 +68,6 @@ namespace ROR.Core
 
         private void OnOnClick(SkillBtn obj)
         {
-            Debug.LogWarning("OnOnClick2");
             SelectedSkill = obj.Skill;
         }
     }

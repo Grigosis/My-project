@@ -11,7 +11,7 @@ namespace SecondCycleGame
     {
         public LivingEntity LivingEntity;
         public Attrs CustomAttributes;
-        
+        public EffectBar EffectBar;
 
         public String DefintionId;
         // Start is called before the first frame update
@@ -28,8 +28,9 @@ namespace SecondCycleGame
             }
 
             CustomAttributes = LivingEntity.SumAttrs;
-            
-            
+            EffectBar = LivingEntity.EffectBar;
+
+             
             LivingEntity.GameObjectLink = gameObject;
         }
 

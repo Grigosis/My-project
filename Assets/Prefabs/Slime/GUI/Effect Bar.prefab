@@ -46,14 +46,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5645361554009489012}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5656145de57912468a27643920b48a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f8d50af7a400b443b2817dae3b8a5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconPrefab: {fileID: 3587297664870733071, guid: 79b5fbda3cac7c548a060841b1dfa41c, type: 3}
-  target: {fileID: 0}
-  line: 6
-  iconsGravity: 0
-  iconScale: 0.5
+  IconPrefab: {fileID: 0}
+  Entity: {fileID: 0}
+  Line: 6
+  IconScale: 0.5
+  IconsGravity: 0
 --- !u!223 &6873269456264058701
 Canvas:
   m_ObjectHideFlags: 0

@@ -60,8 +60,13 @@ namespace ROR.Core.Serialization
         {
             var d = new Definitions();
             d.DefinitionList = new SerializableList<Definition>();
+
+            var effect = new EffectDefinition();
+            effect.Class = new SClass<EffectEntity>();
+            effect.Class.Type = typeof(HealingEffectEntity);
+            d.DefinitionList.Add(effect);
             
-            d.DefinitionList.Add(new LivingEntityDefinition()
+            /*d.DefinitionList.Add(new LivingEntityDefinition()
             {
                 EquippedItems = new string[] { "Item/WTF"}, 
                 Id = "LivingEntity/Hero", 
@@ -83,7 +88,7 @@ namespace ROR.Core.Serialization
             d.DefinitionList.Add(new EquipmentDefinition()
             {
                 Id = "Item/BaseWeapon"
-            });
+            });*/
             
             return d;
         }

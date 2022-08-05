@@ -36,6 +36,7 @@ namespace ROR.Core
         }
     }
 
+    [System.Serializable]
     public abstract class EffectEntity : ICreatable
     {
         public LivingEntity Caster { get; private set; }
