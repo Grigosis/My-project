@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
   m_Name: Locker
   m_EditorClassIdentifier: 
-  isSelected: 1
+  isSelected: 0
   rect:
     serializedVersion: 2
     x: 1157.4543
@@ -248,20 +248,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 862.3993
-    y: 1946.0842
+    x: 1300.9327
+    y: 1506.3118
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 1134.3993
-    y: 1674.0842
+    x: 1572.9327
+    y: 1234.3118
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 878.3993
-    y: 1690.0842
+    x: 1316.9327
+    y: 1250.3118
     width: 32
     height: 32
   textureGroups:
@@ -560,51 +560,51 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
-  m_Name: Tile wall
+  m_Name: Cold nuclear reactor
   m_EditorClassIdentifier: 
-  isSelected: 0
+  isSelected: 1
   rect:
     serializedVersion: 2
-    x: 0
-    y: 1148.694
-    width: 379.60168
-    height: 376.59552
+    x: 1535.8983
+    y: 503.69385
+    width: 512.1017
+    height: 516.5956
   guiRect:
     serializedVersion: 2
-    x: 0
-    y: 1152
-    width: 384
-    height: 384
+    x: 1536
+    y: 512
+    width: 512
+    height: 512
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 1227.3586
-    y: 1284.5093
+    x: 1973.8334
+    y: 1116.3334
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 1435.3586
-    y: 1076.5093
+    x: 2245.8333
+    y: 844.3333
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 1243.3586
-    y: 1092.5093
+    x: 1989.8334
+    y: 860.3333
     width: 32
     height: 32
   textureGroups:
   - name: Albedo
-    texture: {fileID: 2800000, guid: cfe693d4f51e9f74cbf0eff1e0786106, type: 3}
+    texture: {fileID: 2800000, guid: bdb575a51ca572b4a85084b775bf40bd, type: 3}
   - name: Normal
     texture: {fileID: 2800000, guid: 5c65672290efbd944ac8f7c140fce923, type: 3}
   - name: Occlusion
     texture: {fileID: 2800000, guid: f3c2c91103b0c8b4bae9a8367a90eee9, type: 3}
   modelGroups:
-  - name: Tile wall
+  - name: Cold nuclear reactor
     meshes:
-    - {fileID: -5256325360034464633, guid: bdd66b31f1f20804587d13f50150e300, type: 3}
+    - {fileID: -5256325360034464633, guid: b5c875094fcf75440aebcb497e07ca59, type: 3}
 --- !u!114 &-716524447278272068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,33 +675,33 @@ MonoBehaviour:
   isSelected: 0
   rect:
     serializedVersion: 2
-    x: 1548.9509
-    y: 381.08063
-    width: 377.42773
+    x: 2.5
+    y: 1136.0808
+    width: 388.29736
     height: 376.59552
   guiRect:
     serializedVersion: 2
-    x: 1536
-    y: 384
+    x: 0
+    y: 1152
     width: 384
     height: 384
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 2723.2754
-    y: 451.54788
+    x: 852.978
+    y: 1496.4597
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 2931.2754
-    y: 243.54788
+    x: 1060.978
+    y: 1288.4597
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 2739.2754
-    y: 259.54788
+    x: 868.978
+    y: 1304.4597
     width: 32
     height: 32
   textureGroups:
@@ -751,7 +751,7 @@ MonoBehaviour:
   - {fileID: 5910466113546590346}
   - {fileID: 7036883654919157370}
   - {fileID: -6388143566700778043}
-  selectedTextureQuad: {fileID: -6388143566700778043}
+  selectedTextureQuad: {fileID: -1649584484439624206}
   showTextures: 1
   exportSettings: {fileID: 11400000, guid: 9c485c5a941d75343907331341bb373c, type: 2}
   textureAtlasSize: {x: 2048, y: 2048}

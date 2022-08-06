@@ -193,20 +193,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 2393.7798
-    y: 838.9083
+    x: 2249.2625
+    y: 973.91846
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 2665.7798
-    y: 566.9083
+    x: 2521.2625
+    y: 701.91846
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 2409.7798
-    y: 582.9083
+    x: 2265.2625
+    y: 717.91846
     width: 32
     height: 32
   textureGroups:
@@ -248,20 +248,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 4588.6836
-    y: 2621.2676
+    x: 2130.2854
+    y: 1320.8025
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 4860.6836
-    y: 2349.2676
+    x: 2402.2854
+    y: 1048.8025
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 4604.6836
-    y: 2365.2676
+    x: 2146.2854
+    y: 1064.8025
     width: 32
     height: 32
   textureGroups:
@@ -450,9 +450,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
-  m_Name: Streat lantern 2
+  m_Name: Androids parts
   m_EditorClassIdentifier: 
-  isSelected: 0
+  isSelected: 1
   rect:
     serializedVersion: 2
     x: 1536.7314
@@ -468,33 +468,33 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 4767.4375
-    y: 2617.2783
+    x: 1973.3334
+    y: 2139.5
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 5039.4375
-    y: 2345.2783
+    x: 2245.3333
+    y: 1867.5
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 4783.4375
-    y: 2361.2783
+    x: 1989.3334
+    y: 1883.5
     width: 32
     height: 32
   textureGroups:
   - name: Albedo
-    texture: {fileID: 2800000, guid: 67dff0cac985ccb4284499886d7230ed, type: 3}
+    texture: {fileID: 2800000, guid: 098b9259b42efc14e907f72e76399288, type: 3}
   - name: Normal
-    texture: {fileID: 2800000, guid: f8ef3896282d8a344b5888ca7f79de42, type: 3}
+    texture: {fileID: 2800000, guid: 52c5acff05ed7be4d9663672df37144b, type: 3}
   - name: Occlusion
-    texture: {fileID: 2800000, guid: 3d5e1dad0997990488bda0fbbdf147ec, type: 3}
+    texture: {fileID: 2800000, guid: 20c571a3a74f16247af012b02de76716, type: 3}
   modelGroups:
-  - name: Streat lantern 2
+  - name: Androids parts
     meshes:
-    - {fileID: 150581138598605843, guid: 4351844f83b8562478855e483ea81e29, type: 3}
+    - {fileID: -8574167724974873158, guid: 121c57e31e3494b4e88d0a17c588106a, type: 3}
 --- !u!114 &-1014401205108495203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,7 +579,7 @@ MonoBehaviour:
   - {fileID: 1779823431133361177}
   - {fileID: -9017563115386125626}
   - {fileID: -8758432677428535734}
-  selectedTextureQuad: {fileID: 1190058286033450399}
+  selectedTextureQuad: {fileID: -2956385520310425335}
   showTextures: 1
   exportSettings: {fileID: 11400000, guid: 9c485c5a941d75343907331341bb373c, type: 2}
   textureAtlasSize: {x: 2048, y: 2048}
@@ -654,7 +654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
   m_Name: Travel flayer
   m_EditorClassIdentifier: 
-  isSelected: 1
+  isSelected: 0
   rect:
     serializedVersion: 2
     x: 1013.20264
@@ -670,20 +670,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 1463.1666
-    y: 1629.1666
+    x: 2130.2854
+    y: 808.8025
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 1735.1666
-    y: 1357.1666
+    x: 2402.2854
+    y: 536.8025
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 1479.1666
-    y: 1373.1666
+    x: 2146.2854
+    y: 552.8025
     width: 32
     height: 32
   textureGroups:
@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
-  m_Name: Window 1 damaged
+  m_Name: Surgeon table
   m_EditorClassIdentifier: 
   isSelected: 0
   rect:
@@ -725,33 +725,33 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 1431.7443
-    y: 1462.883
+    x: 687.6813
+    y: 1123.1731
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 1703.7443
-    y: 1190.883
+    x: 959.6813
+    y: 851.1731
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 1447.7443
-    y: 1206.883
+    x: 703.6813
+    y: 867.1731
     width: 32
     height: 32
   textureGroups:
   - name: Albedo
-    texture: {fileID: 2800000, guid: 2900a1939b2b4a74a9f9a99ababec2aa, type: 3}
+    texture: {fileID: 2800000, guid: 07b5917f3effeb94aac8a2fe7f9a61de, type: 3}
   - name: Normal
-    texture: {fileID: 2800000, guid: aa95ecbca45209b4189013bdc47a3c8b, type: 3}
+    texture: {fileID: 2800000, guid: 39550ad7c06fe9e46976c74103a0008b, type: 3}
   - name: Occlusion
-    texture: {fileID: 2800000, guid: 881c8a0e6b77aec47a62a6adac303e31, type: 3}
+    texture: {fileID: 2800000, guid: 31919b71814fa8a45b5687ed85337414, type: 3}
   modelGroups:
-  - name: Window 1 damaged
+  - name: Surgeon table
     meshes:
-    - {fileID: 7796042907088483969, guid: 61a0918bc894aa146825f849b04e93db, type: 3}
+    - {fileID: -6940665088759197227, guid: a847d93c1274d654b8ab580db14c8fea, type: 3}
 --- !u!114 &3134661938645483355
 MonoBehaviour:
   m_ObjectHideFlags: 0

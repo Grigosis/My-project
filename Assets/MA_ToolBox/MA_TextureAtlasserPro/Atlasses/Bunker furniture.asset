@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
   m_Name: server 1
   m_EditorClassIdentifier: 
-  isSelected: 1
+  isSelected: 0
   rect:
     serializedVersion: 2
     x: 7.8125
@@ -524,7 +524,7 @@ MonoBehaviour:
   - {fileID: 1369076349044436555}
   - {fileID: 6877663483017443602}
   - {fileID: 2607495387849593546}
-  selectedTextureQuad: {fileID: -1448109767421253711}
+  selectedTextureQuad: {fileID: 0}
   showTextures: 1
   exportSettings: {fileID: 11400000, guid: 9c485c5a941d75343907331341bb373c, type: 2}
   textureAtlasSize: {x: 1024, y: 1024}
