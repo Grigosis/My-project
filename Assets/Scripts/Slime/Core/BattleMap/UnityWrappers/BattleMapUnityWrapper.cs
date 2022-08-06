@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Slime.Core.Algorythms;
 using Assets.Scripts.Slime.Core.BattleMap.Logic.Interfaces;
+using Assets.Scripts.Slime.Core.BattleMap.UnityWrappers;
 using Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors;
 using Assets.Scripts.Slime.Sugar;
 using ROR.Core;
@@ -30,7 +31,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap
 
         public IMouseReceiver GetMouseReceiver()
         {
-            return CurrentTargetSelector;
+            return CurrentTargetSelector; 
         }
 
         public void SelectSkill(SkillEntity skillEntity)
@@ -59,6 +60,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap
         {
             Debug.Log("CurrentTargetSelectorOnOnSelected");
             CurrentSelectedSkill.Implementation.CastSkill(CurrentSelectedSkill, obj, new Random());
+            CurrentTargetSelector = null;
             NextUnit();
         }
 
@@ -68,32 +70,40 @@ namespace Assets.Scripts.Slime.Core.BattleMap
         {
             Init();
             
+            CurrentTargetSelector?.Update();
+            
             if (SwitchNextUnit)
             {
                 SwitchNextUnit = false;
-                Debug.Log("NextUnit");
+                Debug.Log("NextUnitImpl");
                 Battle.NextPlayerTurn();
+                
                 if (Battle.CurrentLivingEntityTurn != null)
                 {
                     SkillBarUi.Entity = Battle.CurrentLivingEntityTurn.GameObjectLink.GetComponent<BattleLivingEntity>();
-                    SelectSkill(Battle.CurrentLivingEntityTurn.SkillBar.SkillEntities[0]);
+                    SkillBarUi.OnUnitChanged();
                 }
             }
         }
 
         public void NextUnit()
         {
-            Debug.Log("NextUnit");
+            Debug.Log("ScheduleNextUnit");
             SwitchNextUnit = true;
         }
         
         
         public void Start()
         {
-            
+            SkillBarUi.OnSelectedSkillChanged += OnSelectedSkillChanged;
         }
 
-        
+        private void OnSelectedSkillChanged(SkillEntity obj)
+        {
+            SelectSkill(obj);
+        }
+
+
         public void Init()
         {
             if (wasInited)
@@ -120,11 +130,24 @@ namespace Assets.Scripts.Slime.Core.BattleMap
         private void InitAttachMapObjects()
         {
             var mapObjects = GetComponentsInChildren<MapObjectUnityWrapper>();
+            
             foreach (var mapObject in mapObjects)
             {
                 var o = mapObject.MapObject;
                 BattleMap.AddMapObject(o);
             }
+            
+            var walls = GetComponentsInChildren<WallUnityWrapper>();
+            foreach (var wall in walls)
+            {
+                BattleMap.AddWall(wall);
+            }
+            
+            //ConvexShape shape = new ConvexShape();
+            //shape.Points.Add(new Vector2(0,0));
+            //shape.Points.Add(new Vector2(100,100));
+            //BattleMap.Walls.Add(shape);
+
         }
 
         public void InitAttachCellModificators()

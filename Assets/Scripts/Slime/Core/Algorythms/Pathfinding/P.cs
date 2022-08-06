@@ -23,6 +23,11 @@ namespace Assets.Scripts.Slime.Core.Algorythms.Pathfinding
         public int Bottom => Y + H;
         public int Left => X;
         public int Right => X + W;
+
+        public override string ToString()
+        {
+            return $"{X}-{Y}:{X+W}-{Y+H}";
+        }
     }
     
     [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]

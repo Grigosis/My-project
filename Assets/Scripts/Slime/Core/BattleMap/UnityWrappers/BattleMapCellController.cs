@@ -29,6 +29,17 @@ namespace Assets.Scripts.Slime.Core.Algorythms
             AllCells[vector] = newcell;
             return newcell;
         }
+        
+        public MapCellWrapper GetOrCreate(Vector2Int vector, Vector2Int from, Color color)
+        {
+            var newcell = GetOrCreate(vector);
+
+            newcell.from = from;
+            var _renderer = newcell.gameObject.GetComponentInChildren<Renderer>();
+            _renderer.material.color = color;
+            
+            return newcell;
+        }
 
         public void ClearAll()
         {

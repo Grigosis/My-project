@@ -4,6 +4,7 @@ using Assets.Scripts.Slime.Core.Algorythms;
 using Assets.Scripts.Slime.Core.Algorythms.Pathfinding;
 using Assets.Scripts.Slime.Core.BattleMap;
 using GemCraft2;
+using GemCraft2.Pathfinding;
 using ROR.Core;
 using UnityEngine;
 
@@ -36,21 +37,64 @@ namespace RPGFight
         /// Returns path from P1 to P2, or null
         /// Use moveunits == -1 for infinite search
         /// </summary>
-        public static List<Vector2Int> GetPath(BattleMap map, Vector2Int from, Vector2Int to, float moveunits = -1)
+        public static List<Vector2Int> GetPath(BattleMap map, Vector2Int from, Vector2Int to, float moveunits = -1, bool diagonalPenalty = false)
+        {
+            var pathfinding = new BattleMapPathfinding(map);
+            WaveGenerator pointGenerator = new BattleMapFourSides(map, moveunits);
+            if (diagonalPenalty)
+            {
+                pointGenerator = new BattleMapFourSidesDiagonalPenalty(map, moveunits+1);
+            }
+            
+            GlyphFinder finder = new GlyphFinder();
+            finder.Init(pathfinding, pointGenerator);
+            finder.StartWave(new P(from.x, from.y));
+
+            var path = finder
+                .FindWayBack(to.x, to.y);
+
+            if (path == null)
+            {
+                path = new List<P>();
+            }
+            path.Add(new P(to.x, to.y));
+                    
+                    
+            
+            return path
+                .Select((x)=>new Vector2Int(x.x, x.y))
+                .Reverse()
+                .ToList();
+        }
+        
+        /// <summary>
+        /// Returns path from P1 to P2, or null
+        /// Use moveunits == -1 for infinite search
+        /// </summary>
+        public static List<Vector2Int> GetPaths(BattleMap map, Vector2Int from, Vector2Int to, float moveunits = -1)
         {
             var pathfinding = new BattleMapPathfinding(map);
             var pointGenerator = new BattleMapFourSides(map, moveunits);
             GlyphFinder finder = new GlyphFinder();
             finder.Init(pathfinding, pointGenerator);
             finder.StartWave(new P(from.x, from.y));
-            
+
             var path = finder
-                .FindWayBack(to.x, to.y)
+                .FindWaysBack(to.x, to.y);
+            
+            if (path == null)
+            {
+                path = new List<P>();
+            }
+            
+            path.Add(new P(to.x, to.y));
+                    
+                    
+            
+            return path
                 .Select((x)=>new Vector2Int(x.x, x.y))
                 .Reverse()
                 .ToList();
-            
-            return path;
         }
     }
 }

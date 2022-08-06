@@ -17,8 +17,12 @@ namespace Assets.Scripts.Slime.Core.Skills
                 Debug.LogError($"Cell is == [{targets[0]}]");
                 return;
             }
+
+            entity.Cell.Entity = null;
             entity.Cell = cell;
+            entity.Cell.Entity = entity;
             entity.GameObjectLink.transform.localPosition = entity.Battle.BattleUnity.battleMapCellController.GetCellPosition(cell.X, cell.Y);
+            
         }
     }
 }

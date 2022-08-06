@@ -35,6 +35,13 @@ namespace ROR.Core.Serialization
         [XmlAttribute]
         public float HitChanceMlt = 1;
 
+        [XmlAttribute]
+        public int MinRange = 0;
+        
+        [XmlAttribute]
+        public int MaxRange = 1;
+        
+        [XmlAttribute]
         public int Cooldown = 10;
     }
 }

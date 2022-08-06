@@ -1,39 +1,37 @@
 using System;
 using System.Collections.Generic;
+using SecondCycleGame;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ROR.Core{
     public class EffectBarPresentation : MonoBehaviour{
-        public GameObject iconPrefab;
-        public LivingEntity target;
-        public EffectBar bar;
-        public int line = 6;
-        public ChildGravity iconsGravity = ChildGravity.TopLeft;
-        public float iconScale = 0.5f;
+        public GameObject IconPrefab;
+        public BattleLivingEntity Entity;
+        public int Line = 6;
+        public float IconScale = 0.5f;
+        public ChildGravity IconsGravity = ChildGravity.TopLeft;
+        
+        public EffectBar Bar;
         private List<EffectIcon> icons = new List<EffectIcon>();
 
         // Start is called before the first frame update
         void Start(){
-            if(bar == null && target != null){
-                bar = target.EffectBar;
-            }    
+            Bar = Entity.LivingEntity.EffectBar;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if(bar == null && target != null){
-                bar = target.EffectBar;
-            }
-
-            int changeLen = Math.Min(bar.Effects.Data.Count, icons.Count);
+            Bar = Entity.LivingEntity.EffectBar;
+            Debug.Log($"Update: {Bar} " +Bar.Effects.Data.Count);
+            int changeLen = Math.Min(Bar.Effects.Data.Count, icons.Count);
             for(int i = 0; i < changeLen; i++){
-                icons[i].ChangeTarget(bar.Effects.Data[i]);
+                icons[i].ChangeTarget(Bar.Effects.Data[i]);
             }
-            if(changeLen < bar.Effects.Data.Count) {
-                for(int i = changeLen; i < bar.Effects.Data.Count; i++){
-                    icons.Add(AddIcon(i, bar.Effects.Data[i]));
+            if(changeLen < Bar.Effects.Data.Count) {
+                for(int i = changeLen; i < Bar.Effects.Data.Count; i++){
+                    icons.Add(AddIcon(i, Bar.Effects.Data[i]));
                 }
             } else if(changeLen < icons.Count){
                 for(int i = changeLen; i < icons.Count; i++){
@@ -44,17 +42,18 @@ namespace ROR.Core{
         }
 
         private EffectIcon AddIcon(int pos, EffectEntity target){
-            GameObject icon = Instantiate(iconPrefab, gameObject.transform);
+            Debug.LogWarning("AddIcon:"+target);
+            GameObject icon = Instantiate(IconPrefab, gameObject.transform);
             Graphic iconG = icon.GetComponent<Graphic>();
             var iconTransform = iconG.rectTransform;
-            iconTransform.localScale = new Vector3(iconScale, iconScale, 1);
-            Vector2 iconsAnchor = ChildGravityToAnchor(iconsGravity);
+            iconTransform.localScale = new Vector3(IconScale, IconScale, 1);
+            Vector2 iconsAnchor = ChildGravityToAnchor(IconsGravity);
             iconTransform.anchorMin = iconsAnchor;
             iconTransform.anchorMax = iconsAnchor;
-            int posX = pos % line;
-            int posY = pos / line;
-            float x = iconTransform.sizeDelta.x * iconScale * (posX + iconTransform.pivot.x);
-            float y = iconTransform.sizeDelta.y * iconScale * (posY + iconTransform.pivot.y);
+            int posX = pos % Line;
+            int posY = pos / Line;
+            float x = iconTransform.sizeDelta.x * IconScale * (posX + iconTransform.pivot.x);
+            float y = iconTransform.sizeDelta.y * IconScale * (posY + iconTransform.pivot.y);
             if(iconsAnchor.x != 0){
                 x = -x;
             }

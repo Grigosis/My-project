@@ -1,7 +1,7 @@
 namespace ROR.Core.Serialization
 {
-        public class HealingEffectDefinition : EffectDefinition
-        {
-                public float Heal;
-        }
+    public class HealingEffectDefinition : EffectDefinition
+    {
+        public float Heal;
+    }
 }

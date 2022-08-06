@@ -25,7 +25,7 @@
         <Attack Name="FIRE" Percent="0.5" />
       </Attacks>
     </Definition>
-	<Definition xsi:type="SkillDefinition" Id="Skill/Slime-SplashAttack" IsRangedAttack="false" HitChanceMlt="0.7"  Icon="Icons/Icon2" 
+	<Definition xsi:type="SkillDefinition" Id="Skill/Slime-SplashAttack" IsRangedAttack="false" HitChanceMlt="0.7"  Icon="Icons/Icon2" MinRange="3" MaxRange="6" 
 	TargetSelector="Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors.CellTargetSelector" 
 	Implementation="Assets.Scripts.Slime.Core.Skills.DefaultAttack"
 	>

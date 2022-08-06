@@ -10,7 +10,7 @@ namespace Assets.Scripts.Slime.Core.Algorythms
         public List<SkillTarget> GetAllSkillTargets(Battle battle, LivingEntity caster, SkillEntity skillEntity)
         {
             var cell = caster.Cell;
-            var range = skillEntity.GetRange();
+            var range = skillEntity.GetMinRange();
 
            
             List<SkillTarget> listOfAllVisibleCells = new List<SkillTarget>();
@@ -29,7 +29,7 @@ namespace Assets.Scripts.Slime.Core.Algorythms
     {
         public List<SkillTarget> GetAllSkillTargets(Battle battle, LivingEntity caster, SkillEntity skillEntity)
         {
-            var range = skillEntity.GetRange();
+            var range = skillEntity.GetMinRange();
             List<SkillTarget> listOfAllVisibleCells = new List<SkillTarget>();
             foreach (var livingEntity in battle.BattleMap.AllLivingEntities)
             {
