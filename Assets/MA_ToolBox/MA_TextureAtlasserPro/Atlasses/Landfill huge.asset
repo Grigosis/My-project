@@ -28,20 +28,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 7827.4814
-    y: 4112.796
+    x: 5607.6343
+    y: 1494.627
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 8355.481
-    y: 3584.7961
+    x: 6135.6343
+    y: 966.62695
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 7843.4814
-    y: 3600.7961
+    x: 5623.6343
+    y: 982.62695
     width: 32
     height: 32
   textureGroups:
@@ -83,20 +83,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 2087.5647
-    y: 1483.4668
+    x: 3316.1562
+    y: 1270.627
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 2615.5647
-    y: 955.4668
+    x: 3844.1562
+    y: 742.62695
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 2103.5647
-    y: 971.4668
+    x: 3332.1562
+    y: 758.62695
     width: 32
     height: 32
   textureGroups:
@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
-  m_Name: new new new new new new new Quad
+  m_Name: Truck head
   m_EditorClassIdentifier: 
-  isSelected: 0
+  isSelected: 1
   rect:
     serializedVersion: 2
     x: 0
@@ -138,30 +138,33 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 1964.8276
-    y: 2674.873
+    x: 2414.1418
+    y: 2941.7576
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 2492.8276
-    y: 2146.873
+    x: 2942.1418
+    y: 2413.7576
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 1980.8276
-    y: 2162.873
+    x: 2430.1418
+    y: 2429.7576
     width: 32
     height: 32
   textureGroups:
   - name: Albedo
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: 10ff8749ec1dcc0469f989e63c127794, type: 3}
   - name: Normal
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: a5348b8d5b2b36742b38327f2cef4071, type: 3}
   - name: Occlusion
-    texture: {fileID: 0}
-  modelGroups: []
+    texture: {fileID: 2800000, guid: b14263b3e27fbc24ba2354c43648c5c8, type: 3}
+  modelGroups:
+  - name: Truck head
+    meshes:
+    - {fileID: 7673246021391805175, guid: e28eaae5aed6ae04b842a76ecc44dd0f, type: 3}
 --- !u!114 &-6495104510198186821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
   m_Name: Road
   m_EditorClassIdentifier: 
-  isSelected: 1
+  isSelected: 0
   rect:
     serializedVersion: 2
     x: 2042.8098
@@ -190,20 +193,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 2750
-    y: 2136.8333
+    x: 3448.8513
+    y: 1264.1925
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 3278
-    y: 1608.8334
+    x: 3976.8513
+    y: 736.1925
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 2766
-    y: 1624.8334
+    x: 3464.8513
+    y: 752.1925
     width: 32
     height: 32
   textureGroups:
@@ -300,25 +303,25 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 2971.751
-    y: 2632.7656
+    x: 3438.1418
+    y: 2941.7576
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 3499.751
-    y: 2104.7656
+    x: 3966.1418
+    y: 2413.7576
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 2987.751
-    y: 2120.7656
+    x: 3454.1418
+    y: 2429.7576
     width: 32
     height: 32
   textureGroups:
   - name: Albedo
-    texture: {fileID: 2800000, guid: 52f747b5fd4f5794e97b54b067e6b755, type: 3}
+    texture: {fileID: 2800000, guid: 9b02d4b12528cda428238e1ca49c8c6b, type: 3}
   - name: Normal
     texture: {fileID: 2800000, guid: 950d1bb4b260a144495626ffc7d9cef4, type: 3}
   - name: Occlusion
@@ -355,20 +358,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 1063.5647
-    y: 1483.4668
+    x: 2753.0254
+    y: 270.62677
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 1591.5647
-    y: 955.4668
+    x: 3281.0254
+    y: -257.37323
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 1079.5647
-    y: 971.4668
+    x: 2769.0254
+    y: -241.37323
     width: 32
     height: 32
   textureGroups:
@@ -409,7 +412,7 @@ MonoBehaviour:
   - {fileID: 5306126954095239928}
   - {fileID: -6631006707333474299}
   - {fileID: -1868048999236297461}
-  selectedTextureQuad: {fileID: -6495104510198186821}
+  selectedTextureQuad: {fileID: -6631006707333474299}
   showTextures: 1
   exportSettings: {fileID: 11400000, guid: 9c485c5a941d75343907331341bb373c, type: 2}
   textureAtlasSize: {x: 4096, y: 4096}
@@ -445,33 +448,33 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 1676.0308
-    y: 2389.852
+    x: 2224.7437
+    y: 1357.0247
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 2204.0308
-    y: 1861.8522
+    x: 2752.7437
+    y: 829.02466
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 1692.0308
-    y: 1877.8522
+    x: 2240.7437
+    y: 845.02466
     width: 32
     height: 32
   textureGroups:
   - name: Albedo
-    texture: {fileID: 2800000, guid: 93853c86cbc4d1a4dabe0f6950afd92e, type: 3}
+    texture: {fileID: 2800000, guid: af12834436896e543964087c564d0080, type: 3}
   - name: Normal
-    texture: {fileID: 2800000, guid: fb3095e010bba1e4e86be58ae58098cb, type: 3}
+    texture: {fileID: 2800000, guid: 5b17712c7d6869347a37a64c111bb3fd, type: 3}
   - name: Occlusion
-    texture: {fileID: 2800000, guid: 82191f38d1c2dfa47b86bf7b47ca2827, type: 3}
+    texture: {fileID: 2800000, guid: a6fe28425f627c64ea5b07fef327b779, type: 3}
   modelGroups:
   - name: Travel house
     meshes:
-    - {fileID: -7923135114094986688, guid: 44cf9e92d7800714da538628ecd26ff1, type: 3}
+    - {fileID: -7923135114094986688, guid: b8ad801a39eb0564ca69beb06e1a18b8, type: 3}
 --- !u!114 &1334859162566416777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,20 +503,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 5008.3096
-    y: 1781.5857
+    x: 4646.7646
+    y: 1314.1052
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 5536.3096
-    y: 1253.5857
+    x: 5174.7646
+    y: 786.1052
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 5024.3096
-    y: 1269.5857
+    x: 4662.7646
+    y: 802.1052
     width: 32
     height: 32
   textureGroups:
@@ -555,20 +558,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 2916.6995
-    y: 1970.408
+    x: 2753.0254
+    y: 1294.6267
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 3444.6995
-    y: 1442.408
+    x: 3281.0254
+    y: 766.6268
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 2932.6995
-    y: 1458.408
+    x: 2769.0254
+    y: 782.6268
     width: 32
     height: 32
   textureGroups:
@@ -610,20 +613,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 2043.7997
-    y: 1148.29
+    x: 4340.1562
+    y: 1270.627
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 2571.7998
-    y: 620.29004
+    x: 4868.1562
+    y: 742.62695
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 2059.7998
-    y: 636.29004
+    x: 4356.1562
+    y: 758.62695
     width: 32
     height: 32
   textureGroups:
@@ -665,20 +668,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 1517.5496
-    y: 1477.5769
+    x: 3316.1562
+    y: 2294.627
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 2045.5496
-    y: 949.5769
+    x: 3844.1562
+    y: 1766.627
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 1533.5496
-    y: 965.5769
+    x: 3332.1562
+    y: 1782.627
     width: 32
     height: 32
   textureGroups:
@@ -720,29 +723,29 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 2244.0308
-    y: 2257.852
+    x: 3438.1418
+    y: 1917.7576
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 2772.0308
-    y: 1729.8522
+    x: 3966.1418
+    y: 1389.7576
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 2260.0308
-    y: 1745.8522
+    x: 3454.1418
+    y: 1405.7576
     width: 32
     height: 32
   textureGroups:
   - name: Albedo
-    texture: {fileID: 2800000, guid: 983c5f19a40b6e24e8f067f907d64cc9, type: 3}
+    texture: {fileID: 2800000, guid: a5e966f372159604a9400d7ee0e007da, type: 3}
   - name: Normal
-    texture: {fileID: 2800000, guid: bb1384b1d542bd24c9377649702e87dc, type: 3}
+    texture: {fileID: 2800000, guid: 7f6e9205a24f31c40bdfe2bfb554ba50, type: 3}
   - name: Occlusion
-    texture: {fileID: 2800000, guid: e8a91ca138d5757478a32024b6c5f063, type: 3}
+    texture: {fileID: 2800000, guid: 2a9588e5760963e4db16b55f8ae40a8c, type: 3}
   modelGroups:
   - name: Travel house big
     meshes:
@@ -775,20 +778,20 @@ MonoBehaviour:
   debugMode: 0
   dragRectHeight:
     serializedVersion: 2
-    x: 5456.0933
-    y: 3289.1567
+    x: 4936.2446
+    y: 4117.8013
     width: 64
     height: 16
   dragRectWidth:
     serializedVersion: 2
-    x: 6496.0933
-    y: 2249.1567
+    x: 5976.2446
+    y: 3077.801
     width: 16
     height: 64
   dragRectPos:
     serializedVersion: 2
-    x: 5472.0933
-    y: 2265.1567
+    x: 4952.2446
+    y: 3093.801
     width: 32
     height: 32
   textureGroups:
