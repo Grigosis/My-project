@@ -70,8 +70,8 @@ namespace RPGFight.Core
 
         public static void CalculateFinalValues(Attrs attrs)
         {
-            attrs.HP_MAX += attrs.STATS.STR * 10;
-            attrs.EP_MAX += attrs.STATS.AGI / 5;
+            attrs.HP_MAX += attrs.STATS.END * 10;
+            attrs.EP_MAX += attrs.STATS.AGI;
             attrs.CRIT_CHANCE += attrs.STATS.PER / 5;
         }
 
