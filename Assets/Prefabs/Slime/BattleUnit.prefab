@@ -150,6 +150,9 @@ MonoBehaviour:
       DEF_MLT: 0
       SPECIAL_1: 0
       SPECIAL_2: 0
+  EffectBar:
+    EffectsCount: 0
+  Renderer: {fileID: 5636518298352753684}
   DefintionId: 
 --- !u!1001 &1616024993648585834
 PrefabInstance:
@@ -162,6 +165,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6365180205394145406, guid: e14b5732580903f4588ff6fc50e944aa, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0da93894e9e66654f9c225189b1c9bd0, type: 2}
     - target: {fileID: 8237854564031902972, guid: e14b5732580903f4588ff6fc50e944aa, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -224,6 +231,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8237854564031902972, guid: e14b5732580903f4588ff6fc50e944aa, type: 3}
   m_PrefabInstance: {fileID: 1616024993648585834}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &5636518298352753684 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6365180205394145406, guid: e14b5732580903f4588ff6fc50e944aa, type: 3}
+  m_PrefabInstance: {fileID: 1616024993648585834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5213484072383230127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ClickableReceiver: {fileID: 5077129167582882525}
+  ClickableReceiver2: {fileID: 0}
 --- !u!1001 &3706624161383598228
 PrefabInstance:
   m_ObjectHideFlags: 0

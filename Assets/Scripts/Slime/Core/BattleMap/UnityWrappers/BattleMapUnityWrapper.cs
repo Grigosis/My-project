@@ -58,6 +58,10 @@ namespace Assets.Scripts.Slime.Core.BattleMap
 
         private void CurrentTargetSelectorOnOnSelected(List<SkillTarget> obj)
         {
+            if (Battle.CurrentLivingEntityTurn?.AIController != null)
+            {
+                return;
+            }
             Debug.Log("CurrentTargetSelectorOnOnSelected");
             CurrentSelectedSkill.Implementation.CastSkill(CurrentSelectedSkill, obj, new Random());
             CurrentTargetSelector = null;
@@ -71,6 +75,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             Init();
             
             CurrentTargetSelector?.Update();
+            Battle.CurrentLivingEntityTurn?.AIController?.Update();
             
             if (SwitchNextUnit)
             {
@@ -84,6 +89,12 @@ namespace Assets.Scripts.Slime.Core.BattleMap
                     SkillBarUi.OnUnitChanged();
                 }
             }
+        }
+
+        private void BattleOnOnLivingEntityChanged(LivingEntity was, LivingEntity neww)
+        {
+            was?.AIController?.End();
+            neww?.AIController?.Start();
         }
 
         public void NextUnit()
@@ -114,11 +125,15 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             wasInited = true;
             
             Battle = new Battle();
+            Battle.OnLivingEntityChanged += BattleOnOnLivingEntityChanged;
+            
             Battle.BattleUnity = this;
             Battle.BattleMap = new BattleMap();
             BattleMap.Init(Battle, W,H);
             
             battleMapCellController.Init(this);
+            
+            
             
             InitAttachMapObjects();
             InitAttachCellModificators();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.BattleMap;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Assets.Scripts.Slime.Sugar
 {
@@ -176,6 +177,95 @@ namespace Assets.Scripts.Slime.Sugar
             intpos.x = (int)Math.Round(position.x / BattleMapCell.CellSize);
             intpos.y = (int)Math.Round(position.z / BattleMapCell.CellSize);
             return intpos;
+        }
+        
+        public static bool AreEqual<T, K>(this Dictionary<T, K> a, Dictionary<T, K> b)
+        {
+            if (a == null || b == null) return a==b;
+
+            a = new Dictionary<T, K>(a);
+            b = new Dictionary<T, K>(b);
+            
+            Deduplicate(a,b);
+            var result = a.Count == 0 && b.Count == 0;
+            return result;
+        }
+        public static void Deduplicate<T, K>(this Dictionary<T, K> a, Dictionary<T, K> b)
+        {
+            if (a == null || b == null) return;
+
+            var keys = new List<T>(a.Keys);
+            foreach (var k in keys)
+            {
+                a.Remove(k);
+                b.Remove(k);
+            }
+        }
+
+        public static int DivideWithUpperRound(this int number, int divide)
+        {
+            return number / divide + (number % divide == 0 ? 0 : 1);
+        }
+        
+        public static int DivideWithUpperRound(this uint number, int divide)
+        {
+            return (int)(number / divide + (number % divide == 0 ? 0 : 1));
+        }
+
+        public static T GetAt<T>(this List<T> list, int index)
+        {
+            return list.Count > index ? list[index] : default(T);
+        }
+        
+        public static T AddList<T>(this List<T> list, int index)
+        {
+            return list.Count > index ? list[index] : default(T);
+        }
+        
+        public static void AddMultipleTimes<T>(this List<T> list, T value, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                list.Add(value);
+            }
+        }
+
+        public static double NextDouble(this Random random, double min, double max)
+        {
+            return random.NextDouble() * (max - min) + min;
+        }
+
+        private static char[] alphabet = "qwertyuiopasdfghjklzxcvbnm".ToCharArray(); 
+        
+        public static string NextString(this Random random, int count, char[] chars = null)
+        {
+            if (chars == null)
+            {
+                chars = alphabet;
+            }
+
+            var s = "";
+            for (int i = 0; i < count; i++)
+            {
+                s += alphabet[random.Next(chars.Length)];
+            }
+            return s;
+        }
+
+        public static K GetOrNew<T, K>(this Dictionary<T, K> dict, T key) where K : new()
+        {
+            if (!dict.TryGetValue(key, out var value))
+            {
+                value = new K();
+                dict[key] = value;
+            }
+
+            return value;
+        }
+        
+        public static T Next<T>(this Random random, T[] array)
+        {
+            return array[random.Next(array.Length)];
         }
     }
 }

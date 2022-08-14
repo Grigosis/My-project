@@ -183,5 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ab713e3e1341b44802200c6d8263a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Text: {fileID: 130510100455092921}
   AttributeName: '{HP_NOW}'
   ShowName: 0

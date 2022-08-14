@@ -4,6 +4,8 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Assets.Scripts.Slime.Core;
+using Assets.Scripts.Slime.Core.Algorythms;
 using Assets.Scripts.Sugar;
 using ROR.Lib;
 using UnityEngine;
@@ -29,6 +31,7 @@ namespace ROR.Core.Serialization
                 {
                     if (_instance == null)
                     {
+                        F.Init();
                         _instance = new D();
                         _instance.Init();
                     } 
@@ -61,10 +64,57 @@ namespace ROR.Core.Serialization
             var d = new Definitions();
             d.DefinitionList = new SerializableList<Definition>();
 
-            var effect = new EffectDefinition();
-            effect.Class = new SClass<EffectEntity>();
-            effect.Class.Type = typeof(HealingEffectEntity);
-            d.DefinitionList.Add(effect);
+            var behavior = new AIBehaviorDefinition();
+            behavior.Behavior = new AIBehaviorActionXml[1];
+
+            var behaviorAction = new AIBehaviorUseSkillXml();
+            behaviorAction.SkillType = "Attack";
+            behaviorAction.TargetFilter = "Ally";
+            behaviorAction.TargetSelectorFx = "Closest";
+            behaviorAction.MaxMoveAPToCast = 2;
+
+            behavior.Behavior[0] = behaviorAction;
+
+            behavior.Triggers = new AIBehaviorTriggerXml[1];
+
+            var trigger = new AIBehaviorTriggerUnitDiedXml();
+            trigger.TriggerFx = "Say";
+            trigger.Params = new FxParamXml[1];
+            trigger.Params[0] = new FxParamXml()
+            {
+                Name = "Text",
+                Value = "You bastard!"
+            };
+            
+            trigger.Ally = true;
+
+            behavior.Triggers[0] = trigger;
+
+            behavior.Positioning = new AIPositioningXml();
+
+            behavior.Positioning.Layers = new AIPositioningLayerXml[1];
+            behavior.Positioning.Layers[0] = new AIPositioningLayerXml();
+            behavior.Positioning.Layers[0].MinValue = 1;
+            behavior.Positioning.Layers[0].MaxValue = 3;
+            behavior.Positioning.Layers[0].ValueFx = "StayAwayFromEnemies";
+            behavior.Positioning.Layers[0].Params = new FxParamXml[2];
+            behavior.Positioning.Layers[0].Params[0] = new FxParamXml()
+            {
+                Name = "MinRange",
+                Value = "3",
+            };
+            behavior.Positioning.Layers[0].Params[1] = new FxParamXml()
+            {
+                Name = "MaxRange",
+                Value = "8",
+            };
+            
+            
+            d.DefinitionList.Add(behavior);
+            //var effect = new EffectDefinition();
+            //effect.Class = new SClass<EffectEntity>();
+            //effect.Class.Type = typeof(HealingEffectEntity);
+            //d.DefinitionList.Add(effect);
             
             /*d.DefinitionList.Add(new LivingEntityDefinition()
             {
@@ -103,9 +153,15 @@ namespace ROR.Core.Serialization
                 if (_knownTypes == null)
                 {
                     var types =  new List<Type>();
-                    foreach(Type t in Assembly.GetExecutingAssembly().GetTypes())
-                        if (typeof(Definition).IsAssignableFrom(t))
+                    foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
+                    {
+                        if (typeof(Definition).IsAssignableFrom(t) || t.Name.EndsWith("Xml"))
+                        {
                             types.Add(t);
+                        }
+                    }
+                        
+                            
                     _knownTypes = types.ToArray();
                 }
 

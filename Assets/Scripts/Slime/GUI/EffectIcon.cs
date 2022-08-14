@@ -28,7 +28,6 @@ namespace ROR.Core{
         }
 
         private void UpdateImpl(){
-            Debug.LogWarning("UpdateImpl");
             m_duration = Target.Definition.Duration;
             m_icon.sprite = R.Load<Sprite>(Target.Definition.Icon);
             if(m_duration > 9999999){

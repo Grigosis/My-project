@@ -24,7 +24,6 @@ namespace ROR.Core{
         void Update()
         {
             Bar = Entity.LivingEntity.EffectBar;
-            Debug.Log($"Update: {Bar} " +Bar.Effects.Data.Count);
             int changeLen = Math.Min(Bar.Effects.Data.Count, icons.Count);
             for(int i = 0; i < changeLen; i++){
                 icons[i].ChangeTarget(Bar.Effects.Data[i]);

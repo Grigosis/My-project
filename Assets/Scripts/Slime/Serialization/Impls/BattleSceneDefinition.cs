@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using ClassLibrary1.Inventory;
 using RPGFight;
 
 namespace ROR.Core.Serialization
@@ -14,6 +15,9 @@ namespace ROR.Core.Serialization
         /// То что игрок сам вкачивал во время игры. 
         /// </summary>
         public Attrs UpgradedAttributes = new Attrs();
+
+        [XmlAttribute] 
+        public string AI;
         
         [XmlArrayItem("Id")] 
         public string[] Skills;
@@ -30,7 +34,7 @@ namespace ROR.Core.Serialization
         
     }
 
-    public class EquipmentDefinition : Definition
+    public class EquipmentDefinition : ItemDefinition
     {
         public Attrs Attributes = new Attrs();
     }

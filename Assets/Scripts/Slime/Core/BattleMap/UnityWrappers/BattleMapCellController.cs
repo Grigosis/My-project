@@ -30,13 +30,16 @@ namespace Assets.Scripts.Slime.Core.Algorythms
             return newcell;
         }
         
-        public MapCellWrapper GetOrCreate(Vector2Int vector, Vector2Int from, Color color)
+        public MapCellWrapper GetOrCreate(Vector2Int vector, Vector2Int from, Color color, string text = "", string text2 = "")
         {
             var newcell = GetOrCreate(vector);
 
             newcell.from = from;
             var _renderer = newcell.gameObject.GetComponentInChildren<Renderer>();
             _renderer.material.color = color;
+
+            newcell.Text = text;
+            newcell.Text2 = text2;
             
             return newcell;
         }
@@ -45,10 +48,12 @@ namespace Assets.Scripts.Slime.Core.Algorythms
         {
             foreach (var wrapper in AllCells)
             {
-                GameObject.Destroy(wrapper.Value.gameObject);
+                GameObjectPool.instance.PoolObject(wrapper.Value.gameObject); 
             }
             
             AllCells.Clear();
+            
+            Debug.LogWarning("ClearCells");
         }
 
         public void GenerateCells(HashSet<Vector2Int> newCells)
@@ -72,7 +77,7 @@ namespace Assets.Scripts.Slime.Core.Algorythms
 
         private MapCellWrapper CreateCell(int x, int y)
         {
-            var cell = GameObject.Instantiate(GameAssets.i.mapCell);
+            var cell = GameObjectPool.instance.GetObjectForType(GameAssets.i.mapCell);
             cell.transform.parent = BattleMap.MapCells.transform;
             cell.transform.localPosition = GetCellPosition(x,y, 0);
             cell.GetComponent<ClickableProxy>().ClickableReceiver = BattleMap.gameObject;

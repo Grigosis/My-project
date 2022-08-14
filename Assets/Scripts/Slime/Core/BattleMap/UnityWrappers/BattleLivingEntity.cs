@@ -12,7 +12,7 @@ namespace SecondCycleGame
         public LivingEntity LivingEntity;
         public Attrs CustomAttributes;
         public EffectBar EffectBar;
-
+        public SkinnedMeshRenderer Renderer;
         public String DefintionId;
         // Start is called before the first frame update
         void Awake()
@@ -107,6 +107,11 @@ namespace SecondCycleGame
         public Vector3 GetTorsoPosition()
         {
             return Vector3.back;
+        }
+
+        public void SetHighlighted(Color color)
+        {
+            Renderer.materials[0].color = color;
         }
     }
 }

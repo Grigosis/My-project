@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.MyUnity;
 using Assets.Scripts.Slime.Core;
+using Assets.Scripts.Slime.Core.Algorythms;
 using Assets.Scripts.Slime.Core.BattleMap.Logic.Interfaces;
 using ROR.Core.Serialization;
 using RPGFight;
@@ -19,6 +20,7 @@ namespace ROR.Core
         public int Team;
         public EffectBar EffectBar { get; private set; } = new EffectBar();
         public string Portrait { get; set; }
+        public Vector2Int Position => new Vector2Int(Cell.X, Cell.Y);
 
         public Attrs FinalStats = new Attrs();
         public Attrs SumAttrs = new Attrs();
@@ -38,6 +40,7 @@ namespace ROR.Core
         public Battle Battle;
         public IEntityController Controller;
         public GameObject GameObjectLink;
+        public AIController AIController;
         public event Action<LivingEntity> OnDeath;
         
         public LivingEntity()
@@ -45,11 +48,6 @@ namespace ROR.Core
             FinalStats = new Attrs();
             EffectBar.Init(this);
             Entities.Add(this);
-
-            FinalStats.HP_MAX = 10;
-            FinalStats.HP_NOW = 5;
-            FinalStats.EP_MAX = 5;
-            FinalStats.EP_NOW = 3;
         }
 
         

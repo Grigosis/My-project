@@ -1,26 +1,41 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Slime.Core.Algorythms.Logic;
 using ROR.Core;
-using RPGFight;
 using SecondCycleGame;
 using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core.Algorythms
 {
-    public class AI
+    public class AIController
     {
-        private LivingEntity Entity;
-        private Battle Battle;
+        public LivingEntity Entity;
+        public Battle Battle => Entity.Battle;
+        public AIBehavior Behavior;
         
-        public void Attach(LivingEntity entity, Battle battle)
+        public void Attach(LivingEntity entity, AIBehavior behavior)
         {
             Entity = entity;
-            Battle = battle;
+            Entity.AIController = this;
+            Behavior = behavior;
         }
-        
-        
+
+        public void Start()
+        {
+            Debug.LogWarning("AI:Start");
+            Battle.BattleUnity.battleMapCellController.ClearAll();
+            Behavior.Positioning.Start(Battle, this);
+        }
+
+        public void End()
+        {
+            Debug.LogWarning("AI:End");
+            Battle.BattleUnity.battleMapCellController.ClearAll();
+            Behavior.Positioning.Start(Battle, this);
+        }
 
         public void Update()
         {
+            
             //var enemies = Battle.GetEnemies(Entity);
             //var skills = Entity.SkillBar.SkillEntities;
 //

@@ -77,17 +77,35 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
             OnSelected?.Invoke(skillTarget);
         }
         
-        public virtual void OnMouseEnter(GameObject gameObject) { }
-        public void OnMouseOver(GameObject gameObject) { }
-        public void OnMouseExit(GameObject gameObject) { }
+        public virtual void OnMouseEnterProxy(GameObject gameObject) { }
+
+        public void OnMouseOverProxy(GameObject gameObject)
+        {
+            var target = GetSkillTarget(gameObject);
+            if (target != null && target is LivingEntity living)
+            {
+                var battleLivingEntity = living.GameObjectLink.GetComponent<BattleLivingEntity>();
+                battleLivingEntity.SetHighlighted(Color.red);
+            }
+        }
+
+        public void OnMouseExitProxy(GameObject gameObject)
+        {
+            var target = GetSkillTarget(gameObject);
+            if (target != null && target is LivingEntity living)
+            {
+                var battleLivingEntity = living.GameObjectLink.GetComponent<BattleLivingEntity>();
+                battleLivingEntity.SetHighlighted(Color.white);
+            }
+        }
         
         private GameObject mouseDownGameObject;
-        public void OnMouseDown(GameObject gameObject)
+        public void OnMouseDownProxy(GameObject gameObject)
         {
             mouseDownGameObject = gameObject;
         }
 
-        public void OnMouseUp(GameObject gameObject)
+        public void OnMouseUpProxy(GameObject gameObject)
         {
             if (gameObject == mouseDownGameObject && gameObject != null)
             {

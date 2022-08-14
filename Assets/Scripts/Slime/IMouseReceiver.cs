@@ -9,10 +9,10 @@ namespace SecondCycleGame
     
     public interface IMouseReceiver
     {
-        void OnMouseEnter(GameObject gameObject);
-        void OnMouseOver(GameObject gameObject);
-        void OnMouseExit(GameObject gameObject);
-        void OnMouseDown(GameObject gameObject);
-        void OnMouseUp(GameObject gameObject);
+        void OnMouseEnterProxy(GameObject gameObject);
+        void OnMouseOverProxy(GameObject gameObject);
+        void OnMouseExitProxy(GameObject gameObject);
+        void OnMouseDownProxy(GameObject gameObject);
+        void OnMouseUpProxy(GameObject gameObject);
     }
 }

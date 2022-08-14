@@ -278,6 +278,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap
 
         public void Attach(LivingEntity unit, BattleMapCell cell)
         {
+            AllLivingEntities.Add(unit);
             unit.Attach(Battle, cell);
             cell.Entity = unit;
         }

@@ -19,9 +19,9 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
             });
         }
 
-        public override void OnMouseEnter(GameObject gameObject)
+        public override void OnMouseEnterProxy(GameObject gameObject)
         {
-            base.OnMouseEnter(gameObject);
+            base.OnMouseEnterProxy(gameObject);
             
             
             var wrapper = gameObject.GetComponentInParent<MapCellWrapper>();

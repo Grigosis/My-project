@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DefinitionList>
+    <Definition xsi:type="AIBehaviorDefinition" Id="AI/Simple">
+      <Positioning>
+        <Layers>
+          <Layer MinValue="0" MaxValue="2" ValueFx="StayInRange" DebugName="BeAbleToDamageWithoutMoving">
+            <Params>
+              <Param Name="From" Value="Enemy" />
+              <Param Name="InVision" Value="no" />
+              <Param Name="BonusPerEach" Value="0.5" />
+			  <!--Rating fx-->
+			  <Param Name="OutMinRange" Value="1" />
+              <Param Name="MinRange" Value="3" />
+              <Param Name="MaxRange" Value="8" />
+			  <Param Name="OutMaxRange" Value="10" />
+			  <Param Name="Values" Value="0,1,1,0" />
+			  <Param Name="Interpolation" Value="Linear,Linear,Linear,Linear" />
+            </Params>
+          </Layer>
+		  <Layer MinValue="0" MaxValue="1" ValueFx="UseCovers" DebugName="AvoidDamage">
+            <Params>
+              <Param Name="MaxAP" Value="2" />
+              <Param Name="BonusPerEachHiddenEnemy" Value="0.33" />
+              <Param Name="BonusPerLowCover" Value="0.33" />
+              <Param Name="BonusPerMedCover" Value="0.66" />
+              <Param Name="BonusPerHighCover" Value="1" />
+            </Params>
+          </Layer>
+		  <Layer MinValue="0" MaxValue="3" ValueFx="StayInRangeOfSkill" DebugName="BeAbleToHealWithoutMoving">
+            <Params>
+			  <Param Name="From" Value="Ally" />
+              <Param Name="SkillType" Value="Heal" />
+              <Param Name="BonusPerEach" Value="0.5" />
+			  <Param Name="InVision" Value="yes" />
+            </Params>
+          </Layer>
+        </Layers>
+      </Positioning>
+      <Behavior>
+        <Action xsi:type="AIBehaviorUseSkillXml" SkillType="SplashAttack" TargetFilter="Ally" TargetSelectorFx="Closest" MaxMoveAPToCast="2" ReturnToCover="true" MustReturnToCover="true">
+			<Conditions>
+				<Condition DebugName="AvoidSelfDamage" ConditionFx="StayInRange">
+					<Params>
+					  <Param Name="From" Value="Enemy" />
+					  <Param Name="InVision" Value="Any" />
+					  
+					  <Param Name="OutMinRange" Value="1" />
+					  <Param Name="MinRange" Value="3" />
+					  <Param Name="MaxRange" Value="999" />
+					  <Param Name="OutMaxRange" Value="10" />
+					  <Param Name="Values" Value="0,1,1,0" />
+					  <Param Name="Interpolation" Value="Linear,Linear,Linear,Linear" />
+					</Params>
+				</Condition>
+			</Conditions>
+		</Action>
+      </Behavior>
+      <Triggers>
+        <Trigger xsi:type="AIBehaviorTriggerUnitDiedXml" TriggerFx="Say" Ally="true">
+          <Params>
+            <Param Name="Text" Value="You bastard!" />
+          </Params>
+        </Trigger>
+      </Triggers>
+    </Definition>
+  </DefinitionList>
+</Definitions>

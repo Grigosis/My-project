@@ -37,7 +37,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
         public override void Do()
         {
             m_controller.ClearAll();
-            var cells = m_battle.getAllLivingEntities();
+            var cells = m_battle.BattleMap.AllLivingEntities;
             var from = new Vector2Int(lastX, lastY);
             foreach (var move in cells)
             {

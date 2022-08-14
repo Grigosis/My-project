@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.BattleMap;
 using ROR.Core;
@@ -13,22 +13,14 @@ namespace SecondCycleGame
         public LivingEntity CurrentLivingEntityTurn;
         public BattleMap BattleMap;
         public BattleMapUnityWrapper BattleUnity;
+        public event Action<LivingEntity, LivingEntity> OnLivingEntityChanged;
         public Timeline Timeline = new Timeline(FramesInTurn*10);
-
-        public List<LivingEntity> GetEnemies(LivingEntity entity)
-        {
-            return new List<LivingEntity>();
-        }
-        
-        public List<LivingEntity> getAllLivingEntities()
-        {
-            return new List<LivingEntity>();
-        }
-
 
         public void SetCurrentPlayer(LivingEntity currentEntity)
         {
+            var was = CurrentLivingEntityTurn;
             CurrentLivingEntityTurn = currentEntity;
+            OnLivingEntityChanged?.Invoke(was, currentEntity);
         }
         
         public void NextPlayerTurn()

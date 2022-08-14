@@ -37,7 +37,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
             m_controller.GetOrCreate(from, from, Color.green);
         }
 
-        public override void OnMouseEnter(GameObject gameObject)
+        public override void OnMouseEnterProxy(GameObject gameObject)
         {
             var wrapper = gameObject.GetComponentInChildren<MapCellWrapper>();
             SetXY(wrapper.X, wrapper.Y);

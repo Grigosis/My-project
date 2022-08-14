@@ -1,3 +1,5 @@
+using Assets.Scripts.Slime.Core.Algorythms;
+using Assets.Scripts.Slime.Core.Algorythms.Logic;
 using ROR.Core;
 using ROR.Core.Serialization;
 using UnityEngine;
@@ -22,6 +24,14 @@ namespace RPGFight.Core
             for (int i = 0; i < stateInBattle.Skills.Length; i++)
             {
                 skillDefinitions[i] = D.Instance.Get<SkillDefinition>(stateInBattle.Skills[i]);
+            }
+
+            if (!string.IsNullOrEmpty(stateInBattle.AI))
+            {
+                var aiBehaviorDefinition = D.Instance.Get<AIBehaviorDefinition>(stateInBattle.AI);
+                AIBehavior behavior = new AIBehavior(aiBehaviorDefinition);
+                AIController controller = new AIController();
+                controller.Attach(livingEntity, behavior);
             }
             
             livingEntity.InitFromDefinition(stateInBattle.Icon, stateInBattle.BaseAttributes, stateInBattle.UpgradedAttributes, attrs, skillDefinitions);

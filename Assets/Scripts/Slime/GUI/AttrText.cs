@@ -11,15 +11,9 @@ namespace SecondCycleGame
     public class AttrText : MonoBehaviour
     {
         private static Regex Regex = new Regex("{([^}]+)}");
-        private TextMeshPro Text;
+        public TextMeshPro Text;
         public string AttributeName = "{HP_NOW}";
         public bool ShowName = false;
-        // Start is called before the first frame update
-        void Start()
-        {
-            Text = gameObject.GetComponent<TextMeshPro>();
-            
-        }
 
         // Update is called once per frame
         void Update()

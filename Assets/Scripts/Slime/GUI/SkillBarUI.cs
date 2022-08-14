@@ -21,6 +21,7 @@ namespace ROR.Core
                 {
                     m_selectedSkill = value;
                     OnSelectedSkillChanged?.Invoke(value);
+                    Debug.LogWarning($"OnSelectedSkillChanged {value}");
                 }
             }
         }

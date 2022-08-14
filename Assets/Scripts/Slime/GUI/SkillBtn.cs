@@ -61,7 +61,6 @@ namespace ROR.Core
         
         public void OnClick()
         {
-            Debug.LogWarning("OnOnClick1");
             OnClicked?.Invoke(this);
         }
         

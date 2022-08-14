@@ -5,30 +5,36 @@ namespace SecondCycleGame
     public class ClickableProxy : MonoBehaviour
     {
         public GameObject ClickableReceiver;
+        public GameObject ClickableReceiver2;
 
         private void OnMouseEnter()
         {
-            (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseEnter(gameObject);
+            if (ClickableReceiver!=null) (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseEnterProxy(gameObject);
+            if (ClickableReceiver2!=null)(ClickableReceiver2?.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseEnterProxy(gameObject);
         }
  
         private void OnMouseOver()
         {
-            (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseOver(gameObject);
+            if (ClickableReceiver!=null) (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseOverProxy(gameObject);
+            if (ClickableReceiver2!=null)(ClickableReceiver2?.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseOverProxy(gameObject);
         }
 
         private void OnMouseExit()
         {
-            (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseExit(gameObject);
+            if (ClickableReceiver!=null) (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseExitProxy(gameObject);
+            if (ClickableReceiver2!=null)(ClickableReceiver2?.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseExitProxy(gameObject);
         }
 
         private void OnMouseDown()
         {
-            (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseDown(gameObject);
+            if (ClickableReceiver!=null) (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseDownProxy(gameObject);
+            if (ClickableReceiver2!=null)(ClickableReceiver2?.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseDownProxy(gameObject);
         }
 
         private void OnMouseUp()
         {
-            (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseUp(gameObject);
+            if (ClickableReceiver!=null) (ClickableReceiver.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseUpProxy(gameObject);
+            if (ClickableReceiver2!=null)(ClickableReceiver2?.GetComponentInParent<IMouseReceiverProxy>())?.GetMouseReceiver()?.OnMouseUpProxy(gameObject);
         }
     }
 }
