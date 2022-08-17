@@ -272,5 +272,12 @@ namespace Assets.Scripts.Slime.Sugar
         {
             return array[random.Next(array.Length)];
         }
+
+        public static void AddOnce<T, K>(this Dictionary<T, K> dictionary, T t, K k) {
+            if (dictionary.TryGetValue(t, out var oldK)) {
+                throw new Exception($"Allready contains with key {t} : {oldK} / {k}");
+            }
+            dictionary.Add(t, k);
+        }
     }
 }
