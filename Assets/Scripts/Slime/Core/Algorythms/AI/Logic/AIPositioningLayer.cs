@@ -20,14 +20,14 @@ namespace Assets.Scripts.Slime.Core.Algorythms.Logic
 
             if (!F.AIFunctions.TryGetValue(xml.ValueFx, out Fx))
             {
-                Fx = (battle, controller, selector, args) => 66;
+                Fx = (battle, controller, selector, moveAP, args) => 666;
                 Debug.LogWarning($"Fx [{xml.ValueFx}] NotFound");
             }
         }
 
-        public float Do(Battle battle, AIController controller, BattleMapCell cell)
+        public float Do(Battle battle, AIController controller, BattleMapCell cell, float moveAP)
         {
-            return Fx.Invoke(battle, controller, cell, Params);
+            return Fx.Invoke(battle, controller, cell, moveAP, Params);
         }
     }
 }

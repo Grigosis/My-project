@@ -6,5 +6,5 @@ using SecondCycleGame;
 
 namespace Assets.Scripts.Slime.Core
 {
-    public delegate float AIFunction(Battle battle, AIController controller, BattleMapCell targetSelector, Dictionary<string, FxParam> args);
+    public delegate float AIFunction(Battle battle, AIController controller, BattleMapCell targetSelector, float moveAP, Dictionary<string, FxParam> args);
 }

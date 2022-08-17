@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core
 {
-    public class BattleMapCell : SkillTarget
+    public class BattleMapCell : ISkillTarget
     {
         public const float CellSize = 1f;
         
@@ -40,8 +40,8 @@ namespace Assets.Scripts.Slime.Core
             {
                 _renderer.material.color = newColor;
             }
-            
         }
+        
 
         public bool IsVisibleFrom(BattleMapCell cell)
         {

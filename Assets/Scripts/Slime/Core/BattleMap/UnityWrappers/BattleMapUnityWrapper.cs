@@ -8,7 +8,6 @@ using Assets.Scripts.Slime.Sugar;
 using ROR.Core;
 using SecondCycleGame;
 using UnityEngine;
-using Random = System.Random;
 
 namespace Assets.Scripts.Slime.Core.BattleMap
 {
@@ -36,43 +35,51 @@ namespace Assets.Scripts.Slime.Core.BattleMap
 
         public void SelectSkill(SkillEntity skillEntity)
         {
-            CurrentSelectedSkill = skillEntity;
-            
-            var targetSelector = skillEntity.Definition.TargetSelector;
-            Type type = Type.GetType(targetSelector);
-            if (type == null)
+            if (Battle.CurrentLivingEntityTurn?.AIController != null)
             {
-                Debug.LogError($"Was unable to find class {targetSelector} {skillEntity.Definition.Id}");
                 return;
             }
-            var o = Activator.CreateInstance (type) as IUnityTargetSelector;
-            if (o == null)
-            {
-                Debug.LogError($"Was unable to instantinate {targetSelector}");
-            }
-            
-            CurrentTargetSelector = o;
+            CurrentSelectedSkill = skillEntity;
+            CurrentTargetSelector = skillEntity.UnityTargetSelector;
             CurrentTargetSelector.BeginSelection(battleMapCellController, Battle, Battle.CurrentLivingEntityTurn, skillEntity);
             CurrentTargetSelector.OnSelected += CurrentTargetSelectorOnOnSelected;
         }
 
-        private void CurrentTargetSelectorOnOnSelected(List<SkillTarget> obj)
+        private void CurrentTargetSelectorOnOnSelected(List<ISkillTarget> obj)
         {
             if (Battle.CurrentLivingEntityTurn?.AIController != null)
             {
                 return;
             }
-            Debug.Log("CurrentTargetSelectorOnOnSelected");
-            CurrentSelectedSkill.Implementation.CastSkill(CurrentSelectedSkill, obj, new Random());
-            CurrentTargetSelector = null;
-            NextUnit();
+            //Debug.Log("CurrentTargetSelectorOnOnSelected");
+            //CurrentSelectedSkill.Implementation.CastSkill(CurrentSelectedSkill, obj, new Random());
+            //CurrentTargetSelector = null;
+            //NextUnit();
         }
 
+        public List<Action> ActionsToExecute = new List<Action>();
         private bool SwitchNextUnit = false;
 
+        public void AddAction(Action action)
+        {
+            lock (ActionsToExecute)
+            {
+                ActionsToExecute.Add(action);
+            }
+        }
+        
         void Update()
         {
             Init();
+            
+            lock (ActionsToExecute)
+            {
+                foreach (var action in ActionsToExecute)
+                {
+                    action();
+                }
+                ActionsToExecute.Clear();
+            }
             
             CurrentTargetSelector?.Update();
             Battle.CurrentLivingEntityTurn?.AIController?.Update();
@@ -95,6 +102,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap
         {
             was?.AIController?.End();
             neww?.AIController?.Start();
+            Debug.Log($"{(neww?.AIController != null ? "HAS AI": "HASN'T AI")}");
         }
 
         public void NextUnit()
@@ -157,12 +165,6 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             {
                 BattleMap.AddWall(wall);
             }
-            
-            //ConvexShape shape = new ConvexShape();
-            //shape.Points.Add(new Vector2(0,0));
-            //shape.Points.Add(new Vector2(100,100));
-            //BattleMap.Walls.Add(shape);
-
         }
 
         public void InitAttachCellModificators()
@@ -189,124 +191,9 @@ namespace Assets.Scripts.Slime.Core.BattleMap
                 var cell = BattleMap[cords];
                 if (cell != null)
                 {
-                    Battle.Attach(unit.LivingEntity, cell);
+                    Battle.Attach(unit.LivingEntity, cell, unit.Team);
                 }
             }
         }
     }
 }
-
-
-
-/*class MyClass : IMouseReceiver
-        {
-            private Vector2Int LastHoveredCell = new Vector2Int(-1,-1);
-            public void OnMouseEnter(GameObject gameObject)
-            {
-            
-            }
-
-            public void OnMouseOver(GameObject gameObject)
-            {
-                var wrapper = gameObject.GetComponent<MapCellWrapper>();
-                LastHoveredCell.x = wrapper.X;
-                LastHoveredCell.y = wrapper.Y;
-                if (BattleMap[LastHoveredCell] != null)
-                {
-                    BattleMap[LastHoveredCell].Color(Color.cyan);
-                }
-            
-            }
-            
-            public void OnMouseExit(GameObject gameObject)
-            {
-            
-            }
-
-            public void OnMouseDown(GameObject gameObject)
-            {
-                //var wrapper = gameObject.GetComponent<MapCellWrapper>();
-                //LastHoveredCell.x = wrapper.X;
-                //LastHoveredCell.y = wrapper.Y;
-                NextUnit();
-            }
-
-            public void OnMouseUp(GameObject gameObject)
-            {
-            
-            }
-            
-            private void DrawPath()
-            {
-                FillWithColor(Color.gray);
-
-                var all = DI.GetCellsAvailableForMovement(BattleMap, LastHoveredCell, 10);
-                
-                foreach (var cost in all)
-                {
-                    BattleMap[cost.X, cost.Y].Color(Color.green);
-                }
-            }
-
-            private void FillWithColor(Color color)
-            {
-                for (int i = 0; i < BattleMap.W; i++)
-                {
-                    for (int j = 0; j < BattleMap.H; j++)
-                    {
-                        if (!BattleMap[i, j].CanStand)
-                        {
-                            BattleMap[i, j].Color(Color.red);
-                        }
-                        else if (BattleMap[i, j].MovementCost > 1)
-                        {
-                            BattleMap[i, j].Color(Color.yellow);
-                        }
-                        else
-                        {
-                            BattleMap[i, j].Color(color);
-                        }
-                        
-                    }
-                }
-            }
-
-            private void DrawXXX()
-            {
-                FillWithColor(Color.green);
-                
-                
-                var tt = LastHoveredCell;// testCells[(update / 10) % testCells.Length];
-                var cell = BattleMap[tt];
-                if (cell != null)
-                {
-                    var covers = cell.Covers;
-                    if (covers.Count > 0)
-                    {
-                        for (int i = 0; i < BattleMap.W; i++)
-                        {
-                            for (int j = 0; j < BattleMap.H; j++)
-                            {
-                                float isUnderCover=1f;
-                                foreach (var cover in covers)
-                                {
-                                    var result = cover.IsUnderCover(new Vector2Int(i, j));
-                                    isUnderCover = Math.Min(isUnderCover, result);
-                                }
-                                
-                                if (isUnderCover < 0.4f)
-                                {
-                                    BattleMap[i, j].Color(Color.red);
-                                }
-                                else if (isUnderCover < 0.6f)
-                                {
-                                    BattleMap[i, j].Color(Color.yellow);
-                                }
-                            }
-                        }
-                    }
-                    
-                    cell.Color(Color.magenta);
-                }  
-            }
-        }*/

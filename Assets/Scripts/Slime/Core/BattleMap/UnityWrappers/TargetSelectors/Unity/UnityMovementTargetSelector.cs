@@ -9,16 +9,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
 {
-    public class MovementTargetSelector : ATargetSelector
+    public class UnityMovementTargetSelector : ATargetSelector
     {
-        public override void Do()
+        protected override void Do()
         {
             m_controller.ClearAll();
-            var cells = DI.GetCellsAvailableForMovement(m_battle.BattleMap, new Vector2Int(lastX, lastY), Balance.GetMovepoints(m_caster));
-            var from = new Vector2Int(lastX, lastY);
-            foreach (var move in cells)
+            foreach (var move in allAvailableTargets)
             {
-                m_controller.GetOrCreate(move.Position, from, Color.gray);
+                if (move is BattleMapCell cell)
+                {
+                    m_controller.GetOrCreate(cell.Position, new Vector2Int(lastX, lastY), Color.gray);
+                }
             }
         }
 
@@ -49,10 +50,10 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
         public override void BeginSelection(BattleMapCellController controller, Battle battle, LivingEntity caster, SkillEntity skillEntity)
         {
             base.BeginSelection(controller, battle, caster, skillEntity);
-            Do();
+            FindAndDo();
         }
 
-        protected override SkillTarget GetSkillTarget(GameObject gameObject)
+        protected override ISkillTarget GetSkillTarget(GameObject gameObject)
         {
             var wrapper = gameObject.GetComponentInParent<MapCellWrapper>();
             if (wrapper != null)

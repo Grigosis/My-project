@@ -14,6 +14,9 @@ namespace SecondCycleGame
         public EffectBar EffectBar;
         public SkinnedMeshRenderer Renderer;
         public String DefintionId;
+
+        public int Team;
+
         // Start is called before the first frame update
         void Awake()
         {
@@ -112,6 +115,11 @@ namespace SecondCycleGame
         public void SetHighlighted(Color color)
         {
             Renderer.materials[0].color = color;
+        }
+
+        public void ReloadAI()
+        {
+            LivingEntity.AIController?.Start();
         }
     }
 }

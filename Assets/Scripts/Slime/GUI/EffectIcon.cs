@@ -29,7 +29,7 @@ namespace ROR.Core{
 
         private void UpdateImpl(){
             m_duration = Target.Definition.Duration;
-            m_icon.sprite = R.Load<Sprite>(Target.Definition.Icon);
+            m_icon.sprite = R.Instance.Load<Sprite>(Target.Definition.Icon);
             if(m_duration > 9999999){
                 m_progressbar.enabled = false;
                 m_timerText.enabled = false;

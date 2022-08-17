@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.MyUnity;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.Algorythms;
+using Assets.Scripts.Slime.Core.Algorythms.Data;
 using Assets.Scripts.Slime.Core.BattleMap.Logic.Interfaces;
 using ROR.Core.Serialization;
 using RPGFight;
@@ -13,7 +14,7 @@ using Random = System.Random;
 
 namespace ROR.Core
 {
-    public class LivingEntity : IEffectable, IEntity, SkillTarget
+    public class LivingEntity : IEffectable, IEntity, ISkillTarget
     {
         public long EntityId { get; set; }
 
@@ -52,10 +53,11 @@ namespace ROR.Core
 
         
         static Random RAND = new Random();
-        public void Attach(Battle battle, BattleMapCell cell)
+        public void Attach(Battle battle, BattleMapCell cell, int team)
         {
             Battle = battle;
             Cell = cell;
+            Team = team;
             //var frame = (int)((1-FinalStats.INITIATIVE.Clamp(0, 0.9999))*Battle.FramesInTurn);
             var frame = (int)(RAND.NextDouble()*Battle.FramesInTurn);
             MoveAt(frame);
@@ -70,8 +72,9 @@ namespace ROR.Core
                 //TODO Logic of switching
                 return;
             }
-            
-            
+
+            FinalStats.EP_NOW = FinalStats.EP_MAX + 3;
+            Debug.LogError("EP:" + FinalStats.EP_MAX);
             
             MoveAt(Battle.FramesInTurn);
             SkillBar.Update();
@@ -169,6 +172,21 @@ namespace ROR.Core
         public float GetMaxMoveDistance()
         {
             return 10;
+        }
+
+        public RelationShip GetRelationTo(LivingEntity forEntity)
+        {
+            return this.Team != forEntity.Team ? RelationShip.Enemy : RelationShip.Ally;
+        }
+        
+        public bool IsEnemyTo(LivingEntity forEntity)
+        {
+            return this.Team != forEntity.Team;
+        }
+        
+        public bool IsAllyTo(LivingEntity forEntity)
+        {
+            return this.Team == forEntity.Team;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Debug = UnityEngine.Debug;
 
 namespace Assets.Scripts.Sugar
 {
@@ -15,7 +16,7 @@ namespace Assets.Scripts.Sugar
         }
         public void Dispose()
         {
-            Console.WriteLine("Measure:"+name+" totalMs:" +  timer.Elapsed.TotalMilliseconds);
+            Debug.LogWarning($"Measure:{name} totalMs:{timer.Elapsed.TotalMilliseconds}");
         }
     }
 }

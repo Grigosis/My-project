@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.Slime.Core.Algorythms.Logic;
+﻿using Assets.Scripts.Slime.Core.Algorythms.Logic;
+using Assets.Scripts.Sugar;
 using ROR.Core;
 using SecondCycleGame;
-using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace Assets.Scripts.Slime.Core.Algorythms
 {
@@ -22,8 +22,12 @@ namespace Assets.Scripts.Slime.Core.Algorythms
         public void Start()
         {
             Debug.LogWarning("AI:Start");
-            Battle.BattleUnity.battleMapCellController.ClearAll();
-            Behavior.Positioning.Start(Battle, this);
+            
+            using (new Measure("AI Positioning"))
+            {
+                Behavior.Positioning.Start(Battle, this);
+            }
+            
         }
 
         public void End()
@@ -34,21 +38,6 @@ namespace Assets.Scripts.Slime.Core.Algorythms
         }
 
         public void Update()
-        {
-            
-            //var enemies = Battle.GetEnemies(Entity);
-            //var skills = Entity.SkillBar.SkillEntities;
-//
-            //var movespeed = Entity.GetMaxMoveDistance();
-            //var movements = DI.GetCellsAvailableForMovement(Battle.BattleMap, new Vector2Int(Entity.Cell.X, Entity.Cell.Y), movespeed);
-            
-            //foreach (var m in movements)
-            //{
-            //    Battle.
-            //}
-        }
-
-        public void PickEnemy(List<LivingEntity> enemies)
         {
             
         }

@@ -43,9 +43,9 @@ namespace SecondCycleGame
         }
 
 
-        public void Attach(LivingEntity unit, BattleMapCell cell)
+        public void Attach(LivingEntity unit, BattleMapCell cell, int team)
         {
-            BattleMap.Attach(unit, cell);
+            BattleMap.Attach(unit, cell, team);
         }
     }
 }

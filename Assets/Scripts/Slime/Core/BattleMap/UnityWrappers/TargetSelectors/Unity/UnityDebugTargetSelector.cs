@@ -1,13 +1,15 @@
-﻿using Assets.Scripts.Slime.Core.BattleMap.Logic.Interfaces;
+﻿using System;
+using Assets.Scripts.Slime.Core.BattleMap.Logic.Interfaces;
 using RPGFight;
 using RPGFight.Core;
 using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
 {
-    public class DebugTargetSelector : ATargetSelector
+    [Obsolete]
+    public class UnityDebugTargetSelector : ATargetSelector
     {
-        public override void Do()
+        protected override void Do()
         {
             m_controller.ClearAll();
             
@@ -41,10 +43,10 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
         {
             var wrapper = gameObject.GetComponentInChildren<MapCellWrapper>();
             SetXY(wrapper.X, wrapper.Y);
-            Do();
+            FindAndDo();
         }
 
-        protected override SkillTarget GetSkillTarget(GameObject gameObject)
+        protected override ISkillTarget GetSkillTarget(GameObject gameObject)
         {
             var wrapper = gameObject.GetComponentInParent<MapCellWrapper>();
             if (wrapper != null)

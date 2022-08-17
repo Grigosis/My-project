@@ -9,7 +9,7 @@ namespace Assets.Scripts.Slime.Core.Skills
 {
     public class DefaultAttack : ISkillImplementation
     {
-        public void CastSkill(SkillEntity skillEntity, List<SkillTarget> targets, Random seed)
+        public void CastSkill(SkillEntity skillEntity, List<ISkillTarget> targets, Random seed)
         {
             var entity = skillEntity.Owner;
 

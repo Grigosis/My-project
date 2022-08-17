@@ -12,7 +12,7 @@ namespace Assets.Scripts.Slime.GUI
         
         public void Attach(LivingEntity entity)
         {
-            Sprite sprite = R.Load<Sprite> (entity?.Portrait ?? "Icons/Icon3");
+            Sprite sprite = R.Instance.Load<Sprite> (entity?.Portrait ?? "Icons/Icon3");
             Entity = entity;
             Image.sprite = sprite;
         }

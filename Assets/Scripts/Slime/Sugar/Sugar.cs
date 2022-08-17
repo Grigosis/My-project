@@ -207,6 +207,11 @@ namespace Assets.Scripts.Slime.Sugar
             return number / divide + (number % divide == 0 ? 0 : 1);
         }
         
+        public static int ToIntWithUpperRound(this double number)
+        {
+            return (int)Math.Ceiling(number);
+        }
+        
         public static int DivideWithUpperRound(this uint number, int divide)
         {
             return (int)(number / divide + (number % divide == 0 ? 0 : 1));

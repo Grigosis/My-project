@@ -7,17 +7,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
 {
-    public class SelfTargetSelector : ATargetSelector
+    public class UnitySelfTargetSelector : ATargetSelector
     {
         public override void BeginSelection(BattleMapCellController controller, Battle battle, LivingEntity caster, SkillEntity skillEntity)
         {
             base.BeginSelection(controller, battle, caster, skillEntity);
-            Invoke(new List<SkillTarget>() {caster});
+            Invoke(new List<ISkillTarget>() {caster});
         }
 
-        public override void Do() { }
+        protected override void Do() { }
 
-        protected override SkillTarget GetSkillTarget(GameObject gameObject)
+        protected override ISkillTarget GetSkillTarget(GameObject gameObject)
         {
             return null;
         }

@@ -51,6 +51,13 @@ namespace Assets.Scripts.Slime.Core
             RightPoint3 = RightPoint1 + direction.Rotate(RightAngle2);
         }
 
+        /// <summary>
+        /// Returns modificatior of hit
+        /// 1 - 100% hit
+        /// 0 - 0% hit
+        /// </summary>
+        /// <param name="from2"></param>
+        /// <returns></returns>
         public float IsUnderCover(Vector2 from2)
         {
             var sign3 = Sugar.Sugar.IsToLeftOrRight(LeftPoint1, RightPoint1, from2);

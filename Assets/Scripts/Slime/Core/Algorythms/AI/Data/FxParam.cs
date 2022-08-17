@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Slime.Sugar;
+﻿using System;
+using Assets.Scripts.Slime.Sugar;
 
 namespace Assets.Scripts.Slime.Core.Algorythms.Data
 {
@@ -7,7 +8,18 @@ namespace Assets.Scripts.Slime.Core.Algorythms.Data
         Yes,
         No,
         Any
-    } 
+    }
+
+    [Flags]
+    public enum RelationShip
+    {
+        None = 0,
+        Ally = 1,
+        Enemy = 2,
+        Neutral = 4,
+        Any = Ally | Enemy | Neutral
+    }
+    
     public class FxParam
     {
         public readonly string Name;
@@ -35,6 +47,7 @@ namespace Assets.Scripts.Slime.Core.Algorythms.Data
             
             var lower = Value.ToLower();
             Bool = ParseFxBool(lower);
+            Bool = ParseFxBool(lower);
             DoubleValues = ParseDoubles(Value);
         }
 
@@ -54,6 +67,31 @@ namespace Assets.Scripts.Slime.Core.Algorythms.Data
                     return null;
             }
         }
+        
+        private static RelationShip ParseRelationShip(string lower)
+        {
+            var split = lower.Split(" ");
+            RelationShip relationShip = RelationShip.None;
+            for (int i = 0; i < split.Length; i++)
+            {
+                switch (lower)
+                {
+                    case "ally":
+                        relationShip |= RelationShip.Ally;
+                        break;
+                    case "enemy":
+                        relationShip |= RelationShip.Enemy;
+                        break;
+                    case "any":
+                    default:
+                        relationShip |= RelationShip.Any;
+                        break;
+                }
+            }
+
+            return relationShip;
+        }
+        
         private static double[] ParseDoubles(string s)
         {
             if (string.IsNullOrEmpty(s))

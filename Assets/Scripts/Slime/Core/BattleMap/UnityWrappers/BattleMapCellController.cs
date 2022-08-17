@@ -106,5 +106,31 @@ namespace Assets.Scripts.Slime.Core.Algorythms
             //return new Vector3(vector2.x - BattleMapCell.CellSize/2, 1, vector2.y- BattleMapCell.CellSize/2);
             return new Vector3(vector2.x, 1, vector2.y);
         }
+
+        public void ClearOther<T>(List<T> toRemove, Func<T, Vector2Int> converter)
+        {
+            HashSet<Vector2Int> toKeep = new HashSet<Vector2Int>();
+            HashSet<Vector2Int> toRemoveSet = new HashSet<Vector2Int>();
+            foreach (var to in toRemove)
+            {
+                toKeep.Add(converter(to));
+            }
+
+            foreach (var cell in AllCells)
+            {
+                if (!toKeep.Contains(cell.Key))
+                {
+                    toRemoveSet.Add(cell.Key);
+                }
+            }
+
+            Debug.LogError("ClearOther:" + toRemoveSet.Count);
+            foreach (var i in toRemoveSet)
+            {
+                var cell = AllCells[i];
+                AllCells.Remove(i);
+                GameObjectPool.instance.PoolObject(cell.gameObject);
+            }
+        }
     }
 }

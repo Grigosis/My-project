@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
 {
-    public class CellTargetSelector : ATargetSelector
+    public class UnityCellTargetSelector : ATargetSelector
     {
-        public override void Do()
+        protected override void Do()
         {
             var from = m_caster.Cell.Position;
-            m_battle.BattleMap.Foreach(m_caster.Cell, m_skillEntity.GetMinRange(), m_skillEntity.GetMaxRange(), cell =>
+            foreach (var target in allAvailableTargets)
             {
-                var to = new Vector2Int(cell.X, cell.Y);
-                if (!m_battle.BattleMap.IntersectsWall(from, to))
+                if (target is BattleMapCell cell)
                 {
+                    var to = new Vector2Int(cell.X, cell.Y);
                     m_controller.GetOrCreate(to, from, Color.gray);
                 }
-            });
+            }
         }
 
         public override void OnMouseEnterProxy(GameObject gameObject)
@@ -36,7 +36,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
             
         }
 
-        protected override SkillTarget GetSkillTarget(GameObject gameObject)
+        protected override ISkillTarget GetSkillTarget(GameObject gameObject)
         {
             var wrapper = gameObject.GetComponentInParent<MapCellWrapper>();
             if (wrapper != null)

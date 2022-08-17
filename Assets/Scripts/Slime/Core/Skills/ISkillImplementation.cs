@@ -6,6 +6,6 @@ namespace Assets.Scripts.Slime.Core.Skills
 {
     public interface ISkillImplementation
     {
-        void CastSkill(SkillEntity skillEntity, List<SkillTarget> targets, Random seed);
+        void CastSkill(SkillEntity skillEntity, List<ISkillTarget> targets, Random seed);
     }
 }

@@ -182,7 +182,7 @@ namespace Assets.Scripts.Slime.Core.BattleMap
                     var cell = this[cover.Position];
                     if (cell != null)
                     {
-                        //Debug.LogError("Register cover" + cover.Position + " " + cover.Direction);
+                        Debug.LogError("Register cover" + cover.Position + " " + cover.Direction);
                         cell.Covers.Add(cover);
                     } 
                 }
@@ -204,6 +204,8 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             return false;
         }
 
+        
+
         public void Foreach(BattleMapCell cell, int range, Action<BattleMapCell> action)
         {
             var minX = cell.X - range;
@@ -217,15 +219,20 @@ namespace Assets.Scripts.Slime.Core.BattleMap
         
         public void Foreach(BattleMapCell cell, int minRange, int maxRange, Action<BattleMapCell> action)
         {
-            var minX = cell.X - maxRange;
-            var maxX = cell.X + maxRange;
-            var minY = cell.Y - maxRange;
-            var maxY = cell.Y + maxRange;
+            Foreach(new Vector2Int(cell.X, cell.Y), minRange, maxRange, action);
+        }
+        
+        public void Foreach(Vector2Int cell, int minRange, int maxRange, Action<BattleMapCell> action)
+        {
+            var minX = cell.x - maxRange;
+            var maxX = cell.x + maxRange;
+            var minY = cell.y - maxRange;
+            var maxY = cell.y + maxRange;
 
-            var excludeMinX = cell.X - (minRange-1);
-            var excludeMaxX = cell.X + (minRange-1);
-            var excludeMinY = cell.Y - (minRange-1);
-            var excludeMaxY = cell.Y + (minRange-1);
+            var excludeMinX = cell.x - (minRange-1);
+            var excludeMaxX = cell.x + (minRange-1);
+            var excludeMinY = cell.y - (minRange-1);
+            var excludeMaxY = cell.y + (minRange-1);
 
             Foreach(minX, maxX, minY, maxY, excludeMinX, excludeMaxX, excludeMinY, excludeMaxY, action);
         }
@@ -276,10 +283,10 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             }
         }
 
-        public void Attach(LivingEntity unit, BattleMapCell cell)
+        public void Attach(LivingEntity unit, BattleMapCell cell, int team)
         {
             AllLivingEntities.Add(unit);
-            unit.Attach(Battle, cell);
+            unit.Attach(Battle, cell, team);
             cell.Entity = unit;
         }
 
@@ -294,7 +301,19 @@ namespace Assets.Scripts.Slime.Core.BattleMap
             
             Walls.Add(shape);
         }
-        
-        
+
+
+        public List<LivingEntity> GetAllVisibleEnemies(LivingEntity forEntity, List<LivingEntity> buffer)
+        {
+            buffer = buffer ?? new List<LivingEntity>();
+            foreach (var entity in AllLivingEntities)
+            {
+                if (entity.IsEnemyTo(forEntity))
+                {
+                    buffer.Add(entity);
+                }
+            }
+            return buffer;
+        }
     }
 }

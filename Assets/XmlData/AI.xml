@@ -18,7 +18,25 @@
 			  <Param Name="Interpolation" Value="Linear,Linear,Linear,Linear" />
             </Params>
           </Layer>
+		  <!--<Layer MinValue="0" MaxValue="1" ValueFx="Random" DebugName="Debug">
+            <Params>
+              <Param Name="MaxAP" Value="2" />
+              <Param Name="BonusPerEachHiddenEnemy" Value="0.33" />
+              <Param Name="BonusPerLowCover" Value="0.33" />
+              <Param Name="BonusPerMedCover" Value="0.66" />
+              <Param Name="BonusPerHighCover" Value="1" />
+            </Params>
+          </Layer>-->
 		  <Layer MinValue="0" MaxValue="1" ValueFx="UseCovers" DebugName="AvoidDamage">
+            <Params>
+              <Param Name="MaxAP" Value="2" />
+              <Param Name="BonusPerEachHiddenEnemy" Value="0.33" />
+              <Param Name="BonusPerLowCover" Value="0.33" />
+              <Param Name="BonusPerMedCover" Value="0.66" />
+              <Param Name="BonusPerHighCover" Value="1" />
+            </Params>
+          </Layer>
+		  <Layer MinValue="0" MaxValue="10" ValueFx="AmountOfSkillCanUse" DebugName="CanMoveAndCastSkills">
             <Params>
               <Param Name="MaxAP" Value="2" />
               <Param Name="BonusPerEachHiddenEnemy" Value="0.33" />

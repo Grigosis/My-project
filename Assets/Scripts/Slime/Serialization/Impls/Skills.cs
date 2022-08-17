@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using Assets.Scripts.Slime.Core.Algorythms.Data;
 
 namespace ROR.Core.Serialization
 {
@@ -27,14 +28,32 @@ namespace ROR.Core.Serialization
         public string TargetSelector;
         
         [XmlAttribute]
-        public string Implementation;
+        public string UnityTargetSelector;
         
+        [XmlAttribute]
+        public string SplashProvider;
+        
+        [XmlAttribute]
+        public string TargetRanger;
+        
+        [XmlAttribute]
+        public string Implementation;
+
+        [XmlAttribute]
+        public RelationShip RelationShipFilter = RelationShip.Any;
+
         [XmlAttribute]
         public bool IsRangedAttack;
 
         [XmlAttribute]
         public float HitChanceMlt = 1;
 
+        [XmlAttribute]
+        public int SplashRange = 0;
+        
+        [XmlAttribute]
+        public int AP = 0;
+        
         [XmlAttribute]
         public int MinRange = 0;
         

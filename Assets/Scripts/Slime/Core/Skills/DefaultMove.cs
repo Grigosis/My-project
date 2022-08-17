@@ -7,7 +7,7 @@ namespace Assets.Scripts.Slime.Core.Skills
 {
     public class DefaultMove : ISkillImplementation
     {
-        public void CastSkill(SkillEntity skillEntity, List<SkillTarget> targets, Random seed)
+        public void CastSkill(SkillEntity skillEntity, List<ISkillTarget> targets, Random seed)
         {
             var entity = skillEntity.Owner;
             var cell = (BattleMapCell)targets[0];

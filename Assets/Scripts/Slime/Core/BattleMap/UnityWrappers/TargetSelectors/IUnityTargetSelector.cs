@@ -12,6 +12,6 @@ namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
         void BeginSelection(BattleMapCellController controller, Battle battle, LivingEntity caster, SkillEntity entity);
         void EndSelection();
         void Update();
-        event Action<List<SkillTarget>> OnSelected;
+        event Action<List<ISkillTarget>> OnSelected;
     }
 }

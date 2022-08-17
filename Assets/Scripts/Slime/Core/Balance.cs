@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Slime.Core;
+using Assets.Scripts.Slime.Core.BattleMap;
 using ROR.Core;
 using ROR.Core.Serialization;
 using UnityEngine;
@@ -92,6 +94,44 @@ namespace RPGFight.Core
         public static float GetMovepoints(LivingEntity caster)
         {
             return (float)(caster.FinalStats.EP_NOW * (1 + caster.FinalStats.MOVESPEED_MLT)) + 3;
+        }
+        
+        public static float GetCoverHitMultiplicator(BattleMap battleMap, Vector2Int from, Vector2Int to)
+        {
+            if (battleMap.IntersectsWall(from, to))
+            {
+                return 0;
+            }
+
+            var covers = battleMap[to].Covers;
+            if (covers == null || covers.Count == 0)
+            {
+                return 1;
+            }
+            
+            var max = 0f;
+            foreach (var cover in covers)
+            {
+                var result = GetCoverBonus(cover, cover.IsUnderCover(to));
+                max = Math.Max(max, result);
+            }
+            
+            return max;
+        }
+
+        public static float GetCoverBonus(MapCellCover cover, float result)
+        {
+            switch (cover.Type)
+            {
+                case CoverEnum.Large:
+                    return 0;
+                case CoverEnum.Medium:
+                    return result * 0.5f;
+                case CoverEnum.Small:
+                    return result * 0.75f;
+                default:
+                    return 1;
+            }
         }
     }
 }

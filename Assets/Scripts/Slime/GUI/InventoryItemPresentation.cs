@@ -13,7 +13,7 @@ namespace Assets.Scripts.Slime.GUI
         public void SetItem(ItemStack stack)
         {
             var icon = stack.Definition.Icon;
-            Image.sprite = R.Load<Sprite>(icon);
+            Image.sprite = R.Instance.Load<Sprite>(icon);
             ItemStack = stack;
         }
     }
