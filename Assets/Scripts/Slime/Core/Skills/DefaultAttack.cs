@@ -9,6 +9,36 @@ namespace Assets.Scripts.Slime.Core.Skills
 {
     public class DefaultAttack : ISkillImplementation
     {
+        public void PredictFuture(SkillEntity skillEntity, List<ISkillTarget> targets, Random seed)
+        {
+            var dealer = skillEntity.Owner;
+            var future = new Future();
+            foreach (var target in targets)
+            {
+                if (target is LivingEntity receiver)
+                {
+                    var hit = new HitCondition();
+                    var damage = new DamageFuture();
+                    damage.Effect = new HealingEffectEntity();
+                    
+                    var damages = Balance.CalculateDamage(dealer.FinalStats, receiver.FinalStats, skillEntity.Definition.Attacks, 0);
+
+                    damage.Damage = 
+                        
+                    hit.Nodes.Add(damage);
+                    future.Nodes.Add(hit);
+                }
+            }
+        }
+
+        public void ExecuteFuture(Future future, bool animate)
+        {
+            foreach (var node in future.Nodes)
+            {
+                node.Execute();
+            }
+        }
+
         public void CastSkill(SkillEntity skillEntity, List<ISkillTarget> targets, Random seed)
         {
             var entity = skillEntity.Owner;
