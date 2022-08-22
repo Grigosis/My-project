@@ -7,6 +7,16 @@ namespace Assets.Scripts.Slime.Core.Skills
 {
     public class DefaultMove : ISkillImplementation
     {
+        public void PredictFuture(SkillEntity skillEntity, List<ISkillTarget> targets, Random seed)
+        {
+            
+        }
+
+        public void ExecuteFuture(Future future, bool animate)
+        {
+            
+        }
+
         public void CastSkill(SkillEntity skillEntity, List<ISkillTarget> targets, Random seed)
         {
             var entity = skillEntity.Owner;

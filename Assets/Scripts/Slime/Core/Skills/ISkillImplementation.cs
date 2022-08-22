@@ -50,11 +50,6 @@ namespace Assets.Scripts.Slime.Core.Skills
         }
     }
 
-    public class MultiNode
-    {
-        
-    }
-
     public class DamageFuture : Future {
         public double CritChance;
         public List<ElementDamage> Damage;
@@ -62,7 +57,7 @@ namespace Assets.Scripts.Slime.Core.Skills
         public EffectEntity Effect;
     }
 
-    public class HitCondition : Future
+    public class HitCondition : Brancher
     {
         public double HitChance;
         public bool Hitted;

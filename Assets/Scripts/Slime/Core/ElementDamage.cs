@@ -2,7 +2,7 @@ using System.Xml.Serialization;
 
 namespace RPGFight.Core
 {
-    public struct ElementDamage
+    public class ElementDamage
     {
         [XmlAttribute] public int Id;
         [XmlAttribute] public double Min;

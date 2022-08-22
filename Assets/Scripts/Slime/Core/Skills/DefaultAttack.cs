@@ -17,26 +17,19 @@ namespace Assets.Scripts.Slime.Core.Skills
             {
                 if (target is LivingEntity receiver)
                 {
-                    var hit = new HitCondition();
-                    var damage = new DamageFuture();
-                    damage.Effect = new HealingEffectEntity();
-                    
-                    var damages = Balance.CalculateDamage(dealer.FinalStats, receiver.FinalStats, skillEntity.Definition.Attacks, 0);
-
-                    damage.Damage = 
-                        
-                    hit.Nodes.Add(damage);
-                    future.Nodes.Add(hit);
+                    //var hit = new HitCondition();
+                    //var damage = new DamageFuture();
+                    //damage.Effect = new HealingEffectEntity();
+                    var damages = Balance.PredictFuture(dealer, receiver, skillEntity.Definition);
+                    //hit.Nodes.Add(damage);
+                    //future.Nodes.Add(hit);
                 }
             }
         }
 
         public void ExecuteFuture(Future future, bool animate)
         {
-            foreach (var node in future.Nodes)
-            {
-                node.Execute();
-            }
+            future.Execute();
         }
 
         public void CastSkill(SkillEntity skillEntity, List<ISkillTarget> targets, Random seed)

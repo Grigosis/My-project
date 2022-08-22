@@ -15,11 +15,13 @@ namespace RPGFight.Core
         
         public static Future PredictFuture (LivingEntity dealer, LivingEntity receiver, SkillDefinition definition) {
             var hit = new HitCondition();
-            hit.HitChance = CalculateHit(dealer, receiver, definition);;
+            hit.HitChance = CalculateHit(dealer, receiver, definition);
+            
             var damage = new DamageFuture();
             damage.CritChance = CalculateCritChance(dealer, receiver, definition);
             damage.Damage = CalculateDamage(dealer.FinalStats, receiver.FinalStats, definition.Attacks);
-            hit.Nodes.Add(damage);
+            hit.Success = damage;
+            
             return hit;
         }
 
@@ -40,10 +42,12 @@ namespace RPGFight.Core
 
 
             var damages = CalculateDamage(dealer.FinalStats, receiver.FinalStats, definition.Attacks);
-            foreach (var elementDamage in damages)
+            for (var i = 0; i < damages.Count; i++)
             {
+                var elementDamage = damages[i];
                 elementDamage.IsCrit = crit;
             }
+
             receiver.Damage(damages, dealer, seed);
         }
 
@@ -53,20 +57,7 @@ namespace RPGFight.Core
         }
 
 
-        public static List<ElementDamage> CalculateDamage(Attrs dealer, Attrs receiver, ElementAttack[] attacks)
-        {
-            List<ElementDamage> outAttacks = new List<ElementDamage>();
-            foreach (var attack in attacks)
-            {
-                var id = Attrs.GetElementId(attack.Name);
-                var dealerEl = dealer.GetElement(id);
-                var receiverEl = receiver.GetElement(id);
-                var dmg = CalculateDamage(id, dealer, dealerEl, receiverEl);
-                outAttacks.Add(dmg);
-            }
-
-            return outAttacks;
-        }
+        
 
         public static double CalculateHit(LivingEntity dealer, LivingEntity receiver, SkillDefinition definition)
         {
@@ -84,6 +75,21 @@ namespace RPGFight.Core
             return value;
         }
 
+        public static List<ElementDamage> CalculateDamage(Attrs dealer, Attrs receiver, ElementAttack[] attacks)
+        {
+            List<ElementDamage> outAttacks = new List<ElementDamage>();
+            foreach (var attack in attacks)
+            {
+                var id = Attrs.GetElementId(attack.Name);
+                var dealerEl = dealer.GetElement(id);
+                var receiverEl = receiver.GetElement(id);
+                var dmg = CalculateDamage(id, dealer, dealerEl, receiverEl);
+                outAttacks.Add(dmg);
+            }
+
+            return outAttacks;
+        }
+        
         public static ElementDamage CalculateDamage(int id, Attrs dealer, Element attack, Element defence)
         {
             var min = attack.ATK_MIN_ABS * (1 + attack.ATK_MIN_MLT);
