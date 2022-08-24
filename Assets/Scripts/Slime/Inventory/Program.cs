@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Slime.Sugar;
 using ClassLibrary1.Inventory;
+using ROR.Core.Serialization;
 
 namespace ConsoleApplication1
 {

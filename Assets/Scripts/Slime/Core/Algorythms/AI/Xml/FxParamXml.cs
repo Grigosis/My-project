@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Slime.Core.Algorythms
 {
-    public class FxParamXml
+    public struct FxParamXml
     {
         [XmlAttribute] 
         public string Name;

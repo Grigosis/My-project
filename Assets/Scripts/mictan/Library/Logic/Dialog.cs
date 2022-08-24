@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using ClassLibrary1.Xml;
 using Combinator;
 using Assets.Scripts.Library;

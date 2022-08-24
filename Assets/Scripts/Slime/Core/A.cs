@@ -14,34 +14,34 @@ namespace RPGFight
     [System.Serializable]
     public class Attrs
     {
-        [XmlAttribute] public double HP_NOW = 0;
-        [XmlAttribute] public double HP_MAX = 0;
-        [XmlAttribute] public double HP_MAX_MLT = 0;
-        [XmlAttribute] public double HP_REGEN = 0;
-        [XmlAttribute] public double EP_NOW = 0;
-        [XmlAttribute] public double EP_MAX = 0;
-        [XmlAttribute] public double EP_MAX_MLT = 0;
-        [XmlAttribute] public double EP_REGEN = 0;
-        [XmlAttribute] public double HIT_CLOSE_RANGE = 0;
-        [XmlAttribute] public double HIT_FAR_RANGE = 0;
-        [XmlAttribute] public double DODGE_CLOSE_RANGE = 0;
-        [XmlAttribute] public double DODGE_FAR_RANGE = 0;
-        [XmlAttribute] public double CRIT_CHANCE = 0;
-        [XmlAttribute] public double CRIT_MLT = 0;
-        [XmlAttribute] public double MOVESPEED = 0;
-        [XmlAttribute] public double MOVESPEED_MLT = 0;
-        [XmlAttribute] public double INITIATIVE = 0;
+        [SerializeField] public double HP_NOW = 0;
+        [SerializeField] public double HP_MAX = 0;
+        [SerializeField] public double HP_MAX_MLT = 0;
+        [SerializeField] public double HP_REGEN = 0;
+        [SerializeField] public double EP_NOW = 0;
+        [SerializeField] public double EP_MAX = 0;
+        [SerializeField] public double EP_MAX_MLT = 0;
+        [SerializeField] public double EP_REGEN = 0;
+        [SerializeField] public double HIT_CLOSE_RANGE = 0;
+        [SerializeField] public double HIT_FAR_RANGE = 0;
+        [SerializeField] public double DODGE_CLOSE_RANGE = 0;
+        [SerializeField] public double DODGE_FAR_RANGE = 0;
+        [SerializeField] public double CRIT_CHANCE = 0;
+        [SerializeField] public double CRIT_MLT = 0;
+        [SerializeField] public double MOVESPEED = 0;
+        [SerializeField] public double MOVESPEED_MLT = 0;
+        [SerializeField] public double INITIATIVE = 0;
 
-        public Stats STATS = new Stats();
-        public Perks PERKS = new Perks();
-        public Perks UNLOCKABLE_PERKS = new Perks();
-        public Element CRUSH = new Element();
-        public Element PIERCE = new Element();
-        public Element CUT = new Element();
-        public Element FIRE = new Element();
-        public Element COLD = new Element();
-        public Element POISON = new Element();
-        public Element GRAVI = new Element();
+        [SerializeField] public Stats STATS = new Stats();
+        [SerializeField] public Perks PERKS = new Perks();
+        [SerializeField] public Perks UNLOCKABLE_PERKS = new Perks();
+        [SerializeField] public Element CRUSH = new Element();
+        [SerializeField] public Element PIERCE = new Element();
+        [SerializeField] public Element CUT = new Element();
+        [SerializeField] public Element FIRE = new Element();
+        [SerializeField] public Element COLD = new Element();
+        [SerializeField] public Element POISON = new Element();
+        [SerializeField] public Element GRAVI = new Element();
 
         public Attrs() { }
 

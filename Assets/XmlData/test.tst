@@ -2,25 +2,30 @@
 <Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <DefinitionList>
     <Definition xsi:type="AIBehaviorDefinition">
+      <name />
+      <hideFlags>None</hideFlags>
       <Positioning>
         <Layers>
-          <Layer MinValue="1" MaxValue="3" ValueFx="StayAwayFromEnemies">
+          <AIPositioningLayerXml>
+            <ValueFx>StayAwayFromEnemies</ValueFx>
+            <MinValue>1</MinValue>
+            <MaxValue>3</MaxValue>
             <Params>
-              <Param Name="MinRange" Value="3" />
-              <Param Name="MaxRange" Value="8" />
+              <FxParamXml Name="MinRange" Value="3" />
+              <FxParamXml Name="MaxRange" Value="8" />
             </Params>
-          </Layer>
+          </AIPositioningLayerXml>
         </Layers>
       </Positioning>
       <Behavior>
-        <Action xsi:type="AIBehaviorUseSkillXml" SkillType="Attack" TargetFilter="Ally" TargetSelectorFx="Closest" MaxMoveAPToCast="2" />
+        <AIBehaviorActionXml xsi:type="AIBehaviorUseSkillXml" SkillType="Attack" TargetFilter="Ally" TargetSelectorFx="Closest" MaxMoveAPToCast="2" />
       </Behavior>
       <Triggers>
-        <Trigger xsi:type="AIBehaviorTriggerUnitDiedXml" TriggerFx="Say" Ally="true">
+        <AIBehaviorTriggerXml xsi:type="AIBehaviorTriggerUnitDiedXml" TriggerFx="Say" Ally="true">
           <Params>
             <Param Name="Text" Value="You bastard!" />
           </Params>
-        </Trigger>
+        </AIBehaviorTriggerXml>
       </Triggers>
     </Definition>
   </DefinitionList>

@@ -16,7 +16,7 @@ namespace ROR.Core
                 }
                 else
                 {
-                    Image = R.Instance.Load<Sprite>(value.Definition.Icon);
+                    Image = value.Definition.Icon;
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace ROR.Core
         
         void Start()
         {
-            gameObject.GetComponent<Image>().sprite = m_skill == null ? DefaultSprite : Image = R.Instance.Load<Sprite>(m_skill.Definition.Icon);
+            gameObject.GetComponent<Image>().sprite = m_skill == null ? DefaultSprite : Image = m_skill.Definition.Icon;
             OnSelectedChanged();
         }
     

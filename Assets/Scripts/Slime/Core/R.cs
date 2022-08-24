@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Assets.Scripts.Sugar;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -27,10 +28,12 @@ namespace Assets.Scripts.Slime.Core
         private static R m_instance;
         
         private Dictionary<string, Type> m_types = new Dictionary<string, Type>();
+        private Dictionary<Type, List<Type>> Inherritance = new Dictionary<Type, List<Type>>();
 
         private R()
         {
-            foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
+            var allTypes = Assembly.GetExecutingAssembly().GetTypes();
+            foreach (Type t in allTypes)
             {
                 if (t.FullName.Contains("TMPro")) continue;
                 if (t.FullName.Contains("<")) continue;
@@ -44,17 +47,51 @@ namespace Assets.Scripts.Slime.Core
                 {
                     m_types.Add(t.Name, t);
                 }
-                
+
+                if (t.IsInterface)
+                {
+                    Inherritance.Add(t, new List<Type>());
+                }
+            }
+
+            using (new Measure("Inherritance"))
+            {
+                foreach (var t in allTypes)
+                {
+                    if (t.IsAbstract || t.IsInterface)
+                    {
+                        continue;
+                    }
+                    
+                    foreach (var i in Inherritance)
+                    {
+                        if (i.Key.IsAssignableFrom(t))
+                        {
+                            if (i.Key == t) continue;
+                            i.Value.Add(t);
+                        }
+                    }
+                }
             }
         }
 
-        public T CreateInstanceOrNull<T>(string name)
+        public List<Type> GetInterfaceImpls(Type t)
         {
-            if (string.IsNullOrEmpty(name)) return default(T);
-            return CreateInstance<T>(name);
+            if (Inherritance.TryGetValue(t, out var list))
+            {
+                return list;
+            }
+
+            return null;
         }
 
-        public T CreateInstance<T>(string name)
+        public T CreateInstanceOrNull<T>(string name, string errorAddition = "")
+        {
+            if (string.IsNullOrEmpty(name)) return default(T);
+            return CreateInstance<T>(name, errorAddition);
+        }
+
+        public T CreateInstance<T>(string name, string errorAddition = "")
         {
             if (!m_types.TryGetValue(name, out var type) || type == null)
             {
@@ -63,22 +100,31 @@ namespace Assets.Scripts.Slime.Core
             
             if (type == null)
             {
-                Debug.LogError($"Unable to find [{name}] type");
+                Debug.LogError($"Unable to find [{name}] type {errorAddition}");
                 return default(T);
             }
-            
-            var obj = Activator.CreateInstance(type);
-            if (obj == null) {
-                Debug.LogError($"Unable to find [{name}] type");
+
+            object obj;
+            try
+            {
+                obj = Activator.CreateInstance(type);
+                if (obj == null) {
+                    Debug.LogError($"Unable to find [{name}] type {errorAddition}");
+                    return default(T);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error at creating class of type:{name} {errorAddition}");
                 return default(T);
             }
-            
+
             if (obj is T t) {
                 return t;
             }
             else
             {
-                Debug.LogError($"Wrong type of [{name}] expected [{typeof(T)}] but got [{obj.GetType()}]");
+                Debug.LogError($"Wrong type of [{name}] expected [{typeof(T)}] but got [{obj.GetType()}] {errorAddition}");
                 return default(T);
             }
         } 

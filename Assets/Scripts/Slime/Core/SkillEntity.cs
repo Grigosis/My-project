@@ -25,11 +25,11 @@ namespace Assets.Scripts.Slime.Core
         public SkillEntity(LivingEntity owner, SkillDefinition definition)
         {
             Definition = definition;
-            Implementation = R.Instance.CreateInstance<ISkillImplementation>(Definition.Implementation);
-            TargetSelector = R.Instance.CreateInstance<ITargetSelector>(Definition.TargetSelector);
-            UnityTargetSelector = R.Instance.CreateInstance<IUnityTargetSelector>(Definition.UnityTargetSelector);
-            SplashProvider = R.Instance.CreateInstanceOrNull<ISplashProvider>(Definition.SplashProvider);
-            TargetRanger = R.Instance.CreateInstanceOrNull<ITargetRanger>(Definition.TargetRanger);
+            Implementation = R.Instance.CreateInstance<ISkillImplementation>(Definition.Implementation, Definition.Id);
+            TargetSelector = R.Instance.CreateInstance<ITargetSelector>(Definition.TargetSelector, Definition.Id);
+            UnityTargetSelector = R.Instance.CreateInstance<IUnityTargetSelector>(Definition.UnityTargetSelector, Definition.Id);
+            SplashProvider = R.Instance.CreateInstanceOrNull<ISplashProvider>(Definition.SplashProvider, Definition.Id);
+            TargetRanger = R.Instance.CreateInstanceOrNull<ITargetRanger>(Definition.TargetRanger, Definition.Id);
             Owner = owner;
         }
 

@@ -2,7 +2,6 @@ using Assets.Scripts.Slime.Core.Algorythms;
 using Assets.Scripts.Slime.Core.Algorythms.Logic;
 using ROR.Core;
 using ROR.Core.Serialization;
-using UnityEngine;
 
 namespace RPGFight.Core
 {
@@ -13,23 +12,20 @@ namespace RPGFight.Core
         {
             var livingEntity = new LivingEntity();
             var attrs = new Attrs();
-            foreach (var equippedItem in stateInBattle.EquippedItems)
+            foreach (var equipmentDefinition in stateInBattle.EquippedItems)
             {
-                var equipmentDefinition = D.Instance.Get<EquipmentDefinition>(equippedItem);
-                Debug.Log(equippedItem+"::::"+equipmentDefinition.Attributes);
                 attrs.Sum(equipmentDefinition.Attributes);
             }
 
             var skillDefinitions = new SkillDefinition[stateInBattle.Skills.Length];
             for (int i = 0; i < stateInBattle.Skills.Length; i++)
             {
-                skillDefinitions[i] = D.Instance.Get<SkillDefinition>(stateInBattle.Skills[i]);
+                skillDefinitions[i] = stateInBattle.Skills[i];
             }
 
-            if (!string.IsNullOrEmpty(stateInBattle.AI))
+            if (stateInBattle.AI != null)
             {
-                var aiBehaviorDefinition = D.Instance.Get<AIBehaviorDefinition>(stateInBattle.AI);
-                AIBehavior behavior = new AIBehavior(aiBehaviorDefinition);
+                AIBehavior behavior = new AIBehavior(stateInBattle.AI);
                 AIController controller = new AIController();
                 controller.Attach(livingEntity, behavior);
             }

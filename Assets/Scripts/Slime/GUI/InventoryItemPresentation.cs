@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Slime.Core;
-using ClassLibrary1.Inventory;
+﻿using ClassLibrary1.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +11,7 @@ namespace Assets.Scripts.Slime.GUI
 
         public void SetItem(ItemStack stack)
         {
-            var icon = stack.Definition.Icon;
-            Image.sprite = R.Instance.Load<Sprite>(icon);
+            Image.sprite = stack.Definition.Icon;
             ItemStack = stack;
         }
     }

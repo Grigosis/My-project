@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-using System;
-using ClassLibrary1.Xml;
+﻿using ClassLibrary1.Xml;
 
 namespace ClassLibrary1.Logic
 {

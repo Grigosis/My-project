@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.BattleMap;
+using ClassLibrary1.Inventory;
 using UnityEngine;
 using Random = System.Random;
 
@@ -278,6 +279,18 @@ namespace Assets.Scripts.Slime.Sugar
                 throw new Exception($"Allready contains with key {t} : {oldK} / {k}");
             }
             dictionary.Add(t, k);
+        }
+        
+        public static DynamicSettings Clone(this DynamicSettings from)
+        {
+            if (from == null)
+            {
+                return null;
+            }
+
+            var settings = new DynamicSettings();
+            settings.StringSettings = new Dictionary<Type, object>(from.StringSettings);
+            return settings;
         }
     }
 }

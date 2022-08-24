@@ -498,6 +498,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8480107152539774227, guid: b4eb96b6cebfe2e4394cc33051f0cdf4, type: 3}
   m_PrefabInstance: {fileID: 359864063}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &487055412 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5077129167582882525, guid: 2a0bdc18f022a724a8eef8cbde56efaa, type: 3}
+  m_PrefabInstance: {fileID: 1209361584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &487055414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487055412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f70cf55b2086fe4e916735c1b64ee09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueContainer: {fileID: 0}
+  dialogueGroup: {fileID: 0}
+  dialogue: {fileID: 0}
+  groupedDialogues: 0
+  startingDialoguesOnly: 0
+  selectedDialogueGroupIndex: 0
+  selectedDialogueIndex: 0
 --- !u!4 &532095835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5545464975467780935, guid: 2a0bdc18f022a724a8eef8cbde56efaa, type: 3}
@@ -1022,8 +1046,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5887855488618431074, guid: 2a0bdc18f022a724a8eef8cbde56efaa, type: 3}
+      propertyPath: Definition
+      value: 
+      objectReference: {fileID: 11400000, guid: b8a9353405cca8941af2a05dc5e26fc3, type: 2}
+    - target: {fileID: 5887855488618431074, guid: 2a0bdc18f022a724a8eef8cbde56efaa, type: 3}
       propertyPath: DefintionId
-      value: LivingEntity/Slime-EnemyAI
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5887855488618431074, guid: 2a0bdc18f022a724a8eef8cbde56efaa, type: 3}
       propertyPath: CustomAttributes.HP_MAX
@@ -1411,8 +1439,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5887855488618431074, guid: 2a0bdc18f022a724a8eef8cbde56efaa, type: 3}
+      propertyPath: Definition
+      value: 
+      objectReference: {fileID: 11400000, guid: 3fdd485a3da61a747824e59f00623183, type: 2}
+    - target: {fileID: 5887855488618431074, guid: 2a0bdc18f022a724a8eef8cbde56efaa, type: 3}
       propertyPath: DefintionId
-      value: LivingEntity/Slime-Hero
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6326143859361449738, guid: 2a0bdc18f022a724a8eef8cbde56efaa, type: 3}
       propertyPath: m_Mesh
