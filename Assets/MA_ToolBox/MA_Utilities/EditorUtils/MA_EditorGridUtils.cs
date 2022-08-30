@@ -1,8 +1,6 @@
 ﻿//https://github.com/maxartz15/MA_EditorUtils
 
 #if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 

@@ -1,10 +1,7 @@
 #if UNITY_EDITOR
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using MA_Editor;
-using MA_Editor.Grid;
 
 namespace MA_TextureAtlasserPro
 {

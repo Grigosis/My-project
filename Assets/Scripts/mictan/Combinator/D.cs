@@ -81,7 +81,7 @@ namespace Combinator
             }
         }
 
-        private T ReadFrom<T>(string filePath)
+        public T ReadFrom<T>(string filePath)
         {
             return ReadFromFile<T>(AbsolutePathToResources+ExtraPath+filePath);
         }

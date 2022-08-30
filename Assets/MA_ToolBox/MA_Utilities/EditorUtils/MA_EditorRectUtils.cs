@@ -5,7 +5,6 @@
 
 #if UNITY_EDITOR
 using UnityEngine;
-using MA_Editor;
 
 namespace MA_Editor.RectUtils
 {

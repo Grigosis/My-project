@@ -7,12 +7,12 @@ namespace ClassLibrary1.Logic
     {
         public DialogXml Xml;
 
-        public ICombinator<bool> Combinator;
+        public ICombinator<bool> VisibleCombinator;
         public Question StartQuestion;
 
         public bool IsVisible {
             get {
-                return Combinator.Value;
+                return VisibleCombinator.Value;
             }
         }
 
@@ -21,7 +21,7 @@ namespace ClassLibrary1.Logic
             //Combinator = (ICombinator<bool>)CombinatorBuilder.Build(xml.Combinator, typeof(bool), CombinatorFunctions.Parser, CombinatorFunctions.Subscriber);
             //Combinator.Subscribe();
             //Combinator.IsVisible.OnChanged += IsVisibleChanged;
-            Combinator.OnChanged += IsVisibleChanged;
+            VisibleCombinator.OnChanged += IsVisibleChanged;
             StartQuestion = Dialogs.Questions[Xml.StartQuestionId];
         }
 

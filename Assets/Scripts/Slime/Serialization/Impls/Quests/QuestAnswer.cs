@@ -1,6 +1,10 @@
 ﻿using System.Linq;
+using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core.Algorythms;
 using ClassLibrary1;
+using Combinator;
+using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
+using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
 using Slime;
 using UnityEditor;
 using UnityEngine;
@@ -13,11 +17,18 @@ namespace ROR.Core.Serialization
         public string AnswerFx;
         public string Text; //"Bla lba {MONEY}g? {Nickname}"
         public FxParamXml[] Requirements;
+
+        public CombinatorScriptable CombinatorData;
         
         [HideInInspector]
         public string SelectionFx; // Когда выбрали ответ
         [HideInInspector]
         public QuestDialog NextQuestionDialog; //Следующий вопрос
+
+        public void BuildCombinator(QuestContext context)
+        {
+            CombinatorBuilder.Build(CombinatorData, typeof(bool), new CombinatorBuilderRules(context, null));
+        }
     }
     
     [CustomEditor(typeof(QuestAnswer))]

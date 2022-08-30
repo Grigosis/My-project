@@ -45,7 +45,10 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
 
         public void OnCombinatorCreate(CombinatorScriptable data, ICombinator combinator)
         {
-            CombinatorANENode.AttachCombinator(Graph, data, combinator);
+            if (Graph != null)
+            {
+                CombinatorANENode.AttachCombinator(Graph, data, combinator);
+            }
         }
     }
 }

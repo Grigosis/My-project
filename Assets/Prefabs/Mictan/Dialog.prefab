@@ -281,6 +281,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Background: {fileID: 2776201857871736089}
   text: {fileID: 6088795564053519267}
+  AnswerPrefab: {fileID: 574050969271322034, guid: 9755402c31fed2c4a92726aa84b3cbf6, type: 3}
+  AnswerBehaviours: []
 --- !u!1 &4038505893027307110
 GameObject:
   m_ObjectHideFlags: 0
