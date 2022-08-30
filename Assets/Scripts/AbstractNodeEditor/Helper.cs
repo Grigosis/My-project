@@ -2,7 +2,6 @@
 using System.Linq;
 using Assets.Scripts.Slime.Core;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -29,13 +28,6 @@ namespace Slime
             };
 
             return foldout;
-        }
-
-        public static Port CreatePort(this Node node, string portName = "", Orientation orientation = Orientation.Horizontal, Direction direction = Direction.Output, Port.Capacity capacity = Port.Capacity.Single)
-        {
-            Port port = node.InstantiatePort(orientation, direction, capacity, typeof(bool));
-            port.portName = portName;
-            return port;
         }
 
         public static VisualElement AddClasses(this VisualElement element, params string[] classNames)
@@ -148,24 +140,33 @@ namespace Slime
                 return;
             }
             
-            
-            var copy = implementation;
             var implsA = impls.Select((x)=>x.Name).ToArray();
             if (implsA.Length == 0)
             {
+                Debug.LogError($"Zero items found for {type}/{name}");
                 return;
             }
-            
-            
-            
-            var index = Array.IndexOf(implsA, copy);
+
+            CreateEditorClassSelector(ref implementation, implsA, name);
+        }
+        
+        public static void CreateEditorClassSelector(ref string implementation, string[] values, string name)
+        {
+            var index = Array.IndexOf(values, implementation);
             
             if (index < 0)
                 index = 0;
             
-            index = EditorGUILayout.Popup(name, index, implsA);
-            
-            implementation = implsA[index];
+            index = EditorGUILayout.Popup(name, index, values);
+
+            try
+            {
+                implementation = values[index];
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Accessing {index} of {values}");
+            }
         }
         
         public static void CreateEditorClassSelectorForStructs(Rect position, ref string implementation, Type type, string name)
@@ -177,6 +178,13 @@ namespace Slime
                 return;
             }
             var implsA = impls.Select((x)=>x.Name).ToArray();
+            
+            if (implsA.Length == 0)
+            {
+                Debug.LogError($"Zero items found for {type}/{name}");
+                return;
+            }
+            
             CreateEditorClassSelectorForStructs(position, ref implementation, implsA, name);
         }
         
@@ -197,7 +205,6 @@ namespace Slime
             {
                 Debug.LogError($"Accessing {index} of {values}");
             }
-            
         }
 
         public static void CreateFloatEditor(this SerializedProperty property, string propertyName, ref Rect position, GUIContent label)

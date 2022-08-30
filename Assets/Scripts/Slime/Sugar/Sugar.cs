@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.BattleMap;
 using ClassLibrary1.Inventory;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = System.Random;
 
 namespace Assets.Scripts.Slime.Sugar
@@ -292,5 +295,63 @@ namespace Assets.Scripts.Slime.Sugar
             settings.StringSettings = new Dictionary<Type, object>(from.StringSettings);
             return settings;
         }
+
+
+
+        #region Reflection
+
+        public static void AddScriptFunctions<T>(this Dictionary<string, T> dictionary, Assembly assembly) where T : class
+        {
+            foreach (Type type in assembly.GetTypes())
+            {
+                AddScriptFunctions(dictionary, type);
+            }
+        }
+        
+        public static void AddScriptFunctions<T>(this Dictionary<string, T> dictionary, Type type) where T : class
+        {
+            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+            foreach (MethodInfo method in methods)
+            {
+                AddFx<T>(dictionary, method);
+            }
+        }
+
+        public static bool AddFx<T>(this Dictionary<string, T> funcMap, MethodInfo method) where T : class
+        {
+            if (IsMethodCompatibleWithDelegate<T>(method))
+            {
+                Debug.LogWarning($"F:Found method [{method.Name}/{typeof(T).Name}]");
+                var function = (T) (object) Delegate.CreateDelegate(typeof (T), method);
+                funcMap.Add(method.Name, function);
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsMethodCompatibleWithDelegate<T>(this MethodInfo method) where T : class
+        {
+            Type delegateType = typeof(T);
+            MethodInfo delegateSignature = delegateType.GetMethod("Invoke");
+
+            bool parametersEqual = delegateSignature
+                .GetParameters()
+                .Select(x => x.ParameterType)
+                .SequenceEqual(method.GetParameters()
+                    .Select(x => x.ParameterType));
+
+            return delegateSignature.ReturnType == method.ReturnType &&
+                   parametersEqual;
+        }
+
+        #endregion
+
+
+        public static void SetHidden(this VisualElement element, bool isHidden)
+        {
+            element.style.display = new StyleEnum<DisplayStyle>(isHidden ? StyleKeyword.None : StyleKeyword.Auto);
+        }
+        
     }
 }

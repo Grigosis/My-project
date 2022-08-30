@@ -12,11 +12,11 @@ namespace GemCraft2
         public int minX=999999, minY=999999;
         public int maxX, maxY;
 
-        public R bounds;
+        public PRect bounds;
         private PointChecker canMoveFunc;
         private WaveGenerator generator;
         
-        public void Init (PointChecker canMoveFunc, WaveGenerator generator, R bounds=null)
+        public void Init (PointChecker canMoveFunc, WaveGenerator generator, PRect bounds=null)
         {
             this.generator = generator;
             this.canMoveFunc = canMoveFunc;
@@ -25,7 +25,7 @@ namespace GemCraft2
             
             if (bounds == null)
             {
-                this.bounds = new R (0,0, canMoveFunc.GetWidth(), canMoveFunc.GetHeight());
+                this.bounds = new PRect (0,0, canMoveFunc.GetWidth(), canMoveFunc.GetHeight());
             }
             else
             {

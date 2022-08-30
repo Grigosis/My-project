@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Assets.Scripts.Sugar;
+using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -137,6 +138,31 @@ namespace Assets.Scripts.Slime.Core
                 Debug.LogError($"Doesn't exist: [{path}]");
             }
             return r;
+        }
+        
+        public static T CreateOrLoadAsset<T>(string path) where T : ScriptableObject
+        {
+            string fullPath = $"{path}.asset";
+            T asset = LoadAsset<T>(path);
+            if (asset == null)
+            {
+                asset = ScriptableObject.CreateInstance<T>();
+                AssetDatabase.CreateAsset(asset, fullPath);
+            }
+            return asset;
+        }
+        
+        public static T LoadAsset<T>(string path) where T : ScriptableObject
+        {
+            return AssetDatabase.LoadAssetAtPath<T>($"{path}.asset");
+        }
+        
+        public static void SaveAsset(UnityEngine.Object asset)
+        {
+            EditorUtility.SetDirty(asset);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
     }
 }

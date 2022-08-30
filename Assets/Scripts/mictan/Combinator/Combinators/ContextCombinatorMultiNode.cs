@@ -14,7 +14,7 @@ namespace Combinator
             MarkForRecalculate();
         }
 
-        public void SetFx(object fx)
+        public override void SetFx(object fx)
         {
             if (fx is Func<OBJ, CONTEXT, List<IN>, OUT> func)
             {
@@ -41,7 +41,7 @@ namespace Combinator
             return Function.Invoke(obj, Context, List);
         }
 
-        public void SetContext(object context)
+        public override void SetContext(object context)
         {
             foreach (var combinator in Combinators)
             {
@@ -51,7 +51,8 @@ namespace Combinator
             
             if (context is CONTEXT ctx)
             {
-                SetFx(ctx);
+                Context = ctx;
+                MarkForRecalculate();
             }
         }
 

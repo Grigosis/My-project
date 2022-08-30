@@ -2,14 +2,12 @@
 
 namespace Combinator
 {
-    
-    
-    public class CombinatorSingleNode<OBJ, OUT> : ACombinator<OBJ, OUT>, ICombinator<OUT>
+    public class CombinatorSingleNode<OBJ, OUT> : ACombinator<OBJ, OUT>
     {
         private Func<OBJ, OUT> Function;
         public CombinatorSingleNode()  { }
         
-        public void SetFx(object fx)
+        public override void SetFx(object fx)
         {
             if (fx is Func<OBJ, OUT> func)
             {
@@ -21,12 +19,7 @@ namespace Combinator
             }
         }
 
-        public void SetContext(object obj)
-        {
-            //DOES NOTHING
-        }
-
-        public string GetDebugName()
+        public override string GetDebugName()
         {
             return NodeDebugName;
         }

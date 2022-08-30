@@ -1,20 +1,29 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
-using DS.Enumerations;
+using Assets.Scripts.Slime.Core;
+using RPGFight.Library;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace DS.Windows
 {
     public class ANEGraph : GraphView
     {
         private MiniMap miniMap;
-        private ANEWindow editorWindow;
-        
-        public ANEGraph(ANEWindow editorWindow)
+        public ANEWindow EditorWindow;
+        public ANEIPresentation Presentation;
+
+        public DoubleDictionary<Object, ANENode> NodesAndData = new DoubleDictionary<Object, ANENode>(); 
+        public Dictionary<int, ANEGroup> Groups = new Dictionary<int, ANEGroup>(); 
+
+  
+        public ANEGraph(ANEWindow editorWindow, ANEIPresentation presentation)
         {
-            this.editorWindow = editorWindow;
+            this.EditorWindow = editorWindow;
+            this.Presentation = presentation;
+            presentation.SetGraph(this);
             
             miniMap = new MiniMap()
             {
@@ -33,32 +42,51 @@ namespace DS.Windows
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
-
-            this.AddManipulator(CreateNodeContextualMenu("Add Node (Single Choice)", DSDialogueType.SingleChoice));
-            this.AddManipulator(CreateNodeContextualMenu("Add Node (Multiple Choice)", DSDialogueType.MultipleChoice));
-
-            //this.AddManipulator(CreateGroupContextualMenu());
+            presentation.CreateContextMenu();
+            Clear();
         }
 
         public void OnNodeSelected(ANENode node)
         {
-            editorWindow.OnNodeSelected(node);
+            EditorWindow.GetEditor().RequestEditObject(node.NodeData);
+        }
+        
+        public void OnNodeDeselected(ANENode node)
+        {
+            EditorWindow.GetEditor().FinishEdit();
+        }
+
+        public ANEWindow.ObjectEditorWrapper GetEditor()
+        {
+            return EditorWindow.GetEditor();
         }
         
         public void ToggleMiniMap()
         {
             miniMap.visible = !miniMap.visible;
+            
+            elementsRemovedFromStackNode += ElementsRemovedFromStackNode;
         }
-        
-        private IManipulator CreateNodeContextualMenu(string actionTitle, DSDialogueType dialogueType)
-        {
-            ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
-                menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent => AddElement(CreateNode("DialogueName", dialogueType, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition))))
-            );
 
-            return contextualMenuManipulator;
+        private void ElementsRemovedFromStackNode(StackNode arg1, IEnumerable<GraphElement> arg2)
+        {
+            Debug.LogError($"Remove from {arg1}");
+            foreach (var e in arg2)
+            {
+                if (e is ANENode node)
+                {
+                    NodesAndData.Remove(node);
+                }
+
+                if (e is ANEGroup group)
+                {
+                    Groups.Remove(group.ID);
+                }
+            }
         }
-        
+
+
+
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
             List<Port> compatiblePorts = new List<Port>();
@@ -92,7 +120,7 @@ namespace DS.Windows
 
             if (isSearchWindow)
             {
-                worldMousePosition = editorWindow.rootVisualElement.ChangeCoordinatesTo(editorWindow.rootVisualElement.parent, mousePosition - editorWindow.position.position);
+                worldMousePosition = EditorWindow.rootVisualElement.ChangeCoordinatesTo(EditorWindow.rootVisualElement.parent, mousePosition - EditorWindow.position.position);
             }
 
             Vector2 localMousePosition = contentViewContainer.WorldToLocal(worldMousePosition);
@@ -100,22 +128,86 @@ namespace DS.Windows
             return localMousePosition;
         }
         
-        public Node CreateNode(string nodeName, DSDialogueType dialogueType, Vector2 position, bool shouldDraw = true)
+        public void Save(string folder, string fileName)
         {
-            var node = new ANENode();
-            node.Initialize(nodeName, this, position);
-            if (shouldDraw)
+            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}.assert");
+            ANEGraphData dataOnly = R.CreateOrLoadAsset<ANEGraphData>($"{folder}/{fileName}.DATA.assert");
+
+            graphData.PresentationObject = Presentation.OnSerialize();
+            
+            Debug.LogError("Saved:"+graphData.PresentationObject);
+            
+            graphData.Nodes.Clear();
+            graphData.Groups.Clear();
+            dataOnly.Data.Clear();
+
+            foreach (var nodeAndData in NodesAndData.KeysAndValues)
             {
-                node.Draw();
+                var copy = nodeAndData.Key;//Object.Instantiate(nodeAndData.Key);
+                Debug.Log($"Saved Node: {copy}");
+                
+                dataOnly.Data.Add(copy);
+
+                var nodeState = new ANENodeState();
+                nodeState.Position = nodeAndData.Value.GetPosition().position;
+                nodeState.Data = copy;
+                nodeState.GroupId = nodeAndData.Value.Group;
+                
+                
+                graphData.Nodes.Add(nodeState);
+            }
+            
+            foreach (var group in Groups)
+            {
+                var nodeState = new ANEGroupState();
+                nodeState.Position = group.Value.GetPosition().position;
+                nodeState.Name = group.Value.title;
+                nodeState.Id = group.Key;
+
+                graphData.Groups.Add(nodeState);
+            }
+            
+            R.SaveAsset(graphData);
+            R.SaveAsset(dataOnly);
+        }
+
+        public void Clear()
+        {
+            Presentation.OnCreatedNew();
+            NodesAndData.Clear();
+            Groups.Clear();
+            graphElements.ForEach(graphElement => RemoveElement(graphElement));
+        }
+
+        public void Load(string folder, string fileName)
+        {
+            Clear();
+            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}.assert");
+            
+            
+            Debug.LogError("Loaded:"+graphData.PresentationObject);
+            
+            Presentation.OnLoaded(graphData.PresentationObject);
+            
+            foreach (var group in graphData.Groups)
+            {
+                Presentation.CreateGroup(group.Name, group.Id, group.Position);
+            }
+            
+            foreach (var node in graphData.Nodes)
+            {
+                Debug.Log($"Loaded Node: {node.Data}");
+                Groups.TryGetValue(node.GroupId, out var groupNode);
+                Presentation.RestoreNode(node, groupNode);
             }
 
-            AddUngroupedNode(node);
-            return node;
-        }
-        
-        public void AddUngroupedNode(ANENode node)
-        {
-            /*DO INNER*/
+            foreach (var node in graphData.Nodes)
+            {
+                if (node.Data != null)
+                {
+                    Presentation.ConnectPorts(node.Data);
+                }
+            }
         }
     }
 }

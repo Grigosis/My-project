@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace ClassLibrary1
 {
     public interface AnswerArgs
@@ -18,5 +20,32 @@ namespace ClassLibrary1
         /// Вызывается когда игрок выбирает этот ответ
         /// </summary>
         void OnSelected();
+    }
+    
+    public class MockAnswerArgs : AnswerArgs
+    {
+        private bool visible;
+        private string text;
+
+        public MockAnswerArgs(bool visible, string text)
+        {
+            this.visible = visible;
+            this.text = text;
+        }
+
+        public bool IsVisible()
+        {
+            return visible;
+        }
+
+        public string GenerateString()
+        {
+            return text;
+        }
+
+        public void OnSelected()
+        {
+            Debug.Log($"MockAnswerArgs:OnSelected:{visible}:{text}");
+        }
     }
 }

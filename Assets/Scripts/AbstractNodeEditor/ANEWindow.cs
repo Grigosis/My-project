@@ -1,9 +1,10 @@
-using Assets.Scripts.AbstractNodeEditor;
+using System;
+using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
 using Slime;
 using UnityEditor;
 using UnityEditor.UIElements;
-using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace DS.Windows
 {
@@ -26,13 +27,17 @@ namespace DS.Windows
             GetWindow<ANEWindow>("Dialogue Graph");
         }
 
+        private ObjectEditorWrapper editor;
+        
         private void OnEnable()
         {
             var button = new Button();
             button.text = "Push me23333";
             
-            graphView = new ANEGraph(this);
+            graphView = new ANEGraph(this, new DialogANEPresentation());
             graphView.StretchToParentSize();
+            
+            
             
             splitView = new SplitView(0, 200, TwoPaneSplitViewOrientation.Horizontal);
             splitView.Add(button);
@@ -65,45 +70,28 @@ namespace DS.Windows
             rootVisualElement.Add(toolbar);
 
             rootVisualElement.AddStyleSheets("DialogueSystem/DSVariables.uss");
+
+            editor = new ObjectEditorWrapper(splitView);
         }
 
         private void Save()
         {
-            /*if (string.IsNullOrEmpty(fileNameTextField.value))
-            {
-                EditorUtility.DisplayDialog("Invalid file name.", "Please ensure the file name you've typed in is valid.", "Roger!");
-
-                return;
-            }
-
-            DSIOUtility.Initialize(graphView, fileNameTextField.value);
-            DSIOUtility.Save();*/
+            graphView.Save("Assets/Editor/DialogueSystem/Graphs", "TestGraph");
         }
 
         private void Load()
         {
-            /*string filePath = EditorUtility.OpenFilePanel("Dialogue Graphs", "Assets/Editor/DialogueSystem/Graphs", "asset");
-
-            if (string.IsNullOrEmpty(filePath))
-            {
-                return;
-            }
-
-            Clear();
-
-            DSIOUtility.Initialize(graphView, Path.GetFileNameWithoutExtension(filePath));
-            DSIOUtility.Load();*/
+            graphView.Load("Assets/Editor/DialogueSystem/Graphs", "TestGraph");
         }
 
         private void Clear()
         {
-            /*graphView.ClearGraph();*/
+            graphView.Clear();
         }
 
         private void ToggleMiniMap()
         {
             graphView.ToggleMiniMap();
-
             miniMapButton.ToggleInClassList("ds-toolbar__button__selected");
         }
 
@@ -122,17 +110,73 @@ namespace DS.Windows
             saveButton.SetEnabled(false);
         }
 
-        private Editor editor;
-        public void OnNodeSelected(ANENode node)
-        {
-            Object.DestroyImmediate(editor);
-            editor = Editor.CreateEditor(node.Node);
-            var container = new IMGUIContainer(() =>
-            {
-                editor.OnInspectorGUI();
-            });
-            splitView.Add(container);
 
+        
+        
+        public class ObjectEditorWrapper
+        {
+            protected Action<Object> OnEditorFinished;
+            protected Object ObjectToEdit;
+            protected Editor editor;
+            protected VisualElement editorView;
+            protected VisualElement editorContainterView;
+
+            public ObjectEditorWrapper(VisualElement editorContainterView)
+            {
+                this.editorContainterView = editorContainterView;
+            }
+            
+            public void RequestEditObject(Object objectToEdit, Action<Object> onEditorFinished = null)
+            {
+                FinishEdit();
+                
+                OnEditorFinished = onEditorFinished;
+                ObjectToEdit = objectToEdit;
+                
+                editor = Editor.CreateEditor(ObjectToEdit);
+                editorView = new IMGUIContainer(() =>
+                {
+                    editor.OnInspectorGUI();
+                });
+                editorContainterView.Add(editorView);
+            }
+            
+            public void FinishEdit()
+            {
+                if (OnEditorFinished != null)
+                {
+                    OnEditorFinished?.Invoke(ObjectToEdit);
+                }
+
+                OnEditorFinished = null;
+                ObjectToEdit = null;
+                
+                if (editorView != null)
+                {
+                    editorView.parent.Remove(editorView);
+                    editorView = null;
+                }
+                if (editor != null)
+                {
+                    Object.DestroyImmediate(editor);
+                    editor = null;
+                }
+            }
         }
+
+        public ObjectEditorWrapper GetEditor()
+        {
+            return editor;
+        }
+
+        //public void Hide(DialogAneNode node)
+        //{
+        //    foreach (var toPort in node.AnswerToPorts)
+        //    {
+        //        
+        //    }
+        //}
+
+        
     }
 }

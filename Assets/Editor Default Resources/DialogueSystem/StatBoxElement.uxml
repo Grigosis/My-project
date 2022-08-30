@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+
+    <ui:VisualElement name="secondary-stat-box" style="width: 49px; height: 63px; border-left-width: 4px; border-right-width: 4px; border-top-width: 4px; border-bottom-width: 4px; border-left-color: rgb(77, 77, 77); border-right-color: rgb(77, 77, 77); border-top-color: rgb(77, 77, 77); border-bottom-color: rgb(77, 77, 77); border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; flex-direction: column;">
+
+        <ui:Label text="00" display-tooltip-when-elided="true" name="secondary-stat-value" class="secondary-stat-value" style="flex-grow: 1; -unity-text-align: middle-center; font-size: 18px; color: rgb(77, 77, 77); padding-left: 0; padding-right: 0; padding-top: 3px; padding-bottom: 0; margin-bottom: 0; margin-top: 0; margin-right: 0; margin-left: 0; -unity-font: url(&apos;/Assets/UI Toolkit/Fonts/aBigDeal.ttf&apos;); -unity-font-definition: url(&apos;/Assets/UI Toolkit/Fonts/aBigDeal SDF.asset&apos;);" />
+
+        <ui:VisualElement name="secondary-stat-icon" style="width: 100%; height: 16px; background-color: rgb(77, 77, 77);" />
+
+    </ui:VisualElement>
+
+</ui:UXML>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Combinator
 {
-    public class CombinatorMultiNode<OBJ, IN, OUT> : ACombinatorMultiNode<OBJ, IN,OUT>, ICombinator<OUT>, IMultiCombinator<IN, OUT>
+    public class CombinatorMultiNode<OBJ, IN, OUT> : ACombinatorMultiNode<OBJ, IN,OUT>, IMultiCombinator<IN, OUT>
     {
         private Func<OBJ, List<IN>, OUT> Function;
 
@@ -14,7 +14,7 @@ namespace Combinator
             MarkForRecalculate();
         }
         
-        public void SetContext(object obj)
+        public override void SetContext(object obj)
         {
             for (var i = 0; i < Combinators.Count; i++)
             {
@@ -23,7 +23,7 @@ namespace Combinator
             }
         }
 
-        public void SetFx(object fx)
+        public override void SetFx(object fx)
         {
             if (fx is Func<OBJ, List<IN>, OUT> func)
             {

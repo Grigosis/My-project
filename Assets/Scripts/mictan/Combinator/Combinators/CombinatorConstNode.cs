@@ -2,7 +2,7 @@
 
 namespace Combinator
 {
-    public class CombinatorConstNode<OBJ, OUT> : ACombinator<OBJ, OUT>, ICombinator<OUT>, IConstCombinator
+    public class CombinatorConstNode<OBJ, OUT> : ACombinator<OBJ, OUT>, IConstCombinator
     {
         public CombinatorConstNode() { }
 
@@ -13,7 +13,7 @@ namespace Combinator
             return StoredValue;
         }
 
-        public void SetFx(object fx) { }
+        public override void SetFx(object fx) { }
         
         public void SetValue(object obj)
         {
@@ -33,12 +33,7 @@ namespace Combinator
             MarkForRecalculate();
         }
 
-        public void SetContext(object obj)
-        {
-            //DOES NOTHING
-        }
-        
-        public string GetDebugName()
+        public override string GetDebugName()
         {
             return $"`{Value}`";
         }

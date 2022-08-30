@@ -2,7 +2,10 @@
 
 namespace Combinator
 {
-    public abstract class ACombinator<OBJ, OUT> {
+    public abstract class ACombinator<OBJ, OUT> : ICombinator, ICombinator<OUT> {
+        public virtual void SetContext(object obj) { }
+        public virtual void SetFx(object fx) { }
+        public abstract string GetDebugName();
         
         public OUT Value { get; protected set; }
         public event Action<ICombinator> OnChanged;
@@ -13,6 +16,14 @@ namespace Combinator
         
         public string NodeDebugName { get; set; }
         public bool IsDependent { get; set; }
+        public object RawValue => Value;
+
+        protected ISubscription Subscription;
+
+        public void Destroy()
+        {
+            m_liveUpdates = false;
+        }
 
         public void SetObject(object obj)
         {
@@ -26,12 +37,24 @@ namespace Combinator
             }
             
         }
+
+        
+
+        
+
         public void SetObject(OBJ obj)
         {
             this.obj = obj;
             MarkForRecalculate();
         }
 
+        
+
+        public void SetSubscription(ISubscription subscription)
+        {
+            this.Subscription = subscription;
+        }
+        
         public virtual void SetLiveUpdates(bool liveUpdates, bool recalculate = true)
         {
             if (liveUpdates == m_liveUpdates)

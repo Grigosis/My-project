@@ -4,14 +4,14 @@ using Assets.Scripts.Slime.Sugar;
 
 namespace Assets.Scripts.Slime.Core.Algorythms.Pathfinding
 {
-    public class R
+    public class PRect
     {
         private int X;
         private int Y;
         private int W;
         private int H;
 
-        public R(int x, int y, int w, int h)
+        public PRect(int x, int y, int w, int h)
         {
             X = x;
             Y = y;

@@ -1,6 +1,5 @@
 using ClassLibrary1.Xml;
 using Combinator;
-using Assets.Scripts.Library;
 
 namespace ClassLibrary1.Logic
 {
@@ -19,7 +18,7 @@ namespace ClassLibrary1.Logic
 
         public Dialog(DialogXml xml){
             Xml = xml;
-            Combinator = (ICombinator<bool>)CombinatorBuilder.Build(xml.Combinator, typeof(bool), CombinatorFunctions.Parser, CombinatorFunctions.Subscriber);
+            //Combinator = (ICombinator<bool>)CombinatorBuilder.Build(xml.Combinator, typeof(bool), CombinatorFunctions.Parser, CombinatorFunctions.Subscriber);
             //Combinator.Subscribe();
             //Combinator.IsVisible.OnChanged += IsVisibleChanged;
             Combinator.OnChanged += IsVisibleChanged;

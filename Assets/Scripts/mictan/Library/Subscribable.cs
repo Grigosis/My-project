@@ -2,10 +2,14 @@
 
 namespace ClassLibrary1
 {
-    public class Subscribable<T>
+    public interface ISubscribable
+    {
+        public event Action<ISubscribable> OnChanged;
+    }
+    public class Subscribable<T> : ISubscribable
     {
         private T Value;
-        public event Action<T, T> OnChanged; 
+        public event Action<ISubscribable> OnChanged; 
 
         public Subscribable(){}
         public Subscribable(T value){
@@ -16,7 +20,7 @@ namespace ClassLibrary1
         {
             if (!Value.Equals(newValue))
             {
-                OnChanged?.Invoke(Value, newValue);
+                OnChanged?.Invoke(this);
             }
         }
 

@@ -11,7 +11,6 @@ namespace Assets.Scripts.Slime.Unity.Editors
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-
             var ble = (BattleLivingEntity)target;
             if (GUILayout.Button("Reload AI"))
             {

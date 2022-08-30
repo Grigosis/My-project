@@ -12,13 +12,21 @@ namespace Combinator
         void SetValue(object obj);
     }
 
+    public interface ISubscription
+    {
+        public void Subscribe();
+        public void UnSubscribe();
+    }
+
     public interface ICombinator
     {
         public bool IsDependent { get; set; }
         public string NodeDebugName { get; set; }
+        public object RawValue { get; }
         event Action<ICombinator> OnChanged;
         public void MarkForRecalculate();
         public void SetFx(object fx);
+        public void SetSubscription(ISubscription subscription);
         public void SetObject(object obj);
         public void SetContext(object obj);
 
@@ -26,6 +34,7 @@ namespace Combinator
         //public void SetContext(object obj);
         //public void SetContextDependent(object obj);
         public void SetLiveUpdates(bool liveUpdates, bool recalculate = true);
+        public void Destroy();
     }
 
     public interface IContextCombinator<CONTEXT>

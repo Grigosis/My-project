@@ -1,20 +1,26 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using DS.Windows;
-using Slime;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Assets.Scripts.AbstractNodeEditor
 {
-    public class ANENode : Node
+    public abstract class ANENode : Node
     {
-        public string ID { get; set; }
-
-        protected ANEGraph graphView;
+        protected ANEGraph Graph;
         private Color defaultBackgroundColor;
-        public CombinatorScriptable Node;
+        public Object NodeData;
+
+        protected ANENode()
+        {
+        }
+
+        protected ANENode(string uiFile) : base(uiFile)
+        {
+        }
+
+        public int Group { get; set; }
 
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
@@ -24,34 +30,23 @@ namespace Assets.Scripts.AbstractNodeEditor
             base.BuildContextualMenu(evt);
         }
 
-        public virtual void Initialize(string nodeName, ANEGraph dsGraphView, Vector2 position)
+        public virtual void Initialize(ANEGraph graph, Object nodeData, Vector2 position)
         {
-            ID = Guid.NewGuid().ToString();
-
-            Node = ScriptableObject.CreateInstance(typeof(CombinatorScriptable)) as CombinatorScriptable;
-
+            NodeData = nodeData;
+            Graph = graph;
             SetPosition(new Rect(position, Vector2.zero));
-
-            graphView = dsGraphView;
-            defaultBackgroundColor = new Color(29f / 255f, 29f / 255f, 30f / 255f);
-
-            //mainContainer.AddToClassList("ds-node__main-container");
-            //extensionContainer.AddToClassList("ds-node__extension-container");
+            
         }
 
+        public abstract void CreateGUI();
         public virtual void Draw()
         {
-            Port titlePort = this.CreatePort("Dialogue Connection", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi);
-            Port titlePort2 = this.CreatePort("Dialogue Connection", Orientation.Horizontal, Direction.Output, Port.Capacity.Multi);
-            titleContainer.Add(titlePort);
-            titleContainer.Add(titlePort2);
+            defaultBackgroundColor = new Color(29f / 255f, 29f / 255f, 30f / 255f);
+            CreateGUI();
             
-            Port inputPort = this.CreatePort("Dialogue Connection", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi);
-            inputContainer.Add(inputPort);
+            //mainContainer.AddToClassList("ds-node__main-container");
+            //extensionContainer.AddToClassList("ds-node__extension-container");
             
-            Port outPort = this.CreatePort("Dialogue Connection", Orientation.Horizontal, Direction.Output, Port.Capacity.Multi);
-            outputContainer.Add(outPort);
-
             //titleContainer
             //inputContainer
             //outputContainer
@@ -61,7 +56,13 @@ namespace Assets.Scripts.AbstractNodeEditor
         public override void OnSelected()
         {
             base.OnSelected();
-            graphView.OnNodeSelected(this);
+            Graph.OnNodeSelected(this);
+        }
+
+        public override void OnUnselected()
+        {
+            base.OnUnselected();
+            Graph.OnNodeDeselected(this);
         }
 
         public void DisconnectAllPorts()
@@ -89,7 +90,7 @@ namespace Assets.Scripts.AbstractNodeEditor
                     continue;
                 }
 
-                graphView.DeleteElements(port.connections);
+                Graph.DeleteElements(port.connections);
             }
         }
 
@@ -109,5 +110,7 @@ namespace Assets.Scripts.AbstractNodeEditor
         {
             mainContainer.style.backgroundColor = defaultBackgroundColor;
         }
+
+        public abstract void ConnectPorts();
     }
 }

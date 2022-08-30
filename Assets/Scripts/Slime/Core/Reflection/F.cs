@@ -1,66 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+using Assets.Scripts.AbstractNodeEditor;
+using Assets.Scripts.Library;
 using Assets.Scripts.Slime.Core.Algorythms.Fx;
+using Assets.Scripts.Slime.Sugar;
 using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core
 {
+    
+    public class CombinatorFunctionInfo
+    {
+        public readonly Type OutType;
+        public readonly Type InType;
+        public readonly Type ContextType;
+        public readonly object Func;
+
+        public CombinatorFunctionInfo(Type outType, Type inType, Type contextType, object func)
+        {
+            OutType = outType;
+            InType = inType;
+            ContextType = contextType;
+            Func = func;
+        }
+    }
+    
     public class F
     {
         public readonly static Dictionary<string, AIFunction> AIFunctions = new Dictionary<string, AIFunction>();
 
+        public static Dictionary<string, CombinatorFunctionInfo> Functions = new Dictionary<string, CombinatorFunctionInfo>();
+
+        
+        
         static F()
         {
             Debug.LogWarning("F:Init");
-            AddScriptFunctions(typeof(AIFunctions));
+            AIFunctions.AddScriptFunctions(typeof(AIFunctions));
+            
+            RegisterMulti<CombinatorScriptable, string, string>("Concat", CombinatorFunctions.Concat);
+            RegisterMulti<CombinatorScriptable, double, double>("Mlt", CombinatorFunctions.Mlt);
+            RegisterMulti<CombinatorScriptable, double, double>("Sum", CombinatorFunctions.Sum);
+            RegisterMulti<CombinatorScriptable, double, string>("ToStr", CombinatorFunctions.ToStr);
+        }
+
+        #region Combinator
+
+        public static void RegisterSingle<T,K>(string func, Func<T,K> obj)
+        {
+            Functions.Add(func, new CombinatorFunctionInfo(typeof(K), null, null, obj));
         }
         
-        
-        public static void AddScriptFunctions(Assembly assembly)
+        public static void RegisterSingleDependent<T,CONTEXT,K>(string func, Func<T,CONTEXT, K> obj)
         {
-            foreach (Type type in assembly.GetTypes())
-            {
-                AddScriptFunctions(type);
-            }
+            Functions.Add(func, new CombinatorFunctionInfo(typeof(K), null, typeof(CONTEXT), obj));
         }
         
-        public static void AddScriptFunctions(Type type)
+        public static void RegisterMulti<T,A,K>(string func, Func<T,List<A>,K> obj)
         {
-            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-            foreach (MethodInfo method in methods)
-            {
-                AddFx(method, AIFunctions);
-            }
+            Functions.Add(func, new CombinatorFunctionInfo(typeof(K), typeof(A), null, obj));
+        }
+        
+        public static void RegisterMultiDependent<T,CONTEXT,A,K>(string func, Func<T,CONTEXT,List<A>,K> obj)
+        {
+            Functions.Add(func, new CombinatorFunctionInfo(typeof(K), typeof(A), typeof(CONTEXT), obj));
         }
 
-        private static bool AddFx<T>(MethodInfo method, Dictionary<string, T> funcMap) where T : class
-        {
-            if (IsMethodCompatibleWithDelegate<T>(method))
-            {
-                Debug.LogWarning($"F:Found method [{method.Name}/{typeof(T).Name}]");
-                var function = (T) (object) Delegate.CreateDelegate(typeof (T), method);
-                funcMap.Add(method.Name, function);
-                return true;
-            }
-
-            return false;
-        }
-
-        private static bool IsMethodCompatibleWithDelegate<T>(MethodInfo method) where T : class
-        {
-            Type delegateType = typeof(T);
-            MethodInfo delegateSignature = delegateType.GetMethod("Invoke");
-
-            bool parametersEqual = delegateSignature
-                .GetParameters()
-                .Select(x => x.ParameterType)
-                .SequenceEqual(method.GetParameters()
-                    .Select(x => x.ParameterType));
-
-            return delegateSignature.ReturnType == method.ReturnType &&
-                   parametersEqual;
-        }
+        #endregion
     }
 }

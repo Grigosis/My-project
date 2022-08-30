@@ -8,8 +8,7 @@ namespace Combinator
     {
         protected List<IN> List = new List<IN>();
         protected List<ICombinator<IN>> Combinators = new List<ICombinator<IN>>();
-
-        public ACombinatorMultiNode() { }
+        
         
         public void AddNode(ICombinator<IN> combinator)
         {
@@ -45,7 +44,7 @@ namespace Combinator
             base.SetLiveUpdates(liveUpdates, recalculate);
         }
 
-        public string GetDebugName()
+        public override string GetDebugName()
         {
             var sb = new StringBuilder();
             sb.Append($"{NodeDebugName}(");

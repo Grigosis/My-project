@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ClassLibrary1.Xml;
 using ClassLibrary1.Logic;
 using Assets.Scripts.Slime.Sugar;
+using UnityEngine;
 
 namespace ClassLibrary1
 {
@@ -13,13 +14,67 @@ namespace ClassLibrary1
     
     public class Library
     {
-        public static Library Instance;
+        private static Library m_Instance;
+        public static Library Instance
+        {
+            get
+            {
+                lock (typeof(Library))
+                {
+                    if (m_Instance == null)
+                    {
+                        m_Instance = new Library();
+                    }
+
+                    return m_Instance;
+                }
+            }
+        }
+
+
+        private Library()
+        {
+            RegisterFx("TestSelectionFx", ((question, answer) =>
+            {
+                Debug.LogError($"SelectionFx {question} {answer}");
+            }));
+            
+            RegisterFx("TestSelectionFx2", ((question, answer) =>
+            {
+                Debug.LogError($"SelectionFx2 {question} {answer}");
+            }));
+            
+            RegisterFx("TestAnswerArgsFx", ((questionxml, answer) =>
+            {
+                Debug.LogError($"AnswerArgsFx {questionxml} {answer}");
+                return new MockAnswerArgs(true, "TestAnswerArgs");
+            }));
+
+            RegisterFx("TestAnswerArgsFx2", ((questionxml, answer) =>
+            {
+                Debug.LogError($"AnswerArgsFx2 {questionxml} {answer}");
+                return new MockAnswerArgs(false, "TestAnswerArgs2");
+            }));
+            
+            RegisterFx("MockQuestionFx1", ((questionxml) =>
+            {
+                Debug.LogError($"AnswerArgsFx {questionxml}");
+                return new MockQuestionArgs("TestAnswerArgs", true);
+            }));
+
+            RegisterFx("MockQuestionFx2", ((questionxml) =>
+            {
+                Debug.LogError($"MockQuestionArgs2 {questionxml}");
+                return new MockQuestionArgs("MockQuestionArgs2", false);
+            }));
+        }
         
         private Dictionary<string, AnswerXml> Answers = new Dictionary<string, AnswerXml>();
         private Dictionary<string, QuestionXml> Questions = new Dictionary<string, QuestionXml>();
         
-        private Dictionary<string, QuestionArgsFx> QuestionArgsFx = new Dictionary<string, QuestionArgsFx>();
-        private Dictionary<string, AnswerArgsFx> AnswerArgsFx = new Dictionary<string, AnswerArgsFx>();
+        public Dictionary<string, QuestionArgsFx> QuestionArgsFx = new Dictionary<string, QuestionArgsFx>();
+        public Dictionary<string, AnswerArgsFx> AnswerArgsFx = new Dictionary<string, AnswerArgsFx>();
+        public Dictionary<string, SelectionFx> SelectionFx = new Dictionary<string, SelectionFx>();
 
         private Dictionary<string, CombinatorFx> CombinatorFx = new Dictionary<string, CombinatorFx>();
 
@@ -41,6 +96,10 @@ namespace ClassLibrary1
         
         public void RegisterFx (string name, AnswerArgsFx fx) {
             AnswerArgsFx.AddOnce(name, fx);
+        }
+        
+        public void RegisterFx (string name, SelectionFx fx) {
+            SelectionFx.AddOnce(name, fx);
         }
         
         public void RegisterFx (string name, CombinatorFx fx) {

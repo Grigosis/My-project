@@ -221,10 +221,11 @@ MonoBehaviour:
       DEF_MLT: 0
       SPECIAL_1: 0
       SPECIAL_2: 0
-  AI: {fileID: 0}
+  AI: {fileID: 11400000, guid: 41bfc901c55aa024ab405da71e3391a4, type: 2}
   Skills:
   - {fileID: 11400000, guid: 992ae6226968737458f591fe12a699d6, type: 2}
   - {fileID: 11400000, guid: 247e66aa45e71234a8d24093a554264a, type: 2}
   - {fileID: 11400000, guid: 9f5cf39890649254fa85a09e03635786, type: 2}
   - {fileID: 11400000, guid: a54df3d274757f04e91d4689fb48cd95, type: 2}
-  EquippedItems: []
+  EquippedItems:
+  - {fileID: 11400000, guid: a4280c8e05e34814997a11eb12290d96, type: 2}
