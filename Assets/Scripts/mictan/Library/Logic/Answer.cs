@@ -13,7 +13,13 @@ namespace ClassLibrary1.Logic
         public string Requirements = "STR:20";//TODO parse
         
         public SelectionFx SelectionFx; // Когда выбрали ответ
-        public string NextQuestionId; //Следующий вопрос
+
+        public Answer(AnswerXml xml) {
+            Xml = xml;
+            AnswerFx = Library.Instance.GetAnswerArgsFx(xml.AnswerFx);
+            Requirements = xml.Requirements;
+            //SelectionFx = xml.SelectionFx;
+        }
     }
     
 }

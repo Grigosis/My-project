@@ -17,24 +17,37 @@ namespace ClassLibrary1
         
         private Dictionary<string, AnswerXml> Answers = new Dictionary<string, AnswerXml>();
         private Dictionary<string, QuestionXml> Questions = new Dictionary<string, QuestionXml>();
-        
+        private Dictionary<string, DialogXml> Dialogs = new Dictionary<string, DialogXml>();//???
+
         private Dictionary<string, QuestionArgsFx> QuestionArgsFx = new Dictionary<string, QuestionArgsFx>();
         private Dictionary<string, AnswerArgsFx> AnswerArgsFx = new Dictionary<string, AnswerArgsFx>();
 
         private Dictionary<string, CombinatorFx> CombinatorFx = new Dictionary<string, CombinatorFx>();
 
-        public CombinatorFx GetCombinatorFx(string name)
-        {
-            if (CombinatorFx.TryGetValue(name, out var cmb))
-            {
+        public CombinatorFx GetCombinatorFx(string name) {
+            if (CombinatorFx.TryGetValue(name, out var cmb)) {
                 return cmb;
-            }
-            else
-            {
+            } else {
                 throw new Exception($"CombinatorFx not found:{name}");
             }
         }
-        
+
+        public QuestionArgsFx GetQuestionArgsFx(string name) {
+            if (QuestionArgsFx.TryGetValue(name, out var cmb)) {
+                return cmb;
+            } else {
+                throw new Exception($"QuestionArgsFx not found:{name}");
+            }
+        }
+
+        public AnswerArgsFx GetAnswerArgsFx(string name) {
+            if (AnswerArgsFx.TryGetValue(name, out var cmb)) {
+                return cmb;
+            } else {
+                throw new Exception($"AnswerArgsFx not found:{name}");
+            }
+        }
+
         public void RegisterFx (string name, QuestionArgsFx fx) {
             QuestionArgsFx.AddOnce(name, fx);
         }
@@ -55,6 +68,10 @@ namespace ClassLibrary1
         public void Register(QuestionXml questionXml)
         {
             Questions.AddOnce(questionXml.Id, questionXml);
+        }
+
+        public void Register(DialogXml dialogXml) {
+            Dialogs.AddOnce(dialogXml.Id, dialogXml);
         }
     }
 }

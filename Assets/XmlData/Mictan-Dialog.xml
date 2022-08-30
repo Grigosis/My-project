@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameDataXml xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AcheivementValues>
+    <AcheivementValue xsi:type="AcheivementDoubleValue" Id="MONEY" Value="99.9" />
+    <AcheivementValue xsi:type="AcheivementDoubleValue" Id="STR" Value="50" />
+  </AcheivementValues>
+  <Answers>
+    <AnswerXml Id="Exit" AnswerFx="SIMPLE" Requirements="" SelectionFx="" NextQuestionId="">
+      <Text>Выход</Text>
+    </AnswerXml>
+    <AnswerXml Id="Q1A1" AnswerFx="SIMPLE" Requirements="STR:39" SelectionFx="" NextQuestionId="Q2">
+      <Text>Bla lba {MONEY}g? {Nickname}</Text>
+    </AnswerXml>
+    <AnswerXml Id="Q2A1" AnswerFx="SIMPLE" Requirements="STR:39" SelectionFx="" NextQuestionId="">
+      <Text>Blo fre lbo {MONEY}g? {Nickname}</Text>
+    </AnswerXml>
+  </Answers>
+  <Dialogs>
+    <DialogXml Id="Dialog1">
+		<Combinator>
+			<CombinatorNode Fx="IsMore">
+				<CombinatorNode Fx="NPC_VALUE" Value="Reputation">
+				<CombinatorNode Fx="Constant" Value="25">
+			</CombinatorNode>
+		</Combinator>
+    </DialogXml>
+  </Dialogs>
+  <Questions>
+    <QuestionXml Id="Q1" TextArgsFx="SIMPLE">
+      <Text>Bla lba q1</Text>
+      <Answers>
+        <string>Q1A1</string>
+        <string>Exit</string>
+      </Answers>
+    </QuestionXml>
+    <QuestionXml Id="Q2" TextArgsFx="SIMPLE">
+      <Text>Blo lbo q2</Text>
+      <Answers>
+        <string>Q2A1</string>
+        <string>Exit</string>
+      </Answers>
+    </QuestionXml>
+  </Questions>
+</GameDataXml>

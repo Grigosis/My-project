@@ -1,3 +1,4 @@
+using ClassLibrary1;
 using ClassLibrary1.Logic;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,6 +19,11 @@ public class QuestAnswerBehaviour : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetAnswer(Answer answer, AnswerArgs answerArgs) {
+        Answer = answer;
+        Text.text = answerArgs.GenerateString();
     }
 
     public void OnClick() {

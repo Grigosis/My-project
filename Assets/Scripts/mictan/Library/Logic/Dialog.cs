@@ -11,21 +11,21 @@ namespace ClassLibrary1.Logic
     {
         public DialogXml Xml;
 
-        public ICombinator<bool> Combinator;
+        public ICombinator<bool> VisibleCombinator;
         public Question StartQuestion;
 
         public bool IsVisible {
             get {
-                return Combinator.Value;
+                return VisibleCombinator.Value;
             }
         }
 
         public Dialog(DialogXml xml){
             Xml = xml;
-            Combinator = (ICombinator<bool>)CombinatorBuilder.Build(xml.Combinator, typeof(bool), CombinatorFunctions.Parser, CombinatorFunctions.Subscriber);
+            VisibleCombinator = (ICombinator<bool>)CombinatorBuilder.Build(xml.Combinator, typeof(bool), CombinatorFunctions.Parser, CombinatorFunctions.Subscriber);
             //Combinator.Subscribe();
             //Combinator.IsVisible.OnChanged += IsVisibleChanged;
-            Combinator.OnChanged += IsVisibleChanged;
+            VisibleCombinator.OnChanged += IsVisibleChanged;
             StartQuestion = Dialogs.Questions[Xml.StartQuestionId];
         }
 
