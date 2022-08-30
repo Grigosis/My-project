@@ -20,7 +20,7 @@ namespace ROR.Core
 
         public int Team;
         public EffectBar EffectBar { get; private set; } = new EffectBar();
-        public string Portrait { get; set; }
+        public Sprite Portrait { get; set; }
         public Vector2Int Position => new Vector2Int(Cell.X, Cell.Y);
 
         public Attrs FinalStats = new Attrs();
@@ -133,7 +133,7 @@ namespace ROR.Core
         }
 
 
-        public void InitFromDefinition(String portrait, Attrs baseAttrs, Attrs upgradedAttrs, Attrs equipmentAttrs, SkillDefinition[] skillDefinitions)
+        public void InitFromDefinition(Sprite portrait, Attrs baseAttrs, Attrs upgradedAttrs, Attrs equipmentAttrs, SkillDefinition[] skillDefinitions)
         {
             Portrait = portrait;
             BaseStats = baseAttrs;

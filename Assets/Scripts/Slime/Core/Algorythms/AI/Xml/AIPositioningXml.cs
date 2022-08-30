@@ -1,10 +1,12 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core.Algorythms
 {
-    public class AIPositioningXml
+    [Serializable]
+    public struct AIPositioningXml
     {
-        [XmlArrayItem("Layer")]
+        [SerializeField]
         public AIPositioningLayerXml[] Layers;
     }
 }

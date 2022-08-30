@@ -4,7 +4,6 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.Algorythms;
 using Assets.Scripts.Sugar;
 using ROR.Lib;
@@ -31,7 +30,6 @@ namespace ROR.Core.Serialization
                 {
                     if (_instance == null)
                     {
-                        F.Init();
                         _instance = new D();
                         _instance.Init();
                     } 

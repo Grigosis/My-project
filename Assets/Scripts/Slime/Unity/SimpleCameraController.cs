@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
-using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Slime.Unity
 {

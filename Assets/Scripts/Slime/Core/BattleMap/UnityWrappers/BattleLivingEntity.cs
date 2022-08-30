@@ -1,4 +1,3 @@
-using System;
 using ROR.Core;
 using ROR.Core.Serialization;
 using RPGFight;
@@ -13,17 +12,16 @@ namespace SecondCycleGame
         public Attrs CustomAttributes;
         public EffectBar EffectBar;
         public SkinnedMeshRenderer Renderer;
-        public String DefintionId;
+        public LivingEntityDefinition Definition;
 
         public int Team;
 
         // Start is called before the first frame update
         void Awake()
         {
-            if (DefintionId != null)
+            if (Definition != null)
             {
-                var stateInBattle = D.Instance.Get<LivingEntityDefinition>(DefintionId);
-                LivingEntity = Builder.Build(stateInBattle);
+                LivingEntity = Builder.Build(Definition);
             }
             else
             {

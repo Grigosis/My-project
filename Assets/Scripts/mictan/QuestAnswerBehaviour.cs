@@ -1,7 +1,5 @@
 using ClassLibrary1;
 using ClassLibrary1.Logic;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

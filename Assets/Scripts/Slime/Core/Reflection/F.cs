@@ -11,11 +11,12 @@ namespace Assets.Scripts.Slime.Core
     {
         public readonly static Dictionary<string, AIFunction> AIFunctions = new Dictionary<string, AIFunction>();
 
-        public static void Init()
+        static F()
         {
             Debug.LogWarning("F:Init");
             AddScriptFunctions(typeof(AIFunctions));
         }
+        
         
         public static void AddScriptFunctions(Assembly assembly)
         {

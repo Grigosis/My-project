@@ -1,15 +1,19 @@
-﻿using System.Xml.Serialization;
+﻿using UnityEngine;
 
 namespace ROR.Core.Serialization
 {
-    public class BaseDefinition : Definition
+    public abstract class BaseDefinition : Definition
     {
-        [XmlAttribute]
+        [SerializeField]
         public string Name = "";
-        [XmlAttribute]
-        public string Icon = "";
         
+        [SerializeField]
+        public Sprite Icon;
+        
+        [SerializeField]
         public string Description = "";
+        
+        [SerializeField]
         public string Type = "";
     }
 }

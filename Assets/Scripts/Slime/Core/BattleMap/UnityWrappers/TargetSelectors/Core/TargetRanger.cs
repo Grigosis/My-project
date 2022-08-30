@@ -7,6 +7,14 @@ using UnityEngine;
 
 namespace Assets.Scripts.Slime.Core.BattleMap.UnityWrappers.TargetSelectors
 {
+    public class NoTargetRanger : ITargetRanger
+    {
+        public double RangeTargets(LivingEntity m_caster, SkillEntity m_skillEntity, Battle m_battle, ISkillTarget target, Vector2Int fromPosition)
+        {
+            return -1;
+        }
+    }
+    
     public class SingleUnitTargetRanger : ITargetRanger
     {
         public double RangeTargets(LivingEntity m_caster, SkillEntity m_skillEntity, Battle m_battle, ISkillTarget target, Vector2Int fromPosition)

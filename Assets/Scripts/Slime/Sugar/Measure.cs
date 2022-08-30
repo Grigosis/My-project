@@ -16,7 +16,7 @@ namespace Assets.Scripts.Sugar
         }
         public void Dispose()
         {
-            Debug.LogWarning($"Measure:{name} totalMs:{timer.Elapsed.TotalMilliseconds}");
+            Debug.LogError($"Measure:{name} totalMs:{timer.Elapsed.TotalMilliseconds}");
         }
     }
 }

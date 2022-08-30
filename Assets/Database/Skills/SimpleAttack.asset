@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca1d642de6b177044a9f47974809316b, type: 3}
+  m_Name: SimpleAttack
+  m_EditorClassIdentifier: 
+  Id: SimpleAttack
+  Name: 
+  Icon: {fileID: 21300000, guid: d852bf2b2c6941e4f90d9304a7f93fea, type: 3}
+  Description: 
+  Type: 
+  Attacks: []
+  TargetSelector: UnitTargetSelector
+  UnityTargetSelector: UnityUnitTargetSelector
+  SplashProvider: NoSplash
+  TargetRanger: SingleUnitTargetRanger
+  Implementation: DefaultAttack
+  RelationShipFilter: 7
+  IsRangedAttack: 0
+  Targets: 1
+  HitChanceMlt: 1
+  SplashRange: 0
+  AP: 3
+  MinRange: 0
+  MaxRange: 1
+  Cooldown: 10

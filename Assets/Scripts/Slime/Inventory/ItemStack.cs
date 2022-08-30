@@ -1,4 +1,6 @@
 ﻿using System;
+using Assets.Scripts.Slime.Sugar;
+using ROR.Core.Serialization;
 
 namespace ClassLibrary1.Inventory
 {

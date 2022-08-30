@@ -1,4 +1,5 @@
 ﻿using System;
+using ROR.Core.Serialization;
 
 namespace ClassLibrary1.Inventory
 {

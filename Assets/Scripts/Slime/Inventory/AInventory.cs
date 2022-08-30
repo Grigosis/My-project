@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Assets.Scripts.Slime.Sugar;
 using ConsoleApplication1;
+using ROR.Core.Serialization;
 using UnityEngine;
 
 namespace ClassLibrary1.Inventory
