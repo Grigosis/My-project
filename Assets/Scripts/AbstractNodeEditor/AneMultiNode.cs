@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
 using RPGFight.Library;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
@@ -67,9 +67,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 
         public virtual void OnEditRequest(VisualElement view, DATA2 onDelete)
         {
-            //Graph.GetEditor().RequestEditObject(onDelete, OnEditorFinished);
-             
-            Graph.GetEditor().RequestEditObject((Graph.Presentation as DialogANEPresentation).QuestContext, OnEditorFinished);
+            Graph.GetEditor().RequestEditObject(onDelete, OnEditorFinished);
         }
         
         public virtual void OnMoveRequest(VisualElement view, DATA2 onDelete, int direction)

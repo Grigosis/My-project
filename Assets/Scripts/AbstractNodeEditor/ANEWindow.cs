@@ -38,7 +38,6 @@ namespace DS.Windows
             graphView.StretchToParentSize();
             
             
-            
             splitView = new SplitView(0, 200, TwoPaneSplitViewOrientation.Horizontal);
             splitView.Add(button);
             splitView.Add(graphView);

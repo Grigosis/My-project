@@ -19,10 +19,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
 
         protected override ExtendedPort CreatePort(VisualElement container)
         {
-            var port = ExtendedPort.CreateEPort(ParentData, Orientation.Horizontal, Direction.Output, Port.Capacity.Single, OnConnected, OnDisconnected);
-            port.OnDisconnected += OnDisconnected;
-            container.Add(port);
-            return port;
+            return ExtendedPort.CreateEPort(ParentData, Orientation.Horizontal, Direction.Output, Port.Capacity.Single, OnConnected, OnDisconnected);
         }
 
         public override void UpdateUI()

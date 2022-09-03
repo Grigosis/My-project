@@ -15,13 +15,17 @@ namespace Assets.Scripts.AbstractNodeEditor
         public List<ANEGroupState> Groups = new List<ANEGroupState>();
         
         [SerializeField]
+        public List<Object> Data = new List<Object>();
+        
+        [SerializeField]
         public Object PresentationObject; 
     }
+
     
-    [Serializable]
-    public class ANEGraphData : ScriptableObject
+    public class Test : ScriptableObject
     {
-        public List<Object> Data = new List<Object>();
+        [SerializeReference]
+        public object Data; 
     }
     
     [Serializable]

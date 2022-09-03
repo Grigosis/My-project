@@ -279,7 +279,8 @@ namespace Assets.Scripts.Slime.Sugar
 
         public static void AddOnce<T, K>(this Dictionary<T, K> dictionary, T t, K k) {
             if (dictionary.TryGetValue(t, out var oldK)) {
-                throw new Exception($"Allready contains with key {t} : {oldK} / {k}");
+                Debug.LogError($"Allready contains with key {t} : {oldK} / {k}");
+                return;
             }
             dictionary.Add(t, k);
         }

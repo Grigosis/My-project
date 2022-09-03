@@ -4,10 +4,10 @@ namespace Combinator
 {
     public class SubscribableSub : ISubscription
     {
-        public Subscribable<object> Subscribable {get; private set; }
+        public ISubscribable Subscribable {get; private set; }
         public ICombinator Combinator {get; private set; }
                 
-        public SubscribableSub(Subscribable<object> value, ICombinator combinator)
+        public SubscribableSub(ISubscribable value, ICombinator combinator)
         {
             Subscribable = value;
             Combinator = combinator;

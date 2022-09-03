@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
+using ROR.Core.Serialization;
 using RPGFight.Library;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -130,30 +132,40 @@ namespace DS.Windows
         
         public void Save(string folder, string fileName)
         {
-            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}.assert");
-            ANEGraphData dataOnly = R.CreateOrLoadAsset<ANEGraphData>($"{folder}/{fileName}.DATA.assert");
-
+            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}", true);
             graphData.PresentationObject = Presentation.OnSerialize();
-            
-            Debug.LogError("Saved:"+graphData.PresentationObject);
+
+            foreach (var d in graphData.Data)
+            {
+                AssetDatabase.RemoveObjectFromAsset(d);
+            }
             
             graphData.Nodes.Clear();
             graphData.Groups.Clear();
-            dataOnly.Data.Clear();
+            graphData.Data.Clear();
+            graphData.PresentationObject = null;
 
             foreach (var nodeAndData in NodesAndData.KeysAndValues)
             {
                 var copy = nodeAndData.Key;//Object.Instantiate(nodeAndData.Key);
-                Debug.Log($"Saved Node: {copy}");
-                
-                dataOnly.Data.Add(copy);
-
+                Debug.Log($"Saved Nodes: {copy}");
+               
                 var nodeState = new ANENodeState();
                 nodeState.Position = nodeAndData.Value.GetPosition().position;
                 nodeState.Data = copy;
+                graphData.Data.Add(copy);
+                
+                R.AddObjectToAsset(copy, graphData);
+                if (copy is QuestDialog qd)
+                {
+                    foreach (var answer in qd.Answers)
+                    {
+                        graphData.Data.Add(answer);
+                        R.AddObjectToAsset(answer, graphData);
+                    }
+                }
+                
                 nodeState.GroupId = nodeAndData.Value.Group;
-                
-                
                 graphData.Nodes.Add(nodeState);
             }
             
@@ -167,8 +179,9 @@ namespace DS.Windows
                 graphData.Groups.Add(nodeState);
             }
             
-            R.SaveAsset(graphData);
-            R.SaveAsset(dataOnly);
+            EditorUtility.SetDirty(graphData);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         public void Clear()
@@ -182,10 +195,10 @@ namespace DS.Windows
         public void Load(string folder, string fileName)
         {
             Clear();
-            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}.assert");
+            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}");
             
             
-            Debug.LogError("Loaded:"+graphData.PresentationObject);
+            //Debug.LogError("Loaded:"+graphData.PresentationObject);
             
             Presentation.OnLoaded(graphData.PresentationObject);
             

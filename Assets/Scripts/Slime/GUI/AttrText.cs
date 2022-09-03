@@ -18,6 +18,9 @@ namespace SecondCycleGame
         // Update is called once per frame
         void Update()
         {
+            if (true)
+                return;
+            
             var provider = GetComponentInParent<IAttributeProvider>();
             if (provider == null)
             {

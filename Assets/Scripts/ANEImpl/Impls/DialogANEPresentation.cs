@@ -21,7 +21,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
 
         public override void OnLoaded(object obj)
         {
-            QuestContext = (QuestContext)obj;
+            //QuestContext = (QuestContext)obj;
         }
 
         public override void OnCreatedNew()
@@ -54,7 +54,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
         {
             if (o is QuestDialog qd)
             {
-                var a = ScriptableObject.CreateInstance<QuestAnswer>();
+                var a = ScriptableObject.CreateInstance<QuestAnswer>(); 
                 a.Text = "Hi!";
                 a.AnswerFx = "Test";
                 qd.Answers.Add(a);

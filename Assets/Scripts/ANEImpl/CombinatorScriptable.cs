@@ -7,8 +7,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.AbstractNodeEditor
 {
-    
-    [CreateAssetMenu(fileName = "New SwordData", menuName = "Sword Data", order = 51)]
     public class CombinatorScriptable : ScriptableObject
     {
         public string Value;

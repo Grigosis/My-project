@@ -42,6 +42,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Views
             if (downBtn != null) downBtn.clickable.clicked += ()=>listener.OnMoveRequest(this, this.Data, 1);
 
             EPort = CreatePort(container);
+            container.Add(EPort);
             BindPortData();
         }
 

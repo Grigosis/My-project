@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Test
+  m_EditorClassIdentifier: Assembly-CSharp:Assets.Scripts.AbstractNodeEditor:Test
+  Data:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: NodeData, ns: Assets.Scripts.AbstractNodeEditor, asm: Assembly-CSharp}
+      data:
+        Linked:
+          id: 1
+        Name: Id1
+    00000001:
+      type: {class: NodeData, ns: Assets.Scripts.AbstractNodeEditor, asm: Assembly-CSharp}
+      data:
+        Linked:
+          id: 2
+        Name: Id2
+    00000002:
+      type: {class: NodeData, ns: Assets.Scripts.AbstractNodeEditor, asm: Assembly-CSharp}
+      data:
+        Linked:
+          id: 0
+        Name: Id3

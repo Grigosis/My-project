@@ -125,10 +125,13 @@ namespace Assets.Scripts.Slime.Core.BattleMap
 
         public void Init()
         {
+            
             if (wasInited)
             {
                 return;
             }
+            
+            var context = ClassLibrary1.Library.Instance.Context;
 
             wasInited = true;
             

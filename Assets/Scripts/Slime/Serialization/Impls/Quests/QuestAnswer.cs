@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Assets.Scripts.AbstractNodeEditor;
+using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.Algorythms;
-using ClassLibrary1;
 using Combinator;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
@@ -40,8 +40,8 @@ namespace ROR.Core.Serialization
             DrawDefaultInspector();
             var someClass = target as QuestAnswer;
             
-            Helper.CreateEditorClassSelector(ref someClass.AnswerFx, Library.Instance.AnswerArgsFx.Keys.ToArray(), "Implementation");
-            Helper.CreateEditorClassSelector(ref someClass.SelectionFx, Library.Instance.SelectionFx.Keys.ToArray(), "TargetSelector");
+            Helper.CreateEditorClassSelector(ref someClass.AnswerFx, F.AnswerArgsFx.Keys.ToArray(), "Implementation");
+            Helper.CreateEditorClassSelector(ref someClass.SelectionFx, F.SelectionFx.Keys.ToArray(), "TargetSelector");
 
             // Save the changes back to the object
             EditorUtility.SetDirty(target);

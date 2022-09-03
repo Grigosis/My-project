@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using Assets.Scripts.Sugar;
 using UnityEditor;
@@ -42,7 +43,7 @@ namespace Assets.Scripts.Slime.Core
                 
                 if (m_types.ContainsKey(t.Name))
                 {
-                    Debug.LogWarning($"Already contains class with this name {t.Name} [{t.FullName}] [{m_types[t.Name].FullName}]");
+                    //Debug.LogWarning($"Already contains class with this name {t.Name} [{t.FullName}] [{m_types[t.Name].FullName}]");
                 }
                 else
                 {
@@ -140,21 +141,37 @@ namespace Assets.Scripts.Slime.Core
             return r;
         }
         
-        public static T CreateOrLoadAsset<T>(string path) where T : ScriptableObject
+        public static T CreateOrLoadAsset<T>(string path, bool createNew = false) where T : ScriptableObject
         {
             string fullPath = $"{path}.asset";
-            T asset = LoadAsset<T>(path);
-            if (asset == null)
+            if (!File.Exists(fullPath))
             {
-                asset = ScriptableObject.CreateInstance<T>();
+                Debug.LogError("Created assert at:" + fullPath);
+                T asset = ScriptableObject.CreateInstance<T>();
                 AssetDatabase.CreateAsset(asset, fullPath);
+                return asset;
             }
-            return asset;
-        }
-        
-        public static T LoadAsset<T>(string path) where T : ScriptableObject
-        {
-            return AssetDatabase.LoadAssetAtPath<T>($"{path}.asset");
+            else
+            {
+                T asset = AssetDatabase.LoadAssetAtPath<T>($"{path}.asset");
+                if (asset != null)
+                {
+                    return asset;
+                    
+                }
+                
+                if (createNew)
+                {
+                    asset = ScriptableObject.CreateInstance<T>();
+                    AssetDatabase.CreateAsset(asset, fullPath);
+                    return asset;
+                }
+                else
+                {
+                    Debug.LogError($"Error loading {asset}");
+                    return asset;
+                }
+            }
         }
         
         public static void SaveAsset(UnityEngine.Object asset)
@@ -163,6 +180,18 @@ namespace Assets.Scripts.Slime.Core
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+        }
+
+        public static void AddObjectToAsset(Object qd, Object dataOnly)
+        {
+            try
+            {
+                AssetDatabase.AddObjectToAsset(qd, dataOnly);
+            }
+            catch (Exception e)
+            {
+                        
+            }
         }
     }
 }

@@ -7,12 +7,12 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 {
     public class QuestContext : ScriptableObject
     {
-        [SerializeField]
-        public SerializableDictionary<string, object> GLOBAL_VALUES = new SerializableDictionary<string, object>();
+        //[SerializeField]
+        //public SerializableDictionary<string, object> GLOBAL_VALUES = new SerializableDictionary<string, object>();
 
 
         [NonSerialized]
-        public Dictionary<string, Subscribable<object>> Subscribables = new Dictionary<string, Subscribable<object>>();
+        public Dictionary<string, ISubscribable> Subscribables = new Dictionary<string, ISubscribable>();
         
     }
 }

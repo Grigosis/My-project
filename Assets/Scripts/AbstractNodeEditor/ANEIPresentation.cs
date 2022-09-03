@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Assets.Scripts.AbstractNodeEditor.Impls;
 using DS.Windows;
 using UnityEngine;

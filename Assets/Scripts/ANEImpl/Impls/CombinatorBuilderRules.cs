@@ -12,7 +12,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
         protected ANEGraph Graph;
         protected QuestContext Context;
 
-        public CombinatorBuilderRules(QuestContext context, ANEGraph graph)
+        public CombinatorBuilderRules(QuestContext context, ANEGraph graph = null)
         {
             Graph = graph;
             Context = context;
