@@ -117,10 +117,12 @@ namespace DS.Windows
         public class ObjectEditorWrapper
         {
             protected Action<object> OnEditorFinished;
-            protected EditorProxy ObjectToEdit;
-            protected Editor editor;
+            protected object ObjectToEdit;
+            protected AbstractObjectEditor editor;
             protected VisualElement editorView;
             protected VisualElement editorContainterView;
+            
+            
 
             public ObjectEditorWrapper(VisualElement editorContainterView)
             {
@@ -133,16 +135,8 @@ namespace DS.Windows
                 
                 OnEditorFinished = onEditorFinished;
 
+                editorView = AbstractObjectEditor.CreateEditor(objectToEdit);
 
-                var instance = ScriptableObject.CreateInstance<EditorProxy>();
-                instance.Editable = objectToEdit;
-                ObjectToEdit = instance;
-                
-                editor = Editor.CreateEditor(ObjectToEdit);
-                editorView = new IMGUIContainer(() =>
-                {
-                    editor.OnInspectorGUI();
-                });
                 editorContainterView.Add(editorView);
             }
             
@@ -150,7 +144,7 @@ namespace DS.Windows
             {
                 if (OnEditorFinished != null)
                 {
-                    OnEditorFinished?.Invoke(ObjectToEdit.Editable);
+                    OnEditorFinished?.Invoke(ObjectToEdit);
                 }
 
                 OnEditorFinished = null;
@@ -160,11 +154,6 @@ namespace DS.Windows
                 {
                     editorView.parent.Remove(editorView);
                     editorView = null;
-                }
-                if (editor != null)
-                {
-                    Object.DestroyImmediate(editor);
-                    editor = null;
                 }
             }
         }
