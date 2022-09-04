@@ -53,7 +53,7 @@ namespace ClassLibrary1
                 }
             }
             
-            Context = ScriptableObject.CreateInstance<QuestContext>();
+            Context = new QuestContext();
             Context.Subscribables["MONEY"] = new Subscribable<double>(99);
             Context.Subscribables["STR"] = new Subscribable<double>(50);
         }

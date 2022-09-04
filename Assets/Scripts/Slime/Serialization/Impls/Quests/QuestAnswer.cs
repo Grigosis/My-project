@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.Algorythms;
@@ -11,40 +12,31 @@ using UnityEngine;
 
 namespace ROR.Core.Serialization
 {
+    [Serializable]
     public class QuestAnswer : ScriptableObject
     {
-        [HideInInspector]
-        public string AnswerFx;
-        public string Text; //"Bla lba {MONEY}g? {Nickname}"
+        [SerializeField]
+        public string AnswerFx; //Helper.CreateEditorClassSelector(ref someClass.AnswerFx, F.AnswerArgsFx.Keys.ToArray(), "Implementation");
+        
+        [SerializeField]
+        public string Text;
+        
+        [SerializeField]
         public FxParamXml[] Requirements;
 
-        public CombinatorScriptable CombinatorData;
+        [SerializeReference]
+        public CombinatorScriptable CombinatorData; 
         
-        [HideInInspector]
+        [SerializeField]
         public string SelectionFx; // Когда выбрали ответ
-        [HideInInspector]
+        //Helper.CreateEditorClassSelector(ref someClass.SelectionFx, F.SelectionFx.Keys.ToArray(), "TargetSelector");
+        
+        [SerializeReference]
         public QuestDialog NextQuestionDialog; //Следующий вопрос
 
         public void BuildCombinator(QuestContext context)
         {
             CombinatorBuilder.Build(CombinatorData, typeof(bool), new CombinatorBuilderRules(context, null));
-        }
-    }
-    
-    [CustomEditor(typeof(QuestAnswer))]
-    public class QuestAnswerUnityEditor : Editor
-    {
-        public override void OnInspectorGUI ()
-        {
-            // Draw the default inspector
-            DrawDefaultInspector();
-            var someClass = target as QuestAnswer;
-            
-            Helper.CreateEditorClassSelector(ref someClass.AnswerFx, F.AnswerArgsFx.Keys.ToArray(), "Implementation");
-            Helper.CreateEditorClassSelector(ref someClass.SelectionFx, F.SelectionFx.Keys.ToArray(), "TargetSelector");
-
-            // Save the changes back to the object
-            EditorUtility.SetDirty(target);
         }
     }
 }

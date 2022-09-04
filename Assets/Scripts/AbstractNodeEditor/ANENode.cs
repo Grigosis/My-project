@@ -10,7 +10,7 @@ namespace Assets.Scripts.AbstractNodeEditor
     {
         protected ANEGraph Graph;
         private Color defaultBackgroundColor;
-        public Object NodeData;
+        public object NodeData;
 
         protected ANENode()
         {
@@ -30,7 +30,7 @@ namespace Assets.Scripts.AbstractNodeEditor
             base.BuildContextualMenu(evt);
         }
 
-        public virtual void Initialize(ANEGraph graph, Object nodeData, Vector2 position)
+        public virtual void Initialize(ANEGraph graph, object nodeData, Vector2 position)
         {
             NodeData = nodeData;
             Graph = graph;

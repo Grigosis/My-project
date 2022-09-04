@@ -1,8 +1,10 @@
-using System;
+﻿using System;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
+using SecondCycleGame.Assets.Scripts.ObjectEditor;
 using Slime;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
@@ -114,8 +116,8 @@ namespace DS.Windows
         
         public class ObjectEditorWrapper
         {
-            protected Action<Object> OnEditorFinished;
-            protected Object ObjectToEdit;
+            protected Action<object> OnEditorFinished;
+            protected EditorProxy ObjectToEdit;
             protected Editor editor;
             protected VisualElement editorView;
             protected VisualElement editorContainterView;
@@ -125,12 +127,16 @@ namespace DS.Windows
                 this.editorContainterView = editorContainterView;
             }
             
-            public void RequestEditObject(Object objectToEdit, Action<Object> onEditorFinished = null)
+            public void RequestEditObject(object objectToEdit, Action<object> onEditorFinished = null)
             {
                 FinishEdit();
                 
                 OnEditorFinished = onEditorFinished;
-                ObjectToEdit = objectToEdit;
+
+
+                var instance = ScriptableObject.CreateInstance<EditorProxy>();
+                instance.Editable = objectToEdit;
+                ObjectToEdit = instance;
                 
                 editor = Editor.CreateEditor(ObjectToEdit);
                 editorView = new IMGUIContainer(() =>
@@ -144,7 +150,7 @@ namespace DS.Windows
             {
                 if (OnEditorFinished != null)
                 {
-                    OnEditorFinished?.Invoke(ObjectToEdit);
+                    OnEditorFinished?.Invoke(ObjectToEdit.Editable);
                 }
 
                 OnEditorFinished = null;

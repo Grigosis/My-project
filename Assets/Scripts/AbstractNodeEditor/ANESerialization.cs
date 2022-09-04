@@ -15,19 +15,12 @@ namespace Assets.Scripts.AbstractNodeEditor
         public List<ANEGroupState> Groups = new List<ANEGroupState>();
         
         [SerializeField]
-        public List<Object> Data = new List<Object>();
+        public List<object> Data = new List<object>();
         
         [SerializeField]
-        public Object PresentationObject; 
+        public object PresentationObject; 
     }
 
-    
-    public class Test : ScriptableObject
-    {
-        [SerializeReference]
-        public object Data; 
-    }
-    
     [Serializable]
     public struct ANENodeState
     {
@@ -38,7 +31,7 @@ namespace Assets.Scripts.AbstractNodeEditor
         public int GroupId;
 
         [SerializeField] 
-        public Object Data;
+        public object Data;
     }
     
     [Serializable]

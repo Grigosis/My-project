@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Slime.Core;
 using Slime;
@@ -7,12 +8,20 @@ using UnityEngine;
 
 namespace Assets.Scripts.AbstractNodeEditor
 {
-    public class CombinatorScriptable : ScriptableObject
+    [Serializable]
+    public class CombinatorScriptable
     {
+        [SerializeField]
         public string Value;
 
+        [SerializeField]
         public string Fx;
+        
+        //var t = F.Functions.Keys.ToList();
+        //t.Insert(0, "Constant");
+        //Helper.CreateEditorClassSelector(ref someClass.Fx, t.ToArray(), "Function");
 
+        [SerializeReference]
         public List<CombinatorScriptable> Nodes = new List<CombinatorScriptable>();
 
         public override string ToString()
@@ -41,25 +50,6 @@ namespace Assets.Scripts.AbstractNodeEditor
                     node.GetAllChildNodes(set);
                 }
             }
-        }
-    }
-    
-    [CustomEditor(typeof(CombinatorScriptable))]
-    public class QuestAnswerUnityEditor : Editor
-    {
-        public override void OnInspectorGUI ()
-        {
-            // Draw the default inspector
-            DrawDefaultInspector();
-            var someClass = target as CombinatorScriptable;
-
-            var t = F.Functions.Keys.ToList();
-            t.Insert(0, "Constant");
-            
-            Helper.CreateEditorClassSelector(ref someClass.Fx, t.ToArray(), "Function");
-
-            // Save the changes back to the object
-            EditorUtility.SetDirty(target);
         }
     }
 }

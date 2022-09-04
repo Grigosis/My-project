@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Assets.Scripts.AbstractNodeEditor.Impls;
 using DS.Windows;
 using UnityEngine;
@@ -18,10 +18,10 @@ namespace Assets.Scripts.AbstractNodeEditor
             Graph = graph;
         }
         
-        public abstract void OnNewObjectCreated(Object o);
+        public abstract void OnNewObjectCreated(object o);
         public abstract void CreateContextMenu();
         
-        public virtual void ConnectPorts(Object obj)
+        public virtual void ConnectPorts(object obj)
         {
             var aneNode = Graph.NodesAndData.Get(obj);
             if (aneNode == null)
@@ -31,7 +31,7 @@ namespace Assets.Scripts.AbstractNodeEditor
             aneNode.ConnectPorts();
         }
 
-        public abstract Object OnSerialize();
+        public abstract object OnSerialize();
         public abstract void OnLoaded(object obj);
         public abstract void OnCreatedNew();
         
@@ -46,12 +46,12 @@ namespace Assets.Scripts.AbstractNodeEditor
         
         public void CreateNode(Type type, Type typeOfNode, Vector2 position, ANEGroup group)
         {
-            var obj = (Object)ScriptableObject.CreateInstance(type);
+            var obj = Activator.CreateInstance(type);
             OnNewObjectCreated(obj);
             CreateNode(obj, typeOfNode, position, group);
         }
 
-        public void CreateNode(Object obj, Type typeOfNode, Vector2 position, ANEGroup group)
+        public void CreateNode(object obj, Type typeOfNode, Vector2 position, ANEGroup group)
         {
             ANENode node;
             if (typeOfNode == typeof(DialogAneNode))

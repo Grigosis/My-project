@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
 using RPGFight.Library;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
@@ -10,9 +10,9 @@ using Object = UnityEngine.Object;
 
 namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 {
-    public abstract class ANEMultiNode<DATA, DATA2, VIEW> : ANENode, IRowListener<DATA2> where DATA : ScriptableObject where DATA2 : ScriptableObject where VIEW : RowView<DATA, DATA2>, new()
+    public abstract class ANEMultiNode<DATA, DATA2, VIEW> : ANENode, IRowListener<DATA2> where DATA : new() where DATA2 : new() where VIEW : RowView<DATA, DATA2>, new()
     {
-        protected DATA Dialog => NodeData as DATA;
+        protected DATA Dialog => (DATA)NodeData;
         protected DoubleDictionary<DATA2, VIEW> Data2ToPorts = new DoubleDictionary<DATA2, VIEW>();
         
         //UI
@@ -127,7 +127,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 
         protected virtual void OnAddSubNodeClicked()
         {
-            var answer = ScriptableObject.CreateInstance<DATA2>();
+            var answer = new DATA2();
             Graph.Presentation.OnNewObjectCreated(answer);
             GetSubNodes().Add(answer);
             CreateAnswerView(answer, true);
@@ -141,7 +141,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
             subnodesContainer.Add(answerView);
         }
 
-        private void OnEditorFinished(Object obj)
+        private void OnEditorFinished(object obj)
         {
             var view = Data2ToPorts.Get((DATA2)obj);
             if (view != null)

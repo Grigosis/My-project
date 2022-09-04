@@ -14,7 +14,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
         public QuestContext QuestContext;
         
         
-        public override Object OnSerialize()
+        public override object OnSerialize()
         {
             return QuestContext; 
         }
@@ -26,7 +26,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
 
         public override void OnCreatedNew()
         {
-            QuestContext = ScriptableObject.CreateInstance<QuestContext>();
+            QuestContext = new QuestContext();
         }
 
 
@@ -50,7 +50,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
             }
         }
         
-        public override void OnNewObjectCreated(Object o)
+        public override void OnNewObjectCreated(object o)
         {
             if (o is QuestDialog qd)
             {

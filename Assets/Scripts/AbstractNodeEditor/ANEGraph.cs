@@ -17,7 +17,7 @@ namespace DS.Windows
         public ANEWindow EditorWindow;
         public ANEIPresentation Presentation;
 
-        public DoubleDictionary<Object, ANENode> NodesAndData = new DoubleDictionary<Object, ANENode>(); 
+        public DoubleDictionary<object, ANENode> NodesAndData = new DoubleDictionary<object, ANENode>(); 
         public Dictionary<int, ANEGroup> Groups = new Dictionary<int, ANEGroup>(); 
 
   
@@ -135,11 +135,6 @@ namespace DS.Windows
             ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}", true);
             graphData.PresentationObject = Presentation.OnSerialize();
 
-            foreach (var d in graphData.Data)
-            {
-                AssetDatabase.RemoveObjectFromAsset(d);
-            }
-            
             graphData.Nodes.Clear();
             graphData.Groups.Clear();
             graphData.Data.Clear();
@@ -155,13 +150,12 @@ namespace DS.Windows
                 nodeState.Data = copy;
                 graphData.Data.Add(copy);
                 
-                R.AddObjectToAsset(copy, graphData);
+                
                 if (copy is QuestDialog qd)
                 {
                     foreach (var answer in qd.Answers)
                     {
                         graphData.Data.Add(answer);
-                        R.AddObjectToAsset(answer, graphData);
                     }
                 }
                 

@@ -8,34 +8,21 @@ using UnityEngine;
 
 namespace ROR.Core.Serialization
 {
-    public class QuestDialog : ScriptableObject
+    public class QuestDialog
     {
-        [HideInInspector]
+        [SerializeReference]
         public CombinatorScriptable VisibilityCombinator;
 
+        [SerializeField]
         public string Id;
         
+        [SerializeField]
         public string Text;
         
-        [HideInInspector]
-        public string TextArgsFx;
-        [HideInInspector]
+        [SerializeField]
+        public string TextArgsFx; //Helper.CreateEditorClassSelector(ref someClass.TextArgsFx, F.QuestionArgsFx.Keys.ToArray(), "TextArgsFx");
+        
+        [SerializeReference]
         public List<QuestAnswer> Answers = new List<QuestAnswer>();
-    }
-    
-    [CustomEditor(typeof(QuestDialog))]
-    public class QuestDialogUnityEditor : Editor
-    {
-        public override void OnInspectorGUI ()
-        {
-            // Draw the default inspector
-            DrawDefaultInspector();
-            var someClass = target as QuestDialog;
-            
-            Helper.CreateEditorClassSelector(ref someClass.TextArgsFx, F.QuestionArgsFx.Keys.ToArray(), "TextArgsFx");
-
-            // Save the changes back to the object
-            EditorUtility.SetDirty(target);
-        }
     }
 }
