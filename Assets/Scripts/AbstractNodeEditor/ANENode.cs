@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DS.Windows;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -22,12 +24,25 @@ namespace Assets.Scripts.AbstractNodeEditor
 
         public int Group { get; set; }
 
+        protected override void ExecuteDefaultAction(EventBase evt)
+        {
+            if (evt is DetachFromPanelEvent)
+            {
+                var ports = new List<ExtendedPort>();
+                FindPorts(this, ports);
+                foreach (var port in ports)
+                {
+                    port.DisconnectAll();
+                }
+                Debug.LogError($"DetachFromPaneslEvent:{ports.Count}");
+            }
+            base.ExecuteDefaultAction(evt);
+        }
+
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             evt.menu.AppendAction("Disconnect Input Ports", actionEvent => DisconnectInputPorts());
             evt.menu.AppendAction("Disconnect Output Ports", actionEvent => DisconnectOutputPorts());
-
-            base.BuildContextualMenu(evt);
         }
 
         public virtual void Initialize(ANEGraph graph, object nodeData, Vector2 position)
@@ -38,6 +53,37 @@ namespace Assets.Scripts.AbstractNodeEditor
             
         }
 
+        public override void CollectElements(HashSet<GraphElement> collectedElementSet, Func<GraphElement, bool> conditionFunc)
+        {
+            var ports = new List<ExtendedPort>();
+            FindPorts(this, ports);
+
+            foreach (var port in ports)
+            {
+                var aneNode = port.GetFirstOfType<ANENode>();
+                if (conditionFunc.Invoke(aneNode))
+                {
+                    collectedElementSet.Add(aneNode);
+                }
+            }
+        }
+
+        private void FindPorts(VisualElement element, List<ExtendedPort> ports)
+        {
+            foreach (var child in element.Children())
+            {
+                if (child is ExtendedPort ep)
+                {
+                    ports.Add(ep);
+                }
+                else
+                {
+                    FindPorts(child, ports);
+                }
+            }
+        }
+        
+        
         public abstract void CreateGUI();
         public virtual void Draw()
         {

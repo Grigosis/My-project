@@ -50,7 +50,7 @@ namespace DS.Windows
 
             fileNameTextField = Helper.CreateTextField(defaultFileName, "File Name:", callback =>
             {
-                fileNameTextField.value = callback.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
+                fileNameTextField.value = callback.newValue;//.RemoveWhitespaces().RemoveSpecialCharacters()
             });
 
             saveButton = Helper.CreateButton("Save", () => Save());
@@ -77,12 +77,12 @@ namespace DS.Windows
 
         private void Save()
         {
-            graphView.Save("Assets/Editor/DialogueSystem/Graphs", "TestGraph");
+            graphView.Save("Assets/Database/Dialogs", "TestGraph");
         }
 
         private void Load()
         {
-            graphView.Load("Assets/Editor/DialogueSystem/Graphs", "TestGraph");
+            graphView.Load("Assets/Database/Dialogs", "TestGraph");
         }
 
         private void Clear()
@@ -144,7 +144,14 @@ namespace DS.Windows
             {
                 if (OnEditorFinished != null)
                 {
-                    OnEditorFinished?.Invoke(ObjectToEdit);
+                    try
+                    {
+                        OnEditorFinished?.Invoke(ObjectToEdit);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError(e);   
+                    }
                 }
 
                 OnEditorFinished = null;

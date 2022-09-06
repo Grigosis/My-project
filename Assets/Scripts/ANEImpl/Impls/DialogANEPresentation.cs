@@ -54,7 +54,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
         {
             if (o is QuestDialog qd)
             {
-                var a = ScriptableObject.CreateInstance<QuestAnswer>(); 
+                var a = new QuestAnswer(); 
                 a.Text = "Hi!";
                 a.AnswerFx = "Test";
                 qd.Answers.Add(a);

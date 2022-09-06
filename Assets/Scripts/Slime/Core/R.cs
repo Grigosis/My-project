@@ -87,6 +87,17 @@ namespace Assets.Scripts.Slime.Core
             return null;
         }
 
+        public Type GetTypeByName(string name)
+        {
+            if(m_types.TryGetValue(name, out var type))
+            {
+                return type;
+            }
+
+            return null;
+        }
+        
+        
         public T CreateInstanceOrNull<T>(string name, string errorAddition = "")
         {
             if (string.IsNullOrEmpty(name)) return default(T);

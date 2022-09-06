@@ -13,7 +13,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
         //UI
         private Toggle answersVisibilityBtn;
         private Toggle textVisibilityBtn;
-        
+
         public DialogAneNode(string path) : base(path) { }
         
         public override void CreateGUI()
@@ -53,13 +53,20 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
             }
             else
             {
-                throw new Exception($"Wrong output/input ({output.Data} | {input.Data})");
+                Debug.LogError($"Wrong output/input ({output.Data} | {input.Data})");
             }
         }
         
-        public override void OnPortsDisconnected(ExtendedPort input, ExtendedPort output)
+        public override void OnPortsDisconnected(ExtendedPort output, ExtendedPort input)
         {
-            Debug.LogError($"OnPortsDisconnected : {input} => {output}");
+            if (output.Data is QuestAnswer answer && input.Data is QuestDialog dialog)
+            {
+                answer.NextQuestionDialog = null;
+            }
+            else
+            {
+                Debug.LogError($"Wrong output/input ({output.Data} | {input.Data})");
+            }
         }
 
         public override void ConnectPorts()

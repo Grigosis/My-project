@@ -12,7 +12,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
         //public SerializableDictionary<string, object> GLOBAL_VALUES = new SerializableDictionary<string, object>();
 
 
-        [NonSerialized]
+        [field:NonSerialized]
         public Dictionary<string, ISubscribable> Subscribables = new Dictionary<string, ISubscribable>();
         
     }

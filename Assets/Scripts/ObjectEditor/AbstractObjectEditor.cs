@@ -11,9 +11,9 @@ namespace SecondCycleGame.Assets.Scripts.ObjectEditor
     {
         public static VisualElement CreateEditor(object o)
         {
-            VisualTreeAsset uiAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor Default Resources/DialogueSystem/AnswerView.uxml");
+            VisualTreeAsset uiAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor Default Resources/Editor/Editor.uxml");
             TemplateContainer ui = uiAsset.CloneTree();
-            var root = ui.Q<VisualElement>("element");
+            var root = ui.Q<VisualElement>("container");
             
             var editors = PrepareEditor (o);
             foreach (var editor in editors)
@@ -32,20 +32,34 @@ namespace SecondCycleGame.Assets.Scripts.ObjectEditor
             var members = type.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             foreach (var info in members)
             {
-                if (info is MethodInfo mi) continue;
-
-                Type m_type = null;
+                
+                StringProperty property;
+                
                 if (info is PropertyInfo propertyInfo)
                 {
-                    m_type = propertyInfo.PropertyType;
+                    if (info.GetCustomAttribute<HideInInspector>() != null) continue;
+                    property = new StringProperty(propertyInfo);
                 }
                 else if (info is FieldInfo fieldInfo)
                 {
-                    m_type = fieldInfo.FieldType;
+                    if (info.GetCustomAttribute<HideInInspector>() != null) continue;
+                    property = new StringProperty(fieldInfo);
+                }
+                else
+                {
+                    continue;
                 }
 
-                TextFieldEditor editor = new TextFieldEditor(new StringProperty(info));
-                list.Add(editor);
+                if (property.Variants != null)
+                {
+                    ComboBoxEditor editor = new ComboBoxEditor(property);
+                    list.Add(editor);
+                }
+                else
+                {
+                    TextFieldEditor editor = new TextFieldEditor(property);
+                    list.Add(editor);
+                }
             }
             
             return list;
