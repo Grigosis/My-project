@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Slime.Core;
 using ROR.Core.Serialization;
+using ROR.Core.Serialization.Json;
 using SecondCycleGame.Assets.Scripts.ObjectEditor;
 using Slime;
 using UnityEditor;
@@ -11,7 +12,7 @@ using UnityEngine;
 namespace Assets.Scripts.AbstractNodeEditor
 {
     [Serializable]
-    public class CombinatorScriptable : Linkable
+    public class CombinatorData : Linkable
     {
         [SerializeField]
         public string Value;
@@ -22,8 +23,9 @@ namespace Assets.Scripts.AbstractNodeEditor
 
         [HideInInspector]
         [field:NonSerialized]
-        public List<CombinatorScriptable> Nodes = new List<CombinatorScriptable>();
+        public List<CombinatorData> Nodes = new List<CombinatorData>();
 
+        [HideInInspector]
         [SerializeField] 
         public List<string> NodesGuids = new List<string>();
 
@@ -44,10 +46,11 @@ namespace Assets.Scripts.AbstractNodeEditor
             return $"CombinatorScriptable {Fx} Nodes[{s} ]";
         }
 
-        public void GetAllChildNodes(HashSet<CombinatorScriptable> set)
+        public void GetAllChildNodes(HashSet<CombinatorData> set)
         {
             foreach (var node in Nodes)
             {
+                if (node == null) continue;
                 if (set.Add(node))
                 {
                     node.GetAllChildNodes(set);
@@ -72,10 +75,10 @@ namespace Assets.Scripts.AbstractNodeEditor
 
         public void RestoreLinks(ReferenceSerializer dictionary)
         {
-            NodesGuids.Clear();
+            Nodes.Clear();
             foreach (var node in NodesGuids)
             {
-                Nodes.Add(dictionary.GetObject<CombinatorScriptable>(node));
+                Nodes.Add(dictionary.GetObject<CombinatorData>(node));
             }
         }
 

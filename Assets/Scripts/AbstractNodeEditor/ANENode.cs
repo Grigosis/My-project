@@ -99,6 +99,8 @@ namespace Assets.Scripts.AbstractNodeEditor
             //extensionContainer
         }
 
+        public virtual void UpdateUI() { }
+
         public override void OnSelected()
         {
             base.OnSelected();
@@ -109,6 +111,7 @@ namespace Assets.Scripts.AbstractNodeEditor
         {
             base.OnUnselected();
             Graph.OnNodeDeselected(this);
+            UpdateUI();
         }
 
         public void DisconnectAllPorts()

@@ -17,10 +17,6 @@ namespace SecondCycleGame.Assets.Scripts.ObjectEditor
         public void BuildGui(object o, VisualElement e)
         {
             obj = o;
-            //
-            
-            Debug.LogError("Is M?" + m_property.Multiline);
-            
             VisualTreeAsset uiAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(m_property.Multiline ? "Assets/Editor Default Resources/Editor/TextAreaMultiline.uxml" : "Assets/Editor Default Resources/Editor/TextArea.uxml");
             TemplateContainer ui = uiAsset.CloneTree();
             var textField = ui.Q<TextField>("element");

@@ -19,7 +19,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
         }
 
 
-        public object ParseConstant(CombinatorScriptable data, Type shouldBeTypeOf)
+        public object ParseConstant(CombinatorData data, Type shouldBeTypeOf)
         {
             if (shouldBeTypeOf == typeof(double)) {
                 return double.Parse(data.Value);
@@ -32,9 +32,14 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
             throw new Exception($"Missing parser for type {shouldBeTypeOf}");
         }
 
-        public ISubscription Subscriber(CombinatorScriptable data, ICombinator combinator)
+        public ISubscription Subscriber(CombinatorData data, ICombinator combinator)
         {
             var dataValue = data.Value;
+            if (String.IsNullOrEmpty(dataValue))
+            {
+                return null;
+            }
+            
             if (!Context.Subscribables.TryGetValue(dataValue, out var subscribable))
             {
                 throw new Exception($"Not found context [{dataValue}]");
@@ -43,7 +48,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
             return new SubscribableSub(subscribable, combinator);
         }
 
-        public void OnCombinatorCreate(CombinatorScriptable data, ICombinator combinator)
+        public void OnCombinatorCreate(CombinatorData data, ICombinator combinator)
         {
             if (Graph != null)
             {

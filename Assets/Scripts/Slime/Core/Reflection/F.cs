@@ -48,13 +48,13 @@ namespace Assets.Scripts.Slime.Core
             //RegisterMulti<CombinatorScriptable, double, double>("Sum", CombinatorFunctions.Sum);
             //RegisterMulti<CombinatorScriptable, double, string>("ToStr", CombinatorFunctions.ToStr);
             
-            RegisterMulti<CombinatorScriptable, string, string>("Concat", CombinatorFunctions.Concat);
-            RegisterMulti<CombinatorScriptable, double, double>("Mlt", CombinatorFunctions.Mlt);
-            RegisterMulti<CombinatorScriptable, double, double>("Sum", CombinatorFunctions.Sum);
-            RegisterMulti<CombinatorScriptable, double, string>("ToStr", CombinatorFunctions.ToStr);
-            RegisterMulti<CombinatorScriptable, double, bool>("IsMore", CombinatorFunctions.IsMore);
-            RegisterMulti<CombinatorScriptable, bool, bool>("And", CombinatorFunctions.And);
-            RegisterMulti<CombinatorScriptable, bool, bool>("Or", CombinatorFunctions.Or);
+            RegisterMulti<CombinatorData, string, string>("Concat", CombinatorFunctions.Concat);
+            RegisterMulti<CombinatorData, double, double>("Mlt", CombinatorFunctions.Mlt);
+            RegisterMulti<CombinatorData, double, double>("Sum", CombinatorFunctions.Sum);
+            RegisterMulti<CombinatorData, double, string>("ToStr", CombinatorFunctions.ToStr);
+            RegisterMulti<CombinatorData, double, bool>("IsMore", CombinatorFunctions.IsMore);
+            RegisterMulti<CombinatorData, bool, bool>("And", CombinatorFunctions.And);
+            RegisterMulti<CombinatorData, bool, bool>("Or", CombinatorFunctions.Or);
             
             RegisterFx("TestSelectionFx", ((question, answer) =>
             {

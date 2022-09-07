@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using ROR.Core.Serialization;
+using ROR.Core.Serialization.Json;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

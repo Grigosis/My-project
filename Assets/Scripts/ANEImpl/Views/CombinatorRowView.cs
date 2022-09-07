@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace Assets.Scripts.AbstractNodeEditor.Views
 {
-    public class CombinatorRowView : RowView<CombinatorScriptable, CombinatorScriptable>
+    public class CombinatorRowView : RowView<CombinatorData, CombinatorData>
     {
         public ICombinator CombinatorImpl;
 

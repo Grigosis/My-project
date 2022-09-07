@@ -6,6 +6,7 @@ using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.Algorythms;
 using Combinator;
+using ROR.Core.Serialization.Json;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
 using SecondCycleGame.Assets.Scripts.ObjectEditor;
@@ -19,7 +20,7 @@ namespace ROR.Core.Serialization
     {
         [SerializeField]
         [ComboBoxEditor("F.AnswerArgsFx")]
-        public string AnswerFx; //Helper.CreateEditorClassSelector(ref someClass.AnswerFx, F.AnswerArgsFx.Keys.ToArray(), "Implementation");
+        public string AnswerFx;
         
         [Multiline]
         [SerializeField]
@@ -30,7 +31,7 @@ namespace ROR.Core.Serialization
 
         [HideInInspector]
         [field:NonSerialized]
-        public CombinatorScriptable CombinatorData;
+        public CombinatorData CombinatorData;
 
         [SerializeField]
         [ComboBoxEditor("F.SelectionFx")]
@@ -75,7 +76,7 @@ namespace ROR.Core.Serialization
 
         public void RestoreLinks(ReferenceSerializer dictionary)
         {
-            CombinatorData = dictionary.GetObject<CombinatorScriptable>(CombinatorDataGuid);
+            CombinatorData = dictionary.GetObject<CombinatorData>(CombinatorDataGuid);
             NextQuestionDialog = dictionary.GetObject<QuestDialog>(NextQuestionDialogGuid);
         }
 

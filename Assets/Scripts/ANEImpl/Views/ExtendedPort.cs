@@ -171,5 +171,23 @@ namespace Assets.Scripts.AbstractNodeEditor
                 }
               }
             }
+
+        public void DisconnectOfType<T>(GraphView view, T excluded) where T : class
+        {
+            var connectionsCopy = new List<Edge>(connections);
+            foreach (var edge in connectionsCopy)
+            {
+                var other = edge.input;
+                if (other == this) other = edge.output;
+
+                var port = other as ExtendedPort;
+                if (port.Data is T t && excluded != t)
+                {
+                    this.Disconnect(edge);
+                    other.Disconnect(edge);
+                    view.RemoveElement(edge);
+                }
+            }
+        }
     }
 }

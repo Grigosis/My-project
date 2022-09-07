@@ -12,13 +12,13 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 {
     public abstract class ANEMultiNode<DATA, DATA2, VIEW> : ANENode, IRowListener<DATA2> where DATA : new() where DATA2 : new() where VIEW : RowView<DATA, DATA2>, new()
     {
-        protected DATA Dialog => (DATA)NodeData;
+        protected DATA Data => (DATA)NodeData;
         protected DoubleDictionary<DATA2, VIEW> Data2ToPorts = new DoubleDictionary<DATA2, VIEW>();
         
         //UI
         protected Button addSubnodeButton;
         protected VisualElement subnodesContainer;
-        protected ExtendedPort InputPort;
+        public ExtendedPort InputPort;
         
         protected VisualElement root;
         protected Toggle visibilityBtn;
@@ -113,7 +113,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
             addSubnodeButton.clickable.clicked += OnAddSubNodeClicked;
             visibilityBtn.RegisterValueChangedCallback(VisibilityChanged);
             
-            ExtendedPort titlePort = ExtendedPort.CreateEPort(Dialog, Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, OnPortsConnected, OnPortsDisconnected);
+            ExtendedPort titlePort = ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, OnPortsConnected, OnPortsDisconnected);
             InputPort = titlePort;
             inputPortC.Add(titlePort);
             
@@ -136,21 +136,23 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
         protected virtual void CreateAnswerView(DATA2 answer, bool isNew)
         {
             VIEW answerView = new VIEW();
-            answerView.Init(Dialog, answer, this);
+            answerView.Init(Data, answer, this);
             Data2ToPorts.Add(answer, answerView);
             subnodesContainer.Add(answerView);
         }
 
-        private void OnEditorFinished(object obj)
+        protected virtual void OnEditorFinished(object obj)
         {
+            Debug.LogError("OnEditorFinished:" + obj);
             var view = Data2ToPorts.Get((DATA2)obj);
             if (view != null)
             {
                 view.UpdateUI();
             }
+
+            UpdateUI();
         }
-        
-        
+
         protected virtual void VisibilityChanged(ChangeEvent<bool> evt)
         {
             root.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);

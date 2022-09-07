@@ -5,6 +5,7 @@ using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Sugar;
 using ROR.Core.Serialization;
+using ROR.Core.Serialization.Json;
 using RPGFight.Library;
 using Unity.Mathematics;
 using UnityEditor;

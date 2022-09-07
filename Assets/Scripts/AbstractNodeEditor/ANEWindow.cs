@@ -133,6 +133,8 @@ namespace DS.Windows
             {
                 FinishEdit();
                 
+                Debug.LogError($"RequestEditObject [{objectToEdit}]");
+                ObjectToEdit = objectToEdit;
                 OnEditorFinished = onEditorFinished;
 
                 editorView = AbstractObjectEditor.CreateEditor(objectToEdit);

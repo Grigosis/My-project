@@ -6,6 +6,7 @@ using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Sugar;
 using ClassLibrary1.Logic;
+using ROR.Core.Serialization.Json;
 using SecondCycleGame.Assets.Scripts.ObjectEditor;
 using Slime;
 using UnityEditor;
@@ -15,136 +16,12 @@ using Random = UnityEngine.Random;
 namespace ROR.Core.Serialization
 {
 
-    public interface Linkable
-    {
-        /// <summary>
-        /// Maybe null, but always non null before StoreLinks called
-        /// </summary>
-        public string GUID { get; set; }
-        public void GetLinks(HashSet<Linkable> links);
-        public void RestoreLinks(ReferenceSerializer dictionary);
-        public void StoreLinks();
-    }
-
-    [Serializable]
-    public struct WTF
-    {
-        [SerializeReference]
-        public object Obj;
-    }
-    
-    [Serializable]
-    public class ReferenceSerializer : ISerializationCallbackReceiver
-    {
-        [field:NonSerialized] 
-        public Dictionary<string, Linkable> Objects = new Dictionary<string, Linkable>();
-        
-        [SerializeReference]
-        public List<object> ObjectsForSerialize = new List<object>();
-
-        private static System.Random Random = new System.Random();
-        
-        private string GenerateGuid()
-        {
-            while (true)
-            {
-                var s = Random.NextString(12);
-                if (!Objects.ContainsKey(s))
-                {
-                    return s;
-                }
-            }
-        }
-        
-        public void AddObject(Linkable linkable)
-        {
-            if (linkable == null) return;
-
-            Debug.LogError("AddObject:" + linkable + " " + linkable.GUID);
-            if (linkable.GUID == null)
-            {
-                linkable.GUID = GenerateGuid();
-            }
-
-            if (!Objects.ContainsKey(linkable.GUID))
-            {
-                Objects.Add(linkable.GUID, linkable);
-                var set = new HashSet<Linkable>();
-                linkable.GetLinks(set);
-
-                foreach (var link in set)
-                {
-                    AddObject(link);
-                }
-            }
-        }
-
-        public T GetObject<T>(string key) where T : Linkable
-        {
-            if (String.IsNullOrEmpty(key))
-            {
-                return default(T);
-            }
-
-            
-            if (Objects.TryGetValue(key, out var value))
-            {
-                if (value is T t)
-                {
-                    return t;
-                }
-            }
-            return default(T);
-
-        } 
-
-        public void OnBeforeSerialize()
-        {
-            Debug.LogError("OnBeforeSerialize:" + Objects.Count);
-            ObjectsForSerialize.Clear();
-            foreach (var obj in Objects)
-            {
-                (obj.Value as Linkable).StoreLinks();
-                ObjectsForSerialize.Add(obj.Value);
-            }
-            
-            //foreach (var obj in ObjectsForSerialize)
-            //{
-            //    (obj as Linkable).StoreLinks();
-            //}
-        }
-
-        public void OnAfterDeserialize()
-        {
-            //Debug.LogError("OnAfterDeserialize");
-            //foreach (var obj in ObjectsForSerialize)
-            //{
-            //    Debug.LogError($"RestoreLinks [{obj}]");
-            //    (obj as Linkable).RestoreLinks(this);
-            //}
-            
-            
-            Objects.Clear();
-            foreach (var obj in ObjectsForSerialize)
-            {
-                var linkable = obj as Linkable;
-                Objects.Add(linkable.GUID, linkable);
-            }
-            
-            
-            foreach (var obj in Objects)
-            {
-                (obj.Value as Linkable).RestoreLinks(this);
-            }
-        }
-    }
-    
     [Serializable]
     public class QuestDialog : Linkable
     {
         [HideInInspector]
         [field:NonSerialized]
-        public CombinatorScriptable VisibilityCombinator;
+        public CombinatorData VisibilityCombinator;
 
         [SerializeField]
         public string Id;
@@ -207,7 +84,7 @@ namespace ROR.Core.Serialization
         {
             Answers.Clear();
 
-            VisibilityCombinator = dictionary.GetObject<CombinatorScriptable>(VisibilityCombinatorGuid);
+            VisibilityCombinator = dictionary.GetObject<CombinatorData>(VisibilityCombinatorGuid);
             foreach (var guid in AnswersGUIDS)
             {
                 Answers.Add(dictionary.GetObject<QuestAnswer>(guid));

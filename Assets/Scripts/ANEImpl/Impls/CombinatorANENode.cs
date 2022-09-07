@@ -12,7 +12,7 @@ using UnityEngine.UIElements;
 
 namespace Assets.Scripts.AbstractNodeEditor.Impls
 {
-    public class CombinatorANENode : ANEMultiNode<CombinatorScriptable, CombinatorScriptable, CombinatorRowView>
+    public class CombinatorANENode : ANEMultiNode<CombinatorData, CombinatorData, CombinatorRowView>
     {
         private Toggle graph;
         private Label typeOutLabel;
@@ -38,9 +38,9 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
 
         public CombinatorANENode(string path) : base(path) { }
 
-        protected override List<CombinatorScriptable> GetSubNodes()
+        protected override List<CombinatorData> GetSubNodes()
         {
-            return Dialog.Nodes;
+            return Data.Nodes;
         }
 
         public override void CreateGUI()
@@ -61,9 +61,9 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
         {
             if (Combinator == null)
             {
-                if (Dialog.Fx == "Constant")
+                if (Data.Fx == "Constant")
                 {
-                    header.text = "`"+Dialog.Value+"`";
+                    header.text = "`"+Data.Value+"`";
                 }
                 else
                 {
@@ -83,8 +83,8 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
         {
             CombinatorOnOnChanged(Combinator);
             
-            contentText.text = Dialog.Fx;
-            if (F.Functions.TryGetValue(Dialog.Fx, out var fxInfo))
+            contentText.text = Data.Fx;
+            if (F.Functions.TryGetValue(Data.Fx, out var fxInfo))
             {
                 typeOutLabel.text = fxInfo.OutType?.Name ?? "NULL";
                 typeInLabel.text = fxInfo.InType?.Name ?? "NULL";
@@ -93,7 +93,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
             }
             else
             {
-                if (Dialog.Fx == "Constant")
+                if (Data.Fx == "Constant")
                 {
                     typeOutLabel.text = "Any";
                     typeInLabel.text = "";
@@ -127,7 +127,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
         }
 
 
-        protected override void CreateAnswerView(CombinatorScriptable answer, bool isNew)
+        protected override void CreateAnswerView(CombinatorData answer, bool isNew)
         {
             base.CreateAnswerView(answer, isNew);
             if (isNew)
@@ -144,31 +144,10 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
             BuildCombinator();
         }
 
-        public override void OnPortsConnected(ExtendedPort output, ExtendedPort input)
-        {
-            if (input == output)
-            {
-                Debug.LogWarning($"OnPortsSelfConnected : {input.Data} => {output.Data}");
-                return;
-            }
-
-            if (input.Data is CombinatorScriptable child && output.Data is CombinatorScriptable root)
-            {
-                
-                if (!root.Nodes.Contains(child))
-                {
-                    root.Nodes.Add(child);
-                    BuildCombinator();
-                }
-            }
-            else
-            {
-                throw new Exception($"Wrong output/input ({output.Data} | {input.Data})");
-            }
-        }
+        
 
 
-        public void OnSubNodeNullify(VisualElement view, CombinatorScriptable onDelete)
+        public void OnSubNodeNullify(VisualElement view, CombinatorData onDelete)
         {
             var rw = (view as CombinatorRowView);
             if (rw == null) return;
@@ -179,10 +158,156 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
             rw.SetData(null);
         }
 
+        
+
+
+
+        protected override void VisibilityChanged(ChangeEvent<bool> evt)
+        {
+            //base.VisibilityChanged(evt);
+            
+        }
+
+        public void BuildCombinator()
+        {
+            Debug.LogError("BuildCombinator");
+            BuildCombinator(Data);
+        }
+        public void BuildCombinator(CombinatorData forObj)
+        {
+            var top = GetTopMostParent(Graph, forObj).Data;
+            BuildCombinator(top, Graph);
+        }
+        
+        private void TextVisibilityChanged(ChangeEvent<bool> evt)
+        {
+            contentText.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);
+        }
+
+        
+        
+        #region Combinator
+        
+        public static CombinatorANENode GetTopMostParent(ANEGraph graph, CombinatorData data)
+        {
+            var top = (CombinatorANENode) graph.NodesAndData.Get(data);
+            while (true)
+            {
+                var other = top.InputPort.GetOther();
+                if (other != null)
+                {
+                    var node = graph.NodesAndData.Get(other.Data);
+                    if (node is CombinatorANENode cnode)
+                    {
+                        top = cnode;
+                        continue;
+                    }
+                }
+                
+                break;
+            }
+
+            return top;
+        }
+        
+        
+        
+
+        public static void BuildCombinator(CombinatorData root, ANEGraph graph)
+        {
+            try
+            {
+                var presentation = graph.Presentation as DialogANEPresentation;
+                var combinator = CombinatorBuilder.Build(root, typeof(string), new CombinatorBuilderRules(new QuestContext(), graph));
+                combinator.SetLiveUpdates(true);
+                Debug.LogError("Builded Combinator:" + combinator.RawValue);
+            }
+            catch (Exception e)
+            {
+                var set = new HashSet<CombinatorData>();
+                root.GetAllChildNodes(set);
+                set.Add(root);
+                
+                foreach (var cs in set)
+                {
+                    AttachCombinator(graph, cs, null);
+                }
+                
+                Debug.LogWarning("Cant build graph:" + e);
+            }
+            
+            UpdateUIRecusively(root, graph);
+        }
+
+        public static void AttachCombinator(ANEGraph graph, CombinatorData data, ICombinator combi)
+        {
+            var node = graph.NodesAndData.Get(data);
+            if (node == null)
+            {
+                Debug.LogError("Node not found:" + node);
+                return;
+            }
+
+            if (node is CombinatorANENode nodee)
+            {
+                nodee.SetCombinator(combi);
+            }
+            else
+            {
+                Debug.LogError("WTF?");
+            }
+        }
+        
+        public static void UpdateUIRecusively(CombinatorData root, ANEGraph graph)
+        {
+            var set = new HashSet<CombinatorData>();
+            root.GetAllChildNodes(set);
+            set.Add(root);
+
+            foreach (var scriptable in set)
+            {
+                var node = graph.NodesAndData.Get(scriptable) as CombinatorANENode;
+                if (node == null)
+                {
+                    Debug.LogError($"No Node {scriptable}");
+                    continue;
+                }
+                    
+                node.UpdateUI();
+            }
+        }
+
+        #endregion  
+        
+        
+
+        public override void OnPortsConnected(ExtendedPort output, ExtendedPort input)
+        {
+            if (input == output)
+            {
+                Debug.LogWarning($"OnPortsSelfConnected : {input.Data} => {output.Data}");
+                return;
+            }
+
+            if (input.Data is CombinatorData child && output.Data is CombinatorData root)
+            {
+                
+                if (!root.Nodes.Contains(child))
+                {
+                    root.Nodes.Add(child);
+                    BuildCombinator();
+                }
+            }
+            else
+            {
+                //throw new Exception($"Wrong output/input ({output.Data} | {input.Data})");s
+            }
+        }
+        
         public override void OnPortsDisconnected(ExtendedPort output, ExtendedPort input)
         {
             Debug.LogWarning($"OnPortsDisconnected");
-            if (input.Data is CombinatorScriptable child && output.Data is CombinatorScriptable root)
+            if (input.Data is CombinatorData child && output.Data is CombinatorData root)
             {
                 if (root.Nodes.Contains(child))
                 {
@@ -212,28 +337,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
                 Debug.LogWarning($"Wrong output/input ({output.Data} | {input.Data})");
             }
         }
-
-        protected override void VisibilityChanged(ChangeEvent<bool> evt)
-        {
-            //base.VisibilityChanged(evt);
-            
-        }
-
-        public void BuildCombinator()
-        {
-            BuildCombinator(Dialog);
-        }
-        public void BuildCombinator(CombinatorScriptable forObj)
-        {
-            var top = GetTopMostParent(Graph, forObj).Dialog;
-            BuildCombinator(top, Graph);
-        }
         
-        private void TextVisibilityChanged(ChangeEvent<bool> evt)
-        {
-            contentText.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);
-        }
-
         public override void ConnectPorts()
         {
             Debug.Log("Connect PORTS");
@@ -243,6 +347,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
                 var dialogNodeInfo = node as CombinatorANENode;
                 if (dialogNodeInfo == null)
                 {
+                    Debug.Log($"Connect PORTS [{answerToPort.Key}] not found");
                     continue;
                 }
                 
@@ -250,103 +355,5 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
                 Graph.AddElement(edge);
             }
         }
-
-
-        
-        #region Combinator
-        
-        public static CombinatorANENode GetTopMostParent(ANEGraph graph, CombinatorScriptable data)
-        {
-            var top = (CombinatorANENode) graph.NodesAndData.Get(data);
-            while (true)
-            {
-                var other = top.InputPort.GetOther();
-                if (other != null)
-                {
-                    var node = graph.NodesAndData.Get((ScriptableObject)other.Data);
-                    if (node is CombinatorANENode cnode)
-                    {
-                        top = cnode;
-                        continue;
-                    }
-                }
-                
-                break;
-            }
-
-            return top;
-        }
-        
-        
-        
-
-        public static void BuildCombinator(CombinatorScriptable root, ANEGraph graph)
-        {
-            try
-            {
-                var presentation = graph.Presentation as DialogANEPresentation;
-                var combinator = CombinatorBuilder.Build(root, typeof(string), new CombinatorBuilderRules(presentation.QuestContext, graph));
-                combinator.SetLiveUpdates(true);
-            }
-            catch (Exception e)
-            {
-                var set = new HashSet<CombinatorScriptable>();
-                root.GetAllChildNodes(set);
-                set.Add(root);
-                
-                foreach (var cs in set)
-                {
-                    AttachCombinator(graph, cs, null);
-                }
-                
-                Debug.LogWarning("Cant build graph:" + e);
-            }
-            
-            UpdateUIRecusively(root, graph);
-        }
-
-        public static void AttachCombinator(ANEGraph graph, CombinatorScriptable data, ICombinator combi)
-        {
-            var node = graph.NodesAndData.Get(data);
-            if (node == null)
-            {
-                Debug.LogError("Node not found:" + node);
-                return;
-            }
-
-            if (node is CombinatorANENode nodee)
-            {
-                nodee.SetCombinator(combi);
-            }
-            else
-            {
-                Debug.LogError("WTF?");
-            }
-        }
-        
-        public static void UpdateUIRecusively(CombinatorScriptable root, ANEGraph graph)
-        {
-            var set = new HashSet<CombinatorScriptable>();
-            root.GetAllChildNodes(set);
-            set.Add(root);
-
-            foreach (var scriptable in set)
-            {
-                var node = graph.NodesAndData.Get(scriptable) as CombinatorANENode;
-                if (node == null)
-                {
-                    Debug.LogError($"No Node {scriptable}");
-                    continue;
-                }
-                    
-                node.UpdateUI();
-            }
-        }
-
-        #endregion  
-        
-        
-
-
     }
 }

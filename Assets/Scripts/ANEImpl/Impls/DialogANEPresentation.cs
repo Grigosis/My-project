@@ -21,7 +21,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
 
         public override void OnLoaded(object obj)
         {
-            //QuestContext = (QuestContext)obj;
+            QuestContext = new QuestContext();
         }
 
         public override void OnCreatedNew()
@@ -33,7 +33,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
         public override void CreateContextMenu()
         {
             AppendToMenu("Add Dialog", (actionEvent, position) => CreateNode(typeof(QuestDialog), typeof(DialogAneNode), position, null));
-            AppendToMenu("Add Combinator", (actionEvent, position) => CreateNode(typeof(CombinatorScriptable), typeof(CombinatorANENode), position, null));
+            AppendToMenu("Add Combinator", (actionEvent, position) => CreateNode(typeof(CombinatorData), typeof(CombinatorANENode), position, null));
             AppendToMenu("Create Group", (actionEvent, position) => CreateGroup("Unnamed group", new Random().Next(), position));
         }
 
@@ -44,7 +44,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
             {
                 CreateNode(qd, typeof(DialogAneNode), group.Position, groupNode);
             }
-            if (data is CombinatorScriptable cs)
+            if (data is CombinatorData cs)
             {
                 CreateNode(cs, typeof(CombinatorANENode), group.Position, groupNode);
             }
@@ -60,10 +60,10 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
                 qd.Answers.Add(a);
             }
             
-            if (o is CombinatorScriptable cs)
+            if (o is CombinatorData cs)
             {
-                cs.Value = new Random().NextString(8);
-                cs.Fx = new Random().NextString(8);
+                cs.Value = "1";
+                cs.Fx = "Constant";
             }
         }
     }
