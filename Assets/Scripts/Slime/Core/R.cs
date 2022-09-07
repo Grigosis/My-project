@@ -204,5 +204,15 @@ namespace Assets.Scripts.Slime.Core
                         
             }
         }
+
+        public static T LoadJSON<T>(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return default(T);
+            }
+            var json = File.ReadAllText(path);
+            return JsonUtility.FromJson<T>(json);
+        }
     }
 }

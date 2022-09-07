@@ -134,119 +134,6 @@ namespace DS.Windows
             return localMousePosition;
         }
 
-
-      
-        public void TestSave1()
-        {
-            try
-            {
-                TestDialog d1 = new TestDialog();
-                TestDialog d2 = new TestDialog();
-                TestDialog d3 = new TestDialog();
-                TestDialog d4 = new TestDialog();
-
-                var r = new System.Random();
-                d1.Name = r.NextString(6);
-                d2.Name = r.NextString(6); 
-                d3.Name = r.NextString(6); 
-                d4.Name = r.NextString(6); 
-            
-            
-                d1.NextDialog = d2;
-                d2.NextDialog = d3;
-                d3.NextDialog = d4;
-                d4.NextDialog = d1;
-            
-                d1.NextDialogs.Add(d1);
-                d1.NextDialogs.Add(d2);
-                d1.NextDialogs.Add(d3);
-                d1.NextDialogs.Add(d4);
-            
-                Debug.Log("Before:"+d1);
-            
-                var s = JsonUtility.ToJson(d1);
-                Debug.LogError(s);
-                var d_1 = JsonUtility.FromJson<TestDialog>(s);
-
-                Debug.Log("After:"+d_1);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-            }
-        }
-        
-        public void TestSave2()
-        {
-            try
-            {
-                QuestDialog qd1 = new QuestDialog();
-                QuestDialog qd2 = new QuestDialog();
-                var a = new QuestAnswer();
-                a.NextQuestionDialog = qd2;
-                qd1.Answers.Add(a);
-
-                var s = JsonUtility.ToJson(qd1);
-                Debug.LogError(s);
-                var d1 = JsonUtility.FromJson<QuestDialog>(s);
-
-                Debug.Log("After:"+d1);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-            }
-        }
-
-        private void Save1(string folder, string fileName)
-        {
-            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}", true);
-            graphData.PresentationObject = Presentation.OnSerialize();
-
-            graphData.Nodes.Clear();
-            graphData.Groups.Clear();
-            graphData.Data.Clear();
-            graphData.PresentationObject = null;
-
-            foreach (var nodeAndData in NodesAndData.KeysAndValues)
-            {
-                var nodeState = new ANENodeState();
-                nodeState.Position = nodeAndData.Value.GetPosition().position;
-                nodeState.Data = nodeAndData.Key;
-                Debug.Log($"Saved Nodes: {nodeAndData.Key}");
-                nodeState.GroupId = nodeAndData.Value.Group;
-                graphData.Nodes.Add(nodeState);
-            }
-
-            foreach (var group in Groups)
-            {
-                var nodeState = new ANEGroupState();
-                nodeState.Position = group.Value.GetPosition().position;
-                nodeState.Name = group.Value.title;
-                nodeState.Id = group.Key;
-
-                graphData.Groups.Add(nodeState);
-            }
-
-            EditorUtility.SetDirty(graphData);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-        
-        
-
-        public void Load(string folder, string fileName)
-        {
-            Load2(folder, fileName);
-        }
-        
-        public void Save(string folder, string fileName)
-        {
-            //Save1(folder, fileName);
-            Save2(folder, fileName);
-            
-        }
-
         public void Clear()
         {
             Presentation.OnCreatedNew();
@@ -254,62 +141,21 @@ namespace DS.Windows
             Groups.Clear();
             graphElements.ForEach(graphElement => RemoveElement(graphElement));
         }
-
-        public void Load1(string folder, string fileName)
-        {
-            Clear();
-            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}");
-            
-            
-            //Debug.LogError("Loaded:"+graphData.PresentationObject);
-            
-            Presentation.OnLoaded(graphData.PresentationObject);
-            
-            foreach (var group in graphData.Groups)
-            {
-                Presentation.CreateGroup(group.Name, group.Id, group.Position);
-            }
-            
-            foreach (var node in graphData.Nodes)
-            {
-                Debug.Log($"Loaded Node: {node.Data}");
-                Groups.TryGetValue(node.GroupId, out var groupNode);
-                Presentation.RestoreNode(node, groupNode);
-            }
-
-            foreach (var node in graphData.Nodes)
-            {
-                if (node.Data != null)
-                {
-                    Presentation.ConnectPorts(node.Data);
-                }
-            }
-        }
         
         
-        
-        private void Save2(string folder, string fileName)
+        public void Save(string folder, string fileName)
         {
             var referenceSerializer = new ReferenceSerializer();
-            ANEGraphStateJson graphData = new ANEGraphStateJson();
+            ANEGraphState graphData = new ANEGraphState();
             graphData.PresentationObject = Presentation.OnSerialize();
 
-            graphData.Nodes.Clear();
-            graphData.Groups.Clear();
-            graphData.PresentationObject = null;
-
-            
-            
             foreach (var nodeAndData in NodesAndData.KeysAndValues)
             {
                 var nodeState = new ANENodeState();
                 nodeState.Position = nodeAndData.Value.GetPosition().position;
                 nodeState.Data = nodeAndData.Key;
-                
-                Debug.Log($"Saved Nodes: {nodeAndData.Key}");
                 nodeState.GroupId = nodeAndData.Value.Group;
-                graphData.Nodes.Add(nodeState);
-                
+
                 referenceSerializer.AddObject(nodeAndData.Key as Linkable);
                 referenceSerializer.AddObject(nodeState);
             }
@@ -326,26 +172,18 @@ namespace DS.Windows
 
             graphData.ReferenceSerializer = referenceSerializer;
 
-
             var t1 = JsonUtility.ToJson(graphData);
-            var t2 = JsonUtility.ToJson(referenceSerializer);
-            
-            Debug.LogError(t1);
-            Debug.LogError(t2);
-            
             File.WriteAllText($"{folder}/{fileName}.JSON", t1);
-            File.WriteAllText($"{folder}/{fileName}2.JSON", t2);
+            Debug.LogError(t1);
         }
         
-        public void Load2(string folder, string fileName)
+        public void Load(string folder, string fileName)
         {
             Clear();
             var result1 = File.ReadAllText($"{folder}/{fileName}.JSON");
-            var result2 = File.ReadAllText($"{folder}/{fileName}2.JSON");
             
-            
-            var graphData = JsonUtility.FromJson<ANEGraphStateJson>(result1);
-            var serializer = graphData.ReferenceSerializer;//JsonUtility.FromJson<ANEGraphStateJson>(result2);
+            var graphData = JsonUtility.FromJson<ANEGraphState>(result1);
+            var serializer = graphData.ReferenceSerializer;
             
             
 

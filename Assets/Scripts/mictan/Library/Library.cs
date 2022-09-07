@@ -39,9 +39,9 @@ namespace ClassLibrary1
 
         private Library()
         {
-            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"Assets/Editor/DialogueSystem/Graphs/TestGraph");
-            Debug.Log($"Library Instance: Loaded2: " + graphData.Data.Count);
-            foreach (var obj in graphData.Data)
+            ANEGraphState graphData = R.LoadJSON<ANEGraphState>($"Assets/Editor/DialogueSystem/Graphs/TestGraph");
+            Debug.Log($"Library Instance: Loaded2: " + graphData.ReferenceSerializer.ObjectsForSerialize);
+            foreach (var obj in graphData.ReferenceSerializer.ObjectsForSerialize)
             {
                 if (obj is QuestDialog qd)
                 {

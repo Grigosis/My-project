@@ -21,6 +21,7 @@ namespace ROR.Core.Serialization
         [ComboBoxEditor("F.AnswerArgsFx")]
         public string AnswerFx; //Helper.CreateEditorClassSelector(ref someClass.AnswerFx, F.AnswerArgsFx.Keys.ToArray(), "Implementation");
         
+        [Multiline]
         [SerializeField]
         public string Text;
         
@@ -59,12 +60,12 @@ namespace ROR.Core.Serialization
         }
 
         
-        public string GUID { 
-            get { return Guid; }
-            set { Guid = value; }
-        }
+        [HideInInspector]
+        public string GUID {  get { return Guid; } set { Guid = value; } }
 
-        [SerializeField] public string Guid;
+        [HideInInspector]
+        [SerializeField] 
+        public string Guid;
         
         public void GetLinks(HashSet<Linkable> links)
         {

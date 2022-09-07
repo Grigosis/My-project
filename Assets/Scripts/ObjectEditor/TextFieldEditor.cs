@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SecondCycleGame.Assets.Scripts.ObjectEditor
@@ -16,7 +17,11 @@ namespace SecondCycleGame.Assets.Scripts.ObjectEditor
         public void BuildGui(object o, VisualElement e)
         {
             obj = o;
-            VisualTreeAsset uiAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor Default Resources/Editor/TextArea.uxml");
+            //
+            
+            Debug.LogError("Is M?" + m_property.Multiline);
+            
+            VisualTreeAsset uiAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(m_property.Multiline ? "Assets/Editor Default Resources/Editor/TextAreaMultiline.uxml" : "Assets/Editor Default Resources/Editor/TextArea.uxml");
             TemplateContainer ui = uiAsset.CloneTree();
             var textField = ui.Q<TextField>("element");
             textField.value = m_property.GetValue(o);

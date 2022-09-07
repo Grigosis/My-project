@@ -55,12 +55,12 @@ namespace Assets.Scripts.AbstractNodeEditor
             }
         }
 
-        public string GUID { 
-            get { return Guid; }
-            set { Guid = value; Debug.LogError("SetGUID:" + value); }
-        }
+        [HideInInspector]
+        public string GUID {  get { return Guid; } set { Guid = value; } }
 
-        [SerializeField] public string Guid;
+        [HideInInspector]
+        [SerializeField] 
+        public string Guid;
         
         public void GetLinks(HashSet<Linkable> links)
         {

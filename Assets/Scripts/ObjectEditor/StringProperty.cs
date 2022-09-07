@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEngine;
 
 namespace SecondCycleGame.Assets.Scripts.ObjectEditor
 {
@@ -11,6 +12,8 @@ namespace SecondCycleGame.Assets.Scripts.ObjectEditor
         public string Name;
         public List<string> Variants;
         private Type m_type;
+
+        public bool Multiline;
 
         public StringProperty(PropertyInfo propertyInfo)
         {
@@ -32,6 +35,8 @@ namespace SecondCycleGame.Assets.Scripts.ObjectEditor
             {
                 Variants = attribute.GetVariants();
             }
+            
+            Multiline = propertyInfo.GetCustomAttribute<MultilineAttribute>() != null;
         }
         
         public StringProperty(FieldInfo fieldInfo)
@@ -54,6 +59,8 @@ namespace SecondCycleGame.Assets.Scripts.ObjectEditor
             {
                 Variants = attribute.GetVariants();
             }
+            
+            Multiline = fieldInfo.GetCustomAttribute<MultilineAttribute>() != null;
         }
 
         private string TransformFromObject(object obj)

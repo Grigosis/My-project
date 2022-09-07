@@ -36,8 +36,8 @@ namespace ROR.Core.Serialization
     [Serializable]
     public class ReferenceSerializer : ISerializationCallbackReceiver
     {
-        //[field:NonSerialized] 
-        //public Dictionary<string, Linkable> Objects = new Dictionary<string, Linkable>();
+        [field:NonSerialized] 
+        public Dictionary<string, Linkable> Objects = new Dictionary<string, Linkable>();
         
         [SerializeReference]
         public List<object> ObjectsForSerialize = new List<object>();
@@ -49,7 +49,7 @@ namespace ROR.Core.Serialization
             while (true)
             {
                 var s = Random.NextString(12);
-                //if (!Objects.ContainsKey(s))
+                if (!Objects.ContainsKey(s))
                 {
                     return s;
                 }
@@ -66,14 +66,9 @@ namespace ROR.Core.Serialization
                 linkable.GUID = GenerateGuid();
             }
 
-            if (ObjectsForSerialize.Contains(linkable))
+            if (!Objects.ContainsKey(linkable.GUID))
             {
-                return;
-            }
-            
-            //if (ObjectsForSerialize.Add(linkable))
-            ObjectsForSerialize.Add(linkable);
-            {
+                Objects.Add(linkable.GUID, linkable);
                 var set = new HashSet<Linkable>();
                 linkable.GetLinks(set);
 
@@ -91,64 +86,56 @@ namespace ROR.Core.Serialization
                 return default(T);
             }
 
-            var index = ObjectsForSerialize.Find((x) => (x as Linkable).GUID == key);
             
-            
-            Debug.LogError($"RestoreLinks [{key}][{index}]");
-            
-            return (T)index;
-            
-            
-            //if (Objects.TryGetValue(key, out var value))
-            //{
-            //    if (value is T t)
-            //    {
-            //        return t;
-            //    }
-            //}
-//
-            //return default(T);
+            if (Objects.TryGetValue(key, out var value))
+            {
+                if (value is T t)
+                {
+                    return t;
+                }
+            }
+            return default(T);
 
         } 
 
         public void OnBeforeSerialize()
         {
-            Debug.LogError("OnBeforeSerialize");
-            //ObjectsForSerialize.Clear();
-            //foreach (var obj in Objects)
-            //{
-            //    (obj.Value as Linkable).StoreLinks();
-            //    ObjectsForSerialize.Add(obj);
-            //}
-            
-            foreach (var obj in ObjectsForSerialize)
+            Debug.LogError("OnBeforeSerialize:" + Objects.Count);
+            ObjectsForSerialize.Clear();
+            foreach (var obj in Objects)
             {
-                (obj as Linkable).StoreLinks();
+                (obj.Value as Linkable).StoreLinks();
+                ObjectsForSerialize.Add(obj.Value);
             }
+            
+            //foreach (var obj in ObjectsForSerialize)
+            //{
+            //    (obj as Linkable).StoreLinks();
+            //}
         }
 
         public void OnAfterDeserialize()
         {
-            Debug.LogError("OnAfterDeserialize");
+            //Debug.LogError("OnAfterDeserialize");
+            //foreach (var obj in ObjectsForSerialize)
+            //{
+            //    Debug.LogError($"RestoreLinks [{obj}]");
+            //    (obj as Linkable).RestoreLinks(this);
+            //}
+            
+            
+            Objects.Clear();
             foreach (var obj in ObjectsForSerialize)
             {
-                Debug.LogError($"RestoreLinks [{obj}]");
-                (obj as Linkable).RestoreLinks(this);
+                var linkable = obj as Linkable;
+                Objects.Add(linkable.GUID, linkable);
             }
             
             
-            //Objects.Clear();
-            //foreach (var obj in ObjectsForSerialize)
-            //{
-            //    var linkable = obj as Linkable;
-            //    Objects.Add(linkable.GUID, linkable);
-            //}
-            //
-            //
-            //foreach (var obj in Objects)
-            //{
-            //    (obj.Value as Linkable).RestoreLinks(this);
-            //}
+            foreach (var obj in Objects)
+            {
+                (obj.Value as Linkable).RestoreLinks(this);
+            }
         }
     }
     
@@ -162,6 +149,7 @@ namespace ROR.Core.Serialization
         [SerializeField]
         public string Id;
         
+        [Multiline]
         [SerializeField]
         public string Text;
         
@@ -173,9 +161,11 @@ namespace ROR.Core.Serialization
         [field:NonSerialized]
         public List<QuestAnswer> Answers = new List<QuestAnswer>();
 
+        [HideInInspector]
         [SerializeField]
         public string VisibilityCombinatorGuid;
 
+        [HideInInspector]
         [SerializeField]
         public List<string> AnswersGUIDS = new List<string>();
 
@@ -197,12 +187,12 @@ namespace ROR.Core.Serialization
             return $"QuestDialog {GetHashCode()} [{Id}/Answers:{Answers.Count} [{sb.ToString()}]]";;
         }
 
-        public string GUID { 
-            get { return Guid; }
-            set { Guid = value; }
-        }
+        [HideInInspector]
+        public string GUID {  get { return Guid; } set { Guid = value; } }
 
-        [SerializeField] public string Guid;
+        [HideInInspector]
+        [SerializeField] 
+        public string Guid;
         
         public void GetLinks(HashSet<Linkable> links)
         {
