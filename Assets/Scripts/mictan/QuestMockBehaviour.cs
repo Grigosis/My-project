@@ -16,29 +16,29 @@ namespace SecondCycleGame.Assets.Scripts.mictan {
 
         QuestContext context;
         void Start() {
-            context = ScriptableObject.CreateInstance<QuestContext>();
+            context = new QuestContext();
 
-            var dialog = ScriptableObject.CreateInstance<QuestDialog>();
+            var dialog = new QuestDialog();
             dialog.Text = "Как ты сегодня";
             dialog.TextArgsFx = "SIMPLE";
-            var dialogComb1 = ScriptableObject.CreateInstance<CombinatorScriptable>();
+            var dialogComb1 = new CombinatorData();
             dialogComb1.Fx = "Constant";
             dialogComb1.Value = "true";
-            dialog.VisibilityCombinator = (ICombinator<bool>)CombinatorBuilder.Build(dialogComb1, typeof(bool), new CombinatorBuilderRules(context, null));
+            dialog.VisibilityCombinator = dialogComb1;
             dialog.Answers = new List<QuestAnswer>(2);
             {
-                QuestAnswer ok = ScriptableObject.CreateInstance<QuestAnswer>();
+                QuestAnswer ok = new QuestAnswer();
                 ok.AnswerFx = "SIMPLE";
                 ok.Text = "Хорошо ({MONEY})";
                 ok.CombinatorData = dialogComb1;
-                QuestDialog good = ScriptableObject.CreateInstance<QuestDialog>();
+                QuestDialog good = new QuestDialog();
                 {
                     good.Text = "Хорошо...";
                     good.TextArgsFx = "SIMPLE";
-                    good.VisibilityCombinator = (ICombinator<bool>)CombinatorBuilder.Build(dialogComb1, typeof(bool), new CombinatorBuilderRules(context, null));
+                    good.VisibilityCombinator = dialogComb1;
                     good.Answers = new List<QuestAnswer>(1);
 
-                    QuestAnswer back = ScriptableObject.CreateInstance<QuestAnswer>();
+                    QuestAnswer back = new QuestAnswer();
                     back.AnswerFx = "SIMPLE";
                     back.Text = "Назад ({MONEY})";
                     back.CombinatorData = dialogComb1;
@@ -49,7 +49,7 @@ namespace SecondCycleGame.Assets.Scripts.mictan {
                 dialog.Answers.Add(ok);
                 
 
-                QuestAnswer nok = ScriptableObject.CreateInstance<QuestAnswer>();
+                QuestAnswer nok = new QuestAnswer();
                 nok.AnswerFx = "SIMPLE";
                 nok.Text = "Плохо ({MONEY})";
                 nok.CombinatorData = dialogComb1;
