@@ -1,31 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using ROR.Core.Serialization;
+using ROR.Core.Serialization.Json;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.AbstractNodeEditor
 {
     [Serializable]
-    public class ANEGraphState : ScriptableObject
+    public class ANEGraphState
     {
-        [SerializeField]
-        public List<ANENodeState> Nodes = new List<ANENodeState>();
-        
         [SerializeField]
         public List<ANEGroupState> Groups = new List<ANEGroupState>();
+
+        [SerializeReference]
+        public object PresentationObject; 
         
-        [SerializeField]
-        public Object PresentationObject; 
+        [SerializeReference]
+        public ReferenceSerializer ReferenceSerializer;
     }
-    
+
     [Serializable]
-    public class ANEGraphData : ScriptableObject
-    {
-        public List<Object> Data = new List<Object>();
-    }
-    
-    [Serializable]
-    public struct ANENodeState
+    public struct ANENodeState : Linkable
     {
         [SerializeField]
         public Vector2 Position;
@@ -33,8 +31,27 @@ namespace Assets.Scripts.AbstractNodeEditor
         [SerializeField]
         public int GroupId;
 
+        [field:NonSerialized] 
+        public object Data;
+        
+
+        [SerializeField]
+        public string DataGUID;
+        
+        [HideInInspector]
+        public string GUID {  get { return Guid; } set { Guid = value; } }
+
+        [HideInInspector]
         [SerializeField] 
-        public Object Data;
+        public string Guid;
+        
+        
+        
+        public void GetLinks(HashSet<Linkable> links) { links.Add(Data as Linkable); }
+
+        public void RestoreLinks(ReferenceSerializer dictionary) { Data = dictionary.GetObject<Linkable>(DataGUID); }
+
+        public void StoreLinks() { DataGUID = (Data as Linkable)?.GUID; }
     }
     
     [Serializable]

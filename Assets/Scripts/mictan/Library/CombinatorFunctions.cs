@@ -4,7 +4,7 @@ using Assets.Scripts.AbstractNodeEditor;
 
 namespace Assets.Scripts.Library {
     public class CombinatorFunctions {
-        public static string Concat(CombinatorScriptable xml, List<string> parts) {
+        public static string Concat(CombinatorData xml, List<string> parts) {
             var sb = new StringBuilder();
             foreach (var part in parts) {
                 sb.Append(part);
@@ -12,7 +12,7 @@ namespace Assets.Scripts.Library {
             return sb.ToString();
         }
 
-        public static double Mlt(CombinatorScriptable xml, List<double> parts) {
+        public static double Mlt(CombinatorData xml, List<double> parts) {
             var mlt = parts[0];
             for (var i = 1; i < parts.Count; i++) {
                 mlt *= parts[i];
@@ -21,7 +21,7 @@ namespace Assets.Scripts.Library {
             return mlt;
         }
 
-        public static double Sum(CombinatorScriptable xml, List<double> parts) {
+        public static double Sum(CombinatorData xml, List<double> parts) {
             var sum = parts[0];
             for (var i = 1; i < parts.Count; i++) {
                 sum += parts[i];
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Library {
             return sum;
         }
 
-        public static bool IsMore(CombinatorScriptable xml, List<double> parts) {
+        public static bool IsMore(CombinatorData xml, List<double> parts) {
             var last = parts[0];
             for(int i = 1; i < parts.Count; i++) {
                 if(last <= parts[i]) {//! IsMore
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Library {
             return true;
         }
 
-        public static bool Eq(CombinatorScriptable xml, List<double> parts) {
+        public static bool Eq(CombinatorData xml, List<double> parts) {
             var first = parts[0];
             for (var i = 1; i < parts.Count; i++) {
                 if (parts[i] != first) {
@@ -53,7 +53,7 @@ namespace Assets.Scripts.Library {
             return true;
         }
 
-        public static bool And(CombinatorScriptable xml, List<bool> parts) {
+        public static bool And(CombinatorData xml, List<bool> parts) {
             for (var i = 0; i < parts.Count; i++) {
                 if (!parts[i]) {
                     return false;
@@ -63,7 +63,7 @@ namespace Assets.Scripts.Library {
             return true;
         }
 
-        public static bool Or(CombinatorScriptable xml, List<bool> parts) {
+        public static bool Or(CombinatorData xml, List<bool> parts) {
             for (var i = 0; i < parts.Count; i++) {
                 if (parts[i]) {
                     return true;
@@ -73,7 +73,7 @@ namespace Assets.Scripts.Library {
             return false;
         }
 
-        public static string ToStr(CombinatorScriptable xml, List<double> parts) {
+        public static string ToStr(CombinatorData xml, List<double> parts) {
             return parts[0].ToString();
         }
     }

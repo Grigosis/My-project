@@ -10,15 +10,15 @@ using Object = UnityEngine.Object;
 
 namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 {
-    public abstract class ANEMultiNode<DATA, DATA2, VIEW> : ANENode, IRowListener<DATA2> where DATA : ScriptableObject where DATA2 : ScriptableObject where VIEW : RowView<DATA, DATA2>, new()
+    public abstract class ANEMultiNode<DATA, DATA2, VIEW> : ANENode, IRowListener<DATA2> where DATA : new() where DATA2 : new() where VIEW : RowView<DATA, DATA2>, new()
     {
-        protected DATA Dialog => NodeData as DATA;
+        protected DATA Data => (DATA)NodeData;
         protected DoubleDictionary<DATA2, VIEW> Data2ToPorts = new DoubleDictionary<DATA2, VIEW>();
         
         //UI
         protected Button addSubnodeButton;
         protected VisualElement subnodesContainer;
-        protected ExtendedPort InputPort;
+        public ExtendedPort InputPort;
         
         protected VisualElement root;
         protected Toggle visibilityBtn;
@@ -67,9 +67,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 
         public virtual void OnEditRequest(VisualElement view, DATA2 onDelete)
         {
-            //Graph.GetEditor().RequestEditObject(onDelete, OnEditorFinished);
-             
-            Graph.GetEditor().RequestEditObject((Graph.Presentation as DialogANEPresentation).QuestContext, OnEditorFinished);
+            Graph.GetEditor().RequestEditObject(onDelete, OnEditorFinished);
         }
         
         public virtual void OnMoveRequest(VisualElement view, DATA2 onDelete, int direction)
@@ -115,7 +113,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
             addSubnodeButton.clickable.clicked += OnAddSubNodeClicked;
             visibilityBtn.RegisterValueChangedCallback(VisibilityChanged);
             
-            ExtendedPort titlePort = ExtendedPort.CreateEPort(Dialog, Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, OnPortsConnected, OnPortsDisconnected);
+            ExtendedPort titlePort = ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, OnPortsConnected, OnPortsDisconnected);
             InputPort = titlePort;
             inputPortC.Add(titlePort);
             
@@ -129,7 +127,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 
         protected virtual void OnAddSubNodeClicked()
         {
-            var answer = ScriptableObject.CreateInstance<DATA2>();
+            var answer = new DATA2();
             Graph.Presentation.OnNewObjectCreated(answer);
             GetSubNodes().Add(answer);
             CreateAnswerView(answer, true);
@@ -138,21 +136,23 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
         protected virtual void CreateAnswerView(DATA2 answer, bool isNew)
         {
             VIEW answerView = new VIEW();
-            answerView.Init(Dialog, answer, this);
+            answerView.Init(Data, answer, this);
             Data2ToPorts.Add(answer, answerView);
             subnodesContainer.Add(answerView);
         }
 
-        private void OnEditorFinished(Object obj)
+        protected virtual void OnEditorFinished(object obj)
         {
+            Debug.LogError("OnEditorFinished:" + obj);
             var view = Data2ToPorts.Get((DATA2)obj);
             if (view != null)
             {
                 view.UpdateUI();
             }
+
+            UpdateUI();
         }
-        
-        
+
         protected virtual void VisibilityChanged(ChangeEvent<bool> evt)
         {
             root.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);

@@ -13,7 +13,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
         //UI
         private Toggle answersVisibilityBtn;
         private Toggle textVisibilityBtn;
-        
+
         public DialogAneNode(string path) : base(path) { }
         
         public override void CreateGUI()
@@ -25,7 +25,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
             answersVisibilityBtn.RegisterValueChangedCallback(AnswersVisibilityChanged);
             textVisibilityBtn.RegisterValueChangedCallback(TextVisibilityChanged);
 
-            header.text = Dialog.Text;
+            header.text = Data.Text;
         }
 
 
@@ -42,36 +42,71 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
 
         protected override List<QuestAnswer> GetSubNodes()
         {
-            return Dialog.Answers;
+            return Data.Answers;
         }
 
+
+
+        public override void UpdateUI()
+        {
+            base.UpdateUI();
+            var txt = Data.Text ?? "NULL";
+            header.text = txt.Substring(0,Math.Min(txt.Length, 20));
+            contentText.text = txt;
+        }
+        
         public override void OnPortsConnected(ExtendedPort output, ExtendedPort input)
         {
-            if (output.Data is QuestAnswer answer && input.Data is QuestDialog dialog)
+            if (output.Data is QuestAnswer answer2 && input.Data is CombinatorData combinator)
             {
+                output.DisconnectOfType<CombinatorData>(Graph, combinator);
+                answer2.CombinatorData = combinator;
+            } 
+            else if (output.Data is QuestAnswer answer && input.Data is QuestDialog dialog)
+            {
+                output.DisconnectOfType<QuestDialog>(Graph, dialog);
                 answer.NextQuestionDialog = dialog;
             }
             else
             {
-                throw new Exception($"Wrong output/input ({output.Data} | {input.Data})");
+                Debug.LogError($"Wrong output/input ({output.Data} | {input.Data})");
             }
         }
         
-        public override void OnPortsDisconnected(ExtendedPort input, ExtendedPort output)
+        public override void OnPortsDisconnected(ExtendedPort output, ExtendedPort input)
         {
-            Debug.LogError($"OnPortsDisconnected : {input} => {output}");
+            if (output.Data is QuestAnswer answer2 && input.Data is CombinatorData combinator)
+            {
+                answer2.CombinatorData = null;
+            }
+            else if (output.Data is QuestAnswer answer && input.Data is QuestDialog dialog)
+            {
+                answer.NextQuestionDialog = null;
+            }
+            else
+            {
+                Debug.LogError($"Wrong output/input ({output.Data} | {input.Data})");
+            }
         }
 
         public override void ConnectPorts()
         {
             foreach (var answerToPort in Data2ToPorts.KeysAndValues)
             {
-                var dialog = answerToPort.Key.NextQuestionDialog;
-                if (dialog != null)
+                var answer = answerToPort.Key;
+                if (answer.NextQuestionDialog != null)
                 {
-                    var node = Graph.NodesAndData.Get(dialog);
+                    var node = Graph.NodesAndData.Get(answer.NextQuestionDialog);
                     var dialogNodeInfo = node as DialogAneNode;
                     var edge = answerToPort.Value.EPort.ConnectTo(dialogNodeInfo.InputPort);
+                    Graph.AddElement(edge);
+                }
+
+                if (answer.CombinatorData != null)
+                {
+                    var node = Graph.NodesAndData.Get(answer.CombinatorData);
+                    var combinator = node as CombinatorANENode;
+                    var edge = answerToPort.Value.EPort.ConnectTo(combinator.InputPort); 
                     Graph.AddElement(edge);
                 }
             }

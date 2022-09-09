@@ -1,4 +1,5 @@
-﻿using ClassLibrary1.Xml;
+﻿using Assets.Scripts.Slime.Core;
+using ClassLibrary1.Xml;
 
 namespace ClassLibrary1.Logic
 {
@@ -14,7 +15,7 @@ namespace ClassLibrary1.Logic
 
         public Answer(AnswerXml xml) {
             Xml = xml;
-            AnswerFx = Library.Instance.GetAnswerArgsFx(xml.AnswerFx);
+            AnswerFx = F.GetAnswerArgsFx(xml.AnswerFx);
             Requirements = xml.Requirements;
             //SelectionFx = xml.SelectionFx;
         }

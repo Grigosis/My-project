@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" name="element" multiline="true" style="max-height: none; min-height: 80px;" />
+</ui:UXML>

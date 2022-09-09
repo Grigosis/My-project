@@ -19,7 +19,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
 
         protected override ExtendedPort CreatePort(VisualElement element)
         {
-            return ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Output, Port.Capacity.Single, OnConnected, OnDisconnected);
+            return ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, OnConnected, OnDisconnected);
         }
 
         public override void Init(QuestDialog pdata, QuestAnswer data, IRowListener<QuestAnswer> listener)

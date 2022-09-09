@@ -1,3 +1,4 @@
+using Assets.Scripts.Slime.Core;
 using ClassLibrary1.Xml;
 
 namespace ClassLibrary1.Logic
@@ -18,7 +19,7 @@ namespace ClassLibrary1.Logic
 
         public Question(QuestionXml xml) {
             Xml = xml;
-            QuestionFx = Library.Instance.GetQuestionArgsFx(xml.TextArgsFx);
+            QuestionFx = F.GetQuestionArgsFx(xml.TextArgsFx);
             answers = new Answer[xml.Answers.Count];
             for(int i = 0; i < answers.Length; i++) {
                 answers[i] = Dialogs.Answers[xml.Answers[i]];

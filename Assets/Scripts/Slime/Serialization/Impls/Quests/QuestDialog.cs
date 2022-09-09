@@ -1,37 +1,104 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using ClassLibrary1;
-using Combinator;
+using System.Text;
+using Assets.Scripts.AbstractNodeEditor;
+using Assets.Scripts.Slime.Core;
+using Assets.Scripts.Slime.Sugar;
+using ClassLibrary1.Logic;
+using ROR.Core.Serialization.Json;
+using SecondCycleGame.Assets.Scripts.ObjectEditor;
 using Slime;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace ROR.Core.Serialization
 {
-    public class QuestDialog : ScriptableObject
-    {
-        [HideInInspector]
-        public CombinatorNodeXml VisibilityCombinator;
-        public string Text;
-        [HideInInspector]
-        public string TextArgsFx;
-        [HideInInspector]
-        public List<QuestAnswer> Answers = new List<QuestAnswer>(); 
-    }
-    
-    [CustomEditor(typeof(QuestDialog))]
-    public class QuestDialogUnityEditor : Editor
-    {
-        public override void OnInspectorGUI ()
-        {
-            // Draw the default inspector
-            DrawDefaultInspector();
-            var someClass = target as QuestDialog;
-            
-            Helper.CreateEditorClassSelector(ref someClass.TextArgsFx, Library.Instance.QuestionArgsFx.Keys.ToArray(), "TextArgsFx");
 
-            // Save the changes back to the object
-            EditorUtility.SetDirty(target);
+    [Serializable]
+    public class QuestDialog : Linkable
+    {
+        [HideInInspector]
+        [field:NonSerialized]
+        public CombinatorData VisibilityCombinator;
+
+        [SerializeField]
+        public string Id;
+        
+        [Multiline]
+        [SerializeField]
+        public string Text;
+        
+        [SerializeField]
+        [ComboBoxEditor("F.QuestionArgsFx")]
+        public string TextArgsFx;
+        
+        [HideInInspector]
+        [field:NonSerialized]
+        public List<QuestAnswer> Answers = new List<QuestAnswer>();
+
+        [HideInInspector]
+        [SerializeField]
+        public string VisibilityCombinatorGuid;
+
+        [HideInInspector]
+        [SerializeField]
+        public List<string> AnswersGUIDS = new List<string>();
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            foreach (var qa in Answers)
+            {
+                if (qa == null)
+                {
+                    sb.Append("NULL");
+                }
+                else
+                {
+                    sb.Append(qa.ToString());
+                }
+                
+            }
+            return $"QuestDialog {GetHashCode()} [{Id}/Answers:{Answers.Count} [{sb.ToString()}]]";;
+        }
+
+        [HideInInspector]
+        public string GUID {  get { return Guid; } set { Guid = value; } }
+
+        [HideInInspector]
+        [SerializeField] 
+        public string Guid;
+        
+        public void GetLinks(HashSet<Linkable> links)
+        {
+            links.Add(VisibilityCombinator);
+            foreach (var answer in Answers)
+            {
+                links.Add(answer);
+            }
+        }
+
+        public void RestoreLinks(ReferenceSerializer dictionary)
+        {
+            Answers.Clear();
+
+            VisibilityCombinator = dictionary.GetObject<CombinatorData>(VisibilityCombinatorGuid);
+            foreach (var guid in AnswersGUIDS)
+            {
+                Answers.Add(dictionary.GetObject<QuestAnswer>(guid));
+            }
+        }
+
+        public void StoreLinks()
+        {
+            AnswersGUIDS.Clear();
+            VisibilityCombinatorGuid = VisibilityCombinator?.GUID;
+            foreach (var answer in Answers)
+            {
+                AnswersGUIDS.Add(answer.GUID);
+            }
         }
     }
 }

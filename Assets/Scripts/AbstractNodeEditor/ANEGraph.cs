@@ -1,7 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
+using Assets.Scripts.Slime.Sugar;
+using ROR.Core.Serialization;
+using ROR.Core.Serialization.Json;
 using RPGFight.Library;
+using Unity.Mathematics;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,7 +22,7 @@ namespace DS.Windows
         public ANEWindow EditorWindow;
         public ANEIPresentation Presentation;
 
-        public DoubleDictionary<Object, ANENode> NodesAndData = new DoubleDictionary<Object, ANENode>(); 
+        public DoubleDictionary<object, ANENode> NodesAndData = new DoubleDictionary<object, ANENode>(); 
         public Dictionary<int, ANEGroup> Groups = new Dictionary<int, ANEGroup>(); 
 
   
@@ -127,36 +134,33 @@ namespace DS.Windows
 
             return localMousePosition;
         }
+
+        public void Clear()
+        {
+            Presentation.OnCreatedNew();
+            NodesAndData.Clear();
+            Groups.Clear();
+            graphElements.ForEach(graphElement => RemoveElement(graphElement));
+        }
+        
         
         public void Save(string folder, string fileName)
         {
-            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}.assert");
-            ANEGraphData dataOnly = R.CreateOrLoadAsset<ANEGraphData>($"{folder}/{fileName}.DATA.assert");
-
+            var referenceSerializer = new ReferenceSerializer();
+            ANEGraphState graphData = new ANEGraphState();
             graphData.PresentationObject = Presentation.OnSerialize();
-            
-            Debug.LogError("Saved:"+graphData.PresentationObject);
-            
-            graphData.Nodes.Clear();
-            graphData.Groups.Clear();
-            dataOnly.Data.Clear();
 
             foreach (var nodeAndData in NodesAndData.KeysAndValues)
             {
-                var copy = nodeAndData.Key;//Object.Instantiate(nodeAndData.Key);
-                Debug.Log($"Saved Node: {copy}");
-                
-                dataOnly.Data.Add(copy);
-
                 var nodeState = new ANENodeState();
                 nodeState.Position = nodeAndData.Value.GetPosition().position;
-                nodeState.Data = copy;
+                nodeState.Data = nodeAndData.Key;
                 nodeState.GroupId = nodeAndData.Value.Group;
-                
-                
-                graphData.Nodes.Add(nodeState);
+
+                referenceSerializer.AddObject(nodeAndData.Key as Linkable);
+                referenceSerializer.AddObject(nodeState);
             }
-            
+
             foreach (var group in Groups)
             {
                 var nodeState = new ANEGroupState();
@@ -166,27 +170,24 @@ namespace DS.Windows
 
                 graphData.Groups.Add(nodeState);
             }
-            
-            R.SaveAsset(graphData);
-            R.SaveAsset(dataOnly);
-        }
 
-        public void Clear()
-        {
-            Presentation.OnCreatedNew();
-            NodesAndData.Clear();
-            Groups.Clear();
-            graphElements.ForEach(graphElement => RemoveElement(graphElement));
-        }
+            graphData.ReferenceSerializer = referenceSerializer;
 
+            var t1 = JsonUtility.ToJson(graphData);
+            File.WriteAllText($"{folder}/{fileName}.JSON", t1);
+            Debug.LogError(t1);
+        }
+        
         public void Load(string folder, string fileName)
         {
             Clear();
-            ANEGraphState graphData = R.CreateOrLoadAsset<ANEGraphState>($"{folder}/{fileName}.assert");
+            var result1 = File.ReadAllText($"{folder}/{fileName}.JSON");
+            
+            var graphData = JsonUtility.FromJson<ANEGraphState>(result1);
+            var serializer = graphData.ReferenceSerializer;
             
             
-            Debug.LogError("Loaded:"+graphData.PresentationObject);
-            
+
             Presentation.OnLoaded(graphData.PresentationObject);
             
             foreach (var group in graphData.Groups)
@@ -194,18 +195,24 @@ namespace DS.Windows
                 Presentation.CreateGroup(group.Name, group.Id, group.Position);
             }
             
-            foreach (var node in graphData.Nodes)
+            foreach (var obj in serializer.ObjectsForSerialize)
             {
-                Debug.Log($"Loaded Node: {node.Data}");
-                Groups.TryGetValue(node.GroupId, out var groupNode);
-                Presentation.RestoreNode(node, groupNode);
-            }
-
-            foreach (var node in graphData.Nodes)
-            {
-                if (node.Data != null)
+                if (obj is ANENodeState node)
                 {
-                    Presentation.ConnectPorts(node.Data);
+                    Debug.Log($"Loaded Node: [{node}] [{node.GUID}] [{node.DataGUID}] [{node.Data}]");
+                    Groups.TryGetValue(node.GroupId, out var groupNode);
+                    Presentation.RestoreNode(node, groupNode);
+                }
+            }
+            
+            foreach (var obj in serializer.ObjectsForSerialize)
+            {
+                if (obj is ANENodeState node)
+                {
+                    if (node.Data != null)
+                    {
+                        Presentation.ConnectPorts(node.Data);
+                    }
                 }
             }
         }

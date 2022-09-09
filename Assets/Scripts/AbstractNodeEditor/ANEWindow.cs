@@ -1,8 +1,10 @@
-using System;
+﻿using System;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
+using SecondCycleGame.Assets.Scripts.ObjectEditor;
 using Slime;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
@@ -38,7 +40,6 @@ namespace DS.Windows
             graphView.StretchToParentSize();
             
             
-            
             splitView = new SplitView(0, 200, TwoPaneSplitViewOrientation.Horizontal);
             splitView.Add(button);
             splitView.Add(graphView);
@@ -49,7 +50,7 @@ namespace DS.Windows
 
             fileNameTextField = Helper.CreateTextField(defaultFileName, "File Name:", callback =>
             {
-                fileNameTextField.value = callback.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
+                fileNameTextField.value = callback.newValue;//.RemoveWhitespaces().RemoveSpecialCharacters()
             });
 
             saveButton = Helper.CreateButton("Save", () => Save());
@@ -76,12 +77,12 @@ namespace DS.Windows
 
         private void Save()
         {
-            graphView.Save("Assets/Editor/DialogueSystem/Graphs", "TestGraph");
+            graphView.Save("Assets/Database/Dialogs", "TestGraph");
         }
 
         private void Load()
         {
-            graphView.Load("Assets/Editor/DialogueSystem/Graphs", "TestGraph");
+            graphView.Load("Assets/Database/Dialogs", "TestGraph");
         }
 
         private void Clear()
@@ -115,29 +116,29 @@ namespace DS.Windows
         
         public class ObjectEditorWrapper
         {
-            protected Action<Object> OnEditorFinished;
-            protected Object ObjectToEdit;
-            protected Editor editor;
+            protected Action<object> OnEditorFinished;
+            protected object ObjectToEdit;
+            protected AbstractObjectEditor editor;
             protected VisualElement editorView;
             protected VisualElement editorContainterView;
+            
+            
 
             public ObjectEditorWrapper(VisualElement editorContainterView)
             {
                 this.editorContainterView = editorContainterView;
             }
             
-            public void RequestEditObject(Object objectToEdit, Action<Object> onEditorFinished = null)
+            public void RequestEditObject(object objectToEdit, Action<object> onEditorFinished = null)
             {
                 FinishEdit();
                 
-                OnEditorFinished = onEditorFinished;
+                Debug.LogError($"RequestEditObject [{objectToEdit}]");
                 ObjectToEdit = objectToEdit;
-                
-                editor = Editor.CreateEditor(ObjectToEdit);
-                editorView = new IMGUIContainer(() =>
-                {
-                    editor.OnInspectorGUI();
-                });
+                OnEditorFinished = onEditorFinished;
+
+                editorView = AbstractObjectEditor.CreateEditor(objectToEdit);
+
                 editorContainterView.Add(editorView);
             }
             
@@ -145,7 +146,14 @@ namespace DS.Windows
             {
                 if (OnEditorFinished != null)
                 {
-                    OnEditorFinished?.Invoke(ObjectToEdit);
+                    try
+                    {
+                        OnEditorFinished?.Invoke(ObjectToEdit);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError(e);   
+                    }
                 }
 
                 OnEditorFinished = null;
@@ -155,11 +163,6 @@ namespace DS.Windows
                 {
                     editorView.parent.Remove(editorView);
                     editorView = null;
-                }
-                if (editor != null)
-                {
-                    Object.DestroyImmediate(editor);
-                    editor = null;
                 }
             }
         }

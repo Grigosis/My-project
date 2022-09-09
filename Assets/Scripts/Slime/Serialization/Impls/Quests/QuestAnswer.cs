@@ -1,50 +1,89 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
 using Assets.Scripts.AbstractNodeEditor;
+using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.Algorythms;
-using ClassLibrary1;
 using Combinator;
+using ROR.Core.Serialization.Json;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
+using SecondCycleGame.Assets.Scripts.ObjectEditor;
 using Slime;
 using UnityEditor;
 using UnityEngine;
 
 namespace ROR.Core.Serialization
 {
-    public class QuestAnswer : ScriptableObject
+    public class QuestAnswer : Linkable
     {
-        [HideInInspector]
+        [SerializeField]
+        [ComboBoxEditor("F.AnswerArgsFx")]
         public string AnswerFx;
-        public string Text; //"Bla lba {MONEY}g? {Nickname}"
+        
+        [Multiline]
+        [SerializeField]
+        public string Text;
+        
+        [SerializeField]
         public FxParamXml[] Requirements;
 
-        public CombinatorScriptable CombinatorData;
+        [HideInInspector]
+        [field:NonSerialized]
+        public CombinatorData CombinatorData;
+
+        [SerializeField]
+        [ComboBoxEditor("F.SelectionFx")]
+        public string SelectionFx; // Когда выбрали ответ
+
+        [HideInInspector]
+        [field:NonSerialized] 
+        public QuestDialog NextQuestionDialog;
+
         
         [HideInInspector]
-        public string SelectionFx; // Когда выбрали ответ
-        [HideInInspector]
-        public QuestDialog NextQuestionDialog; //Следующий вопрос
+        [SerializeField]
+        public string NextQuestionDialogGuid;
 
+        [HideInInspector]
+        [SerializeField]
+        public string CombinatorDataGuid;
+        
         public void BuildCombinator(QuestContext context)
         {
             CombinatorBuilder.Build(CombinatorData, typeof(bool), new CombinatorBuilderRules(context, null));
         }
-    }
-    
-    [CustomEditor(typeof(QuestAnswer))]
-    public class QuestAnswerUnityEditor : Editor
-    {
-        public override void OnInspectorGUI ()
-        {
-            // Draw the default inspector
-            DrawDefaultInspector();
-            var someClass = target as QuestAnswer;
-            
-            Helper.CreateEditorClassSelector(ref someClass.AnswerFx, Library.Instance.AnswerArgsFx.Keys.ToArray(), "Implementation");
-            Helper.CreateEditorClassSelector(ref someClass.SelectionFx, Library.Instance.SelectionFx.Keys.ToArray(), "TargetSelector");
 
-            // Save the changes back to the object
-            EditorUtility.SetDirty(target);
+        public override string ToString()
+        {
+            return $"QuestAnswer [{Text} Next={ (NextQuestionDialog == null ? "NULL" : "Q"+ NextQuestionDialog.GetHashCode()) }]";
+        }
+
+        
+        [HideInInspector]
+        public string GUID {  get { return Guid; } set { Guid = value; } }
+
+        [HideInInspector]
+        [SerializeField] 
+        public string Guid;
+        
+        public void GetLinks(HashSet<Linkable> links)
+        {
+            links.Add(CombinatorData);
+            links.Add(NextQuestionDialog);
+        }
+
+        public void RestoreLinks(ReferenceSerializer dictionary)
+        {
+            CombinatorData = dictionary.GetObject<CombinatorData>(CombinatorDataGuid);
+            NextQuestionDialog = dictionary.GetObject<QuestDialog>(NextQuestionDialogGuid);
+        }
+
+        public void StoreLinks()
+        {
+            CombinatorDataGuid = CombinatorData?.GUID;
+            NextQuestionDialogGuid = NextQuestionDialog?.GUID;
         }
     }
 }

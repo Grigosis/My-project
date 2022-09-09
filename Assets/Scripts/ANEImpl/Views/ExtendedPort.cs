@@ -9,12 +9,26 @@ using Random = System.Random;
 
 namespace Assets.Scripts.AbstractNodeEditor
 {
+    class MyIEdgeConnectorListener : IEdgeConnectorListener
+    {
+        public void OnDropOutsidePort(Edge edge, Vector2 position)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnDrop(GraphView graphView, Edge edge)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
     public class ExtendedPort : Port
     {
         
         protected ExtendedPort(Orientation portOrientation, Direction portDirection, Capacity portCapacity, Type type) : base(portOrientation, portDirection, portCapacity, type)
         {
             DebugName = new Random().NextString(8);
+            
         }
         
 
@@ -40,15 +54,12 @@ namespace Assets.Scripts.AbstractNodeEditor
             if (!connections.Contains(edge))
             {
                 base.Connect(edge);
-
                 if (edge.input.direction == Direction.Input)
                 {
-                    Debug.Log(((ExtendedPort)edge.output) + " => " + ((ExtendedPort)edge.input));
                     OnConnected?.Invoke((ExtendedPort)edge.output, (ExtendedPort)edge.input);
                 }
                 else
                 {
-                    Debug.Log(((ExtendedPort)edge.input) + " => " + ((ExtendedPort)edge.output));
                     OnConnected?.Invoke((ExtendedPort)edge.input, (ExtendedPort)edge.output);
                 }
             }
@@ -57,16 +68,29 @@ namespace Assets.Scripts.AbstractNodeEditor
         public override void Disconnect(Edge edge)
         {
             base.Disconnect(edge);
+            DisconnectInternal(edge);
+        }
+
+        private void DisconnectInternal(Edge edge)
+        {
             if (edge.input.direction == Direction.Input)
             {
-                Debug.Log(((ExtendedPort)edge.output) + " => " + ((ExtendedPort)edge.input));
                 OnDisconnected?.Invoke((ExtendedPort)edge.output, (ExtendedPort)edge.input);
             }
             else
             {
-                Debug.Log(((ExtendedPort)edge.input) + " => " + ((ExtendedPort)edge.output));
                 OnDisconnected?.Invoke((ExtendedPort)edge.input, (ExtendedPort)edge.output);
             }
+        }
+
+        public override void DisconnectAll()
+        {
+            foreach (var edge in connections)
+            {
+                DisconnectInternal(edge);
+            }
+            
+            base.DisconnectAll();
         }
 
         public static ExtendedPort CreateEPort(object data, Orientation orientation, Direction direction, Port.Capacity capacity, Action<ExtendedPort, ExtendedPort> onConnected, Action<ExtendedPort, ExtendedPort> onDisconnected = null,string text = "")
@@ -147,5 +171,23 @@ namespace Assets.Scripts.AbstractNodeEditor
                 }
               }
             }
+
+        public void DisconnectOfType<T>(GraphView view, T excluded) where T : class
+        {
+            var connectionsCopy = new List<Edge>(connections);
+            foreach (var edge in connectionsCopy)
+            {
+                var other = edge.input;
+                if (other == this) other = edge.output;
+
+                var port = other as ExtendedPort;
+                if (port.Data is T t && excluded != t)
+                {
+                    this.Disconnect(edge);
+                    other.Disconnect(edge);
+                    view.RemoveElement(edge);
+                }
+            }
+        }
     }
 }

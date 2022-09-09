@@ -8,23 +8,23 @@ namespace Combinator
     {
         public interface ICombinatorBuilderRules
         {
-            public object ParseConstant(CombinatorScriptable data, Type shouldBeTypeOf);
-            public ISubscription Subscriber(CombinatorScriptable data, ICombinator combinator);
-            public void OnCombinatorCreate(CombinatorScriptable data, ICombinator combinator);
+            public object ParseConstant(CombinatorData data, Type shouldBeTypeOf);
+            public ISubscription Subscriber(CombinatorData data, ICombinator combinator);
+            public void OnCombinatorCreate(CombinatorData data, ICombinator combinator);
         }
 
         
 
-        public static ICombinator Build(CombinatorScriptable xml, Type parentType, ICombinatorBuilderRules builderRules)
+        public static ICombinator Build(CombinatorData xml, Type parentType, ICombinatorBuilderRules builderRules)
         {
             return BuildInternal(xml, parentType, builderRules);
         }
         
-        private static ICombinator BuildInternal(CombinatorScriptable xml, Type parentType, ICombinatorBuilderRules builderRules)
+        private static ICombinator BuildInternal(CombinatorData xml, Type parentType, ICombinatorBuilderRules builderRules)
         {
             if (xml.Fx == "Constant")
             {
-                var t = typeof(CombinatorConstNode<,>).MakeGenericType(typeof(CombinatorScriptable), parentType);
+                var t = typeof(CombinatorConstNode<,>).MakeGenericType(typeof(CombinatorData), parentType);
                 var combi = (ICombinator)Activator.CreateInstance(t);
                 combi.SetObject(xml);
                 IConstCombinator combinator = (IConstCombinator)combi;
@@ -51,7 +51,7 @@ namespace Combinator
                         throw new Exception("SubNodes are not allowed for this node");
                     }
                 
-                    var t = typeof(CombinatorSingleNode<,>).MakeGenericType(typeof(CombinatorScriptable), returnType);
+                    var t = typeof(CombinatorSingleNode<,>).MakeGenericType(typeof(CombinatorData), returnType);
                     var combi = (ICombinator)Activator.CreateInstance(t);
                     combi.SetSubscription(builderRules.Subscriber(xml, combi));
                     combi.SetFx(fx);
@@ -62,7 +62,7 @@ namespace Combinator
                 }
                 else
                 {
-                    var t = typeof(CombinatorMultiNode<,,>).MakeGenericType(typeof(CombinatorScriptable), childTypes, returnType);
+                    var t = typeof(CombinatorMultiNode<,,>).MakeGenericType(typeof(CombinatorData), childTypes, returnType);
                     var combi = (IMultiCombinator)Activator.CreateInstance(t);
                     combi.SetSubscription(builderRules.Subscriber(xml, combi));
                     combi.SetFx(fx);
@@ -72,6 +72,7 @@ namespace Combinator
                     bool IsContexted = false;
                     foreach (var node in xml.Nodes)
                     {
+                        if (node == null) continue;
                         var child = Build(node, childTypes, builderRules);
                         combi.AddNode(child);
                         IsContexted |= child.IsDependent;
@@ -90,7 +91,7 @@ namespace Combinator
                         throw new Exception("SubNodes are not allowed for this node");
                     }
                 
-                    var t = typeof(ContextCombinatorSingleNode<,,>).MakeGenericType(typeof(CombinatorScriptable), context, returnType);
+                    var t = typeof(ContextCombinatorSingleNode<,,>).MakeGenericType(typeof(CombinatorData), context, returnType);
                     var combi = (ICombinator)Activator.CreateInstance(t);
                     combi.SetSubscription(builderRules.Subscriber(xml, combi));
                     combi.SetFx(fx);
@@ -102,7 +103,7 @@ namespace Combinator
                 }
                 else
                 {
-                    var t = typeof(ContextCombinatorMultiNode<,,,>).MakeGenericType(typeof(CombinatorScriptable), context, childTypes, returnType);
+                    var t = typeof(ContextCombinatorMultiNode<,,,>).MakeGenericType(typeof(CombinatorData), context, childTypes, returnType);
                     var combi = (IMultiCombinator)Activator.CreateInstance(t);
                     combi.SetSubscription(builderRules.Subscriber(xml, combi));
                     combi.SetFx(fx);
@@ -111,6 +112,7 @@ namespace Combinator
                     combi.NodeDebugName = $"{xml.Fx}";
                     foreach (var node in xml.Nodes)
                     {
+                        if (node == null) continue;
                         var child = Build(node, childTypes, builderRules);
                         combi.AddNode(child);
                     }
