@@ -11,8 +11,14 @@
             <MinValue>1</MinValue>
             <MaxValue>3</MaxValue>
             <Params>
-              <FxParamXml Name="MinRange" Value="3" />
-              <FxParamXml Name="MaxRange" Value="8" />
+              <FxParamXml>
+                <Name>MinRange</Name>
+                <Value>3</Value>
+              </FxParamXml>
+              <FxParamXml>
+                <Name>MaxRange</Name>
+                <Value>8</Value>
+              </FxParamXml>
             </Params>
           </AIPositioningLayerXml>
         </Layers>
@@ -23,7 +29,10 @@
       <Triggers>
         <AIBehaviorTriggerXml xsi:type="AIBehaviorTriggerUnitDiedXml" TriggerFx="Say" Ally="true">
           <Params>
-            <Param Name="Text" Value="You bastard!" />
+            <Param>
+              <Name>Text</Name>
+              <Value>You bastard!</Value>
+            </Param>
           </Params>
         </AIBehaviorTriggerXml>
       </Triggers>
