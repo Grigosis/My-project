@@ -49,13 +49,31 @@ namespace Assets.Scripts.Slime.Core
             //RegisterMulti<CombinatorScriptable, double, string>("ToStr", CombinatorFunctions.ToStr);
             
             RegisterMulti<CombinatorData, string, string>("Concat", CombinatorFunctions.Concat);
-            RegisterMulti<CombinatorData, double, double>("Mlt", CombinatorFunctions.Mlt);
-            RegisterMulti<CombinatorData, double, double>("Sum", CombinatorFunctions.Sum);
-            RegisterMulti<CombinatorData, double, string>("ToStr", CombinatorFunctions.ToStr);
-            RegisterMulti<CombinatorData, double, bool>("IsMore", CombinatorFunctions.IsMore);
+            RegisterMulti<CombinatorData, double, double>("*", CombinatorFunctions.Mlt);
+            RegisterMulti<CombinatorData, double, double>("+", CombinatorFunctions.Sum);
+            RegisterMulti<CombinatorData, double, double>("/", CombinatorFunctions.Div);
+            RegisterMulti<CombinatorData, double, double>("-", CombinatorFunctions.Sub);
+            RegisterMulti<CombinatorData, double, string>("DToStr", CombinatorFunctions.ToStr);
+            RegisterMulti<CombinatorData, bool, string>("BToStr", CombinatorFunctions.ToStr);
+            RegisterMulti<CombinatorData, string, double>("SToDouble", CombinatorFunctions.ToDouble);
+            RegisterMulti<CombinatorData, bool, double>("BToDouble", CombinatorFunctions.ToDouble);
+            RegisterMulti<CombinatorData, string, bool>("SToBool", CombinatorFunctions.ToBool);
+            RegisterMulti<CombinatorData, double, bool>("DToBool", CombinatorFunctions.ToBool);
+            RegisterMulti<CombinatorData, double, bool>(">", CombinatorFunctions.IsMore);
+            RegisterMulti<CombinatorData, double, bool>("<", CombinatorFunctions.IsLess);
+            RegisterMulti<CombinatorData, double, bool>(">=", CombinatorFunctions.IsMoreOrEq);
+            RegisterMulti<CombinatorData, double, bool>("<=", CombinatorFunctions.IsLessOrEq);
+            RegisterMulti<CombinatorData, double, bool>("=", CombinatorFunctions.Eq);
+            RegisterMulti<CombinatorData, double, bool>("!=", CombinatorFunctions.NotEq);
+            RegisterMulti<CombinatorData, string, bool>("S=", CombinatorFunctions.Eq);//???
+            RegisterMulti<CombinatorData, string, bool>("S!=", CombinatorFunctions.NotEq);//???
+            RegisterMulti<CombinatorData, bool, bool>("!", CombinatorFunctions.Not);
             RegisterMulti<CombinatorData, bool, bool>("And", CombinatorFunctions.And);
             RegisterMulti<CombinatorData, bool, bool>("Or", CombinatorFunctions.Or);
-            
+            RegisterMulti<CombinatorData, bool, bool>("XOr", CombinatorFunctions.XOr);
+            RegisterMulti<CombinatorData, string, bool>("ContainsAny", CombinatorFunctions.ContainsAny);//???
+            RegisterMulti<CombinatorData, string, bool>("ContainsAll", CombinatorFunctions.ContainsAll);//???
+
             RegisterFx("TestSelectionFx", ((question, answer) =>
             {
                 Debug.LogError($"SelectionFx {question} {answer}");

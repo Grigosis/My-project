@@ -33,9 +33,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
 
             if (shouldBeTypeOf == typeof(bool)) {
                 var v = data.Value.ToLower();
-                bool ret = new List<string>() { "true", "1", "t" }.Contains(v);
-                Debug.Log($"{data.Value} => {v} => {ret}");
-                return ret;
+                return new List<string>() { "true", "1", "t" }.Contains(v);
             }
 
             throw new Exception($"Missing parser for type {shouldBeTypeOf}");

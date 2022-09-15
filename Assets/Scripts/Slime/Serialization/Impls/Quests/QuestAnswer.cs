@@ -51,7 +51,10 @@ namespace ROR.Core.Serialization
         
         public ICombinator<bool> BuildCombinator(QuestContext context)
         {
-            return (ICombinator<bool>) CombinatorBuilder.Build(CombinatorData, typeof(bool), new CombinatorBuilderRules(context, null));
+            ICombinator<bool> ret = (ICombinator<bool>) CombinatorBuilder.Build(CombinatorData, typeof(bool), new CombinatorBuilderRules(context, null));
+            ret.SetLiveUpdates(true);
+            ret.SetLiveUpdates(false);
+            return ret;
         }
 
         public override string ToString()

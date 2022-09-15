@@ -49,8 +49,8 @@ public class QuestDialogBehaviour : MonoBehaviour
         for (int i = 0; i < Dialog.Answers.Count; i++) {
             QuestAnswer a = Dialog.Answers[i];
             var isVisibleCombinator = a.BuildCombinator(QuestContext);
-            Debug.Log($"{a.Text} is {isVisibleCombinator.Value}");
-            if (isVisibleCombinator.Value || true) {
+            Debug.Log($"{a.Text} is {isVisibleCombinator.NodeDebugName} = {isVisibleCombinator.Value}");
+            if (isVisibleCombinator.Value) {
                 newAnswers.Add(a);
             }
         }
