@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
+using Assets.Scripts.AbstractNodeEditor.Impls;
 using RPGFight.Library;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Views;
@@ -10,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 {
-    public abstract class ANEMultiNode<DATA, DATA2, VIEW> : ANENode, IRowListener<DATA2> where DATA : new() where DATA2 : new() where VIEW : RowView<DATA, DATA2>, new()
+    public abstract class ANEMultiNode<DATA, DATA2, VIEW> : DefaultANENode<DATA>, IRowListener<DATA2> where DATA : new() where DATA2 : new() where VIEW : RowView<DATA, DATA2>, new()
     {
         protected DATA Data => (DATA)NodeData;
         protected DoubleDictionary<DATA2, VIEW> Data2ToPorts = new DoubleDictionary<DATA2, VIEW>();
@@ -18,22 +19,14 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
         //UI
         protected Button addSubnodeButton;
         protected VisualElement subnodesContainer;
-        public ExtendedPort InputPort;
-        
-        protected VisualElement root;
-        protected Toggle visibilityBtn;
-        
-        protected Label header;
-        protected Label contentText;
 
-        
+
         public ANEMultiNode(string path) : base(path) { }
 
         
         
         protected abstract List<DATA2> GetSubNodes();
-        public abstract void OnPortsConnected(ExtendedPort input, ExtendedPort output);
-        public abstract void OnPortsDisconnected(ExtendedPort input, ExtendedPort output);
+        
         
         public virtual void OnSubNodeDelete(VisualElement view, DATA2 onDelete)
         {
@@ -102,29 +95,17 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 
         public override void CreateGUI()
         {
-            var inputPortC = this.Q<VisualElement>("input-port-container");
-            root = this.Q<VisualElement>("root");
-            header = this.Q<Label>("header-label");
-            contentText = this.Q<Label>("content-text");
+            base.CreateGUI();
             addSubnodeButton = this.Q<Button>("add-subnode");
             subnodesContainer = this.Q<VisualElement>("subnodes-container");
-            visibilityBtn = this.Q<Toggle>("visibility-btn");
-            
             addSubnodeButton.clickable.clicked += OnAddSubNodeClicked;
-            visibilityBtn.RegisterValueChangedCallback(VisibilityChanged);
-            
-            ExtendedPort titlePort = ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, OnPortsConnected, OnPortsDisconnected);
-            InputPort = titlePort;
-            inputPortC.Add(titlePort);
-            
+
             foreach (var answer in GetSubNodes())
             {
                 CreateAnswerView(answer, false);
             }
         }
         
-        
-
         protected virtual void OnAddSubNodeClicked()
         {
             var answer = new DATA2();
@@ -151,11 +132,6 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
             }
 
             UpdateUI();
-        }
-
-        protected virtual void VisibilityChanged(ChangeEvent<bool> evt)
-        {
-            root.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);
         }
     }
 }

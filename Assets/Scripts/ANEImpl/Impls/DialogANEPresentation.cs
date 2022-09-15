@@ -32,6 +32,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
 
         public override void CreateContextMenu()
         {
+            AppendToMenu("Add Dialog Starter", (actionEvent, position) => CreateNode(typeof(NPCAnswer), typeof(AnswerANENode), position, null));
             AppendToMenu("Add Dialog", (actionEvent, position) => CreateNode(typeof(QuestDialog), typeof(DialogAneNode), position, null));
             AppendToMenu("Add Combinator", (actionEvent, position) => CreateNode(typeof(CombinatorData), typeof(CombinatorANENode), position, null));
             AppendToMenu("Create Group", (actionEvent, position) => CreateGroup("Unnamed group", new Random().Next(), position));
@@ -47,6 +48,10 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
             if (data is CombinatorData cs)
             {
                 CreateNode(cs, typeof(CombinatorANENode), group.Position, groupNode);
+            }
+            if (data is NPCAnswer ass)
+            {
+                CreateNode(ass, typeof(AnswerANENode), group.Position, groupNode);
             }
         }
         
@@ -64,6 +69,11 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
             {
                 cs.Value = "1";
                 cs.Fx = "Constant";
+            }
+            
+            if (o is NPCAnswer ass)
+            {
+                ass.Text = "Starter";
             }
         }
     }

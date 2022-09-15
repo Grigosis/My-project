@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ClassLibrary1;
+using ROR.Core.Serialization;
 using UnityEngine;
 
 namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
@@ -14,6 +15,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 
         [field:NonSerialized]
         public Dictionary<string, ISubscribable> Subscribables = new Dictionary<string, ISubscribable>();
-        
+
+        public static Dictionary<string, NPC> Npcs = new Dictionary<string, NPC>();
     }
 }

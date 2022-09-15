@@ -89,14 +89,6 @@ namespace Assets.Scripts.AbstractNodeEditor
         {
             defaultBackgroundColor = new Color(29f / 255f, 29f / 255f, 30f / 255f);
             CreateGUI();
-            
-            //mainContainer.AddToClassList("ds-node__main-container");
-            //extensionContainer.AddToClassList("ds-node__extension-container");
-            
-            //titleContainer
-            //inputContainer
-            //outputContainer
-            //extensionContainer
         }
 
         public virtual void UpdateUI() { }

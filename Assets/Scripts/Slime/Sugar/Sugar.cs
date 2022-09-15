@@ -345,9 +345,58 @@ namespace Assets.Scripts.Slime.Sugar
             return delegateSignature.ReturnType == method.ReturnType &&
                    parametersEqual;
         }
+        
+        public static T GetAttribute<T>(this MemberInfo prop) where T : Attribute => Attribute.GetCustomAttribute(prop, typeof (T)) as T;
 
+        public static int Sort(MemberInfo a, MemberInfo b)
+        {
+            if (a.Name == "Id") return -1;
+            if (b.Name == "Id") return 1;
+            
+            var at = a.DeclaringType;
+            var bt = b.DeclaringType;
+
+            var aa = 0;
+            var bb = 0;
+                
+                
+            while (at.BaseType != null)
+            {
+                at = at.BaseType;
+                aa++;
+            }
+            while (bt.BaseType != null)
+            {
+                bt = bt.BaseType;
+                bb++;
+            }
+
+            return aa - bb;
+        } 
+        
+        public static bool ImplementsGenericInterface(this Type subtype, Type genericInterface) => ((IEnumerable<Type>) subtype.GetInterfaces()).Any<Type>((Func<Type, bool>) (x => x.IsGenericType && x.GetGenericTypeDefinition() == genericInterface));
+
+        
+        public static Type GetMemberType(this MemberInfo member)
+        {
+            Type tt = null;
+            if (member is FieldInfo fi) tt = fi.FieldType;
+            if (member is PropertyInfo pi) tt = pi.PropertyType;
+            return tt;
+        }
+        
         #endregion
 
+        
+        public static int Index<T>(this T[] arr, T val)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i].Equals(val)) return i;
+            }
+
+            return -1;
+        }
 
         public static void SetHidden(this VisualElement element, bool isHidden)
         {

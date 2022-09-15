@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = System.Object;
 
 namespace SecondCycleGame.Assets.Scripts.ObjectEditor
 {
@@ -23,6 +25,50 @@ namespace SecondCycleGame.Assets.Scripts.ObjectEditor
 
             return root;
         }
+
+
+        private static List<Type> SimpleTypes = new List<Type>();
+
+        static AbstractObjectEditor()
+        {
+            SimpleTypes.Add(typeof(string));
+            SimpleTypes.Add(typeof(int));
+            SimpleTypes.Add(typeof(uint));
+            SimpleTypes.Add(typeof(short));
+            SimpleTypes.Add(typeof(ushort));
+            SimpleTypes.Add(typeof(byte));
+            SimpleTypes.Add(typeof(float));
+            SimpleTypes.Add(typeof(double));
+        }
+
+        private static IPropertyEditor CreateSimple(MemberInfo info)
+        {
+            StringProperty property;
+                
+            if (info is PropertyInfo propertyInfo)
+            {
+                if (info.GetCustomAttribute<HideInInspector>() != null) return null;
+                property = new StringProperty(propertyInfo);
+            }
+            else if (info is FieldInfo fieldInfo)
+            {
+                
+                property = new StringProperty(fieldInfo);
+            }
+            else
+            {
+                return null;
+            }
+
+            if (property.Variants != null)
+            {
+                return new ComboBoxEditor(property);
+            }
+            else
+            {
+                return new TextFieldEditor(property);
+            }
+        }
         
         public static List<IPropertyEditor> PrepareEditor(object o)
         {
@@ -32,32 +78,10 @@ namespace SecondCycleGame.Assets.Scripts.ObjectEditor
             var members = type.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             foreach (var info in members)
             {
-                
-                StringProperty property;
-                
-                if (info is PropertyInfo propertyInfo)
+                if (info.GetCustomAttribute<HideInInspector>() != null) continue;
+                var editor = CreateSimple(info);
+                if (editor != null)
                 {
-                    if (info.GetCustomAttribute<HideInInspector>() != null) continue;
-                    property = new StringProperty(propertyInfo);
-                }
-                else if (info is FieldInfo fieldInfo)
-                {
-                    if (info.GetCustomAttribute<HideInInspector>() != null) continue;
-                    property = new StringProperty(fieldInfo);
-                }
-                else
-                {
-                    continue;
-                }
-
-                if (property.Variants != null)
-                {
-                    ComboBoxEditor editor = new ComboBoxEditor(property);
-                    list.Add(editor);
-                }
-                else
-                {
-                    TextFieldEditor editor = new TextFieldEditor(property);
                     list.Add(editor);
                 }
             }

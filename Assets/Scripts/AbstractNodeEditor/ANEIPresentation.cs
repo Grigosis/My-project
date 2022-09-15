@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Scripts.AbstractNodeEditor.Impls;
 using DS.Windows;
+using ROR.Core.Serialization;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
@@ -61,6 +62,10 @@ namespace Assets.Scripts.AbstractNodeEditor
             else if (typeOfNode == typeof(CombinatorANENode) )
             {
                 node = new CombinatorANENode("Assets/Editor Default Resources/DialogueSystem/CombinatorNodeView.uxml");
+            }
+            else if (typeOfNode == typeof(AnswerANENode))
+            {
+                node = new AnswerANENode("Assets/Editor Default Resources/DialogueSystem/AnswerNodeView.uxml");
             }
             else
             {

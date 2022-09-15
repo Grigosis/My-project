@@ -176,6 +176,7 @@ namespace DS.Windows
             var t1 = JsonUtility.ToJson(graphData);
             File.WriteAllText($"{folder}/{fileName}.JSON", t1);
             Debug.LogError(t1);
+            
         }
         
         public void Load(string folder, string fileName)
@@ -185,8 +186,6 @@ namespace DS.Windows
             
             var graphData = JsonUtility.FromJson<ANEGraphState>(result1);
             var serializer = graphData.ReferenceSerializer;
-            
-            
 
             Presentation.OnLoaded(graphData.PresentationObject);
             
@@ -194,7 +193,7 @@ namespace DS.Windows
             {
                 Presentation.CreateGroup(group.Name, group.Id, group.Position);
             }
-            
+
             foreach (var obj in serializer.ObjectsForSerialize)
             {
                 if (obj is ANENodeState node)
