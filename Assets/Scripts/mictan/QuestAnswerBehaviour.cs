@@ -1,5 +1,6 @@
 using ClassLibrary1;
 using ClassLibrary1.Logic;
+using ROR.Core.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,9 @@ public class QuestAnswerBehaviour : MonoBehaviour
     public TextMeshProUGUI Text;
     public Button Button;
 
-    public Answer Answer;
+    public QuestAnswer Answer;
+
+
 
     // Update is called once per frame
     void Update()
@@ -19,13 +22,13 @@ public class QuestAnswerBehaviour : MonoBehaviour
         
     }
 
-    public void SetAnswer(Answer answer, AnswerArgs answerArgs) {
+    public void SetAnswer(QuestAnswer answer) {
         Answer = answer;
-        Text.text = answerArgs.GenerateString();
+        Text.text = answer.Text;
     }
 
     public void OnClick() {
-        Debug.LogWarning($"answer selected {Answer}");
-        Parent.OnAnswerClicked(this);
+        Debug.LogWarning($"answer selected1 {Answer}");
+        Parent.OnAnswerClicked(this); 
     }
 }

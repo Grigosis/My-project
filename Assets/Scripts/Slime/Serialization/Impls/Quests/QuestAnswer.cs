@@ -41,7 +41,6 @@ namespace ROR.Core.Serialization
         [field:NonSerialized] 
         public QuestDialog NextQuestionDialog;
 
-        
         [HideInInspector]
         [SerializeField]
         public string NextQuestionDialogGuid;
@@ -50,9 +49,12 @@ namespace ROR.Core.Serialization
         [SerializeField]
         public string CombinatorDataGuid;
         
-        public void BuildCombinator(QuestContext context)
+        public ICombinator<bool> BuildCombinator(QuestContext context)
         {
-            CombinatorBuilder.Build(CombinatorData, typeof(bool), new CombinatorBuilderRules(context, null));
+            ICombinator<bool> ret = (ICombinator<bool>) CombinatorBuilder.Build(CombinatorData, typeof(bool), new CombinatorBuilderRules(context, null));
+            ret.SetLiveUpdates(true);
+            ret.SetLiveUpdates(false);
+            return ret;
         }
 
         public override string ToString()

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.AbstractNodeEditor.Impls;
 using Combinator;
 using DS.Windows;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
+using UnityEngine;
 
 namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
 {
@@ -27,6 +29,11 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
 
             if (shouldBeTypeOf == typeof(string)) {
                 return data.Value;
+            }
+
+            if (shouldBeTypeOf == typeof(bool)) {
+                var v = data.Value.ToLower();
+                return new List<string>() { "true", "1", "t" }.Contains(v);
             }
 
             throw new Exception($"Missing parser for type {shouldBeTypeOf}");

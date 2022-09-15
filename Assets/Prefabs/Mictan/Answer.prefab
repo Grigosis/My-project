@@ -121,7 +121,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3780353804027609394}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 986693563097738843}
+        m_TargetAssemblyTypeName: QuestAnswerBehaviour, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &986693563097738843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +150,7 @@ MonoBehaviour:
   Background: {fileID: 3780353804027609394}
   Text: {fileID: 1895505943116208645}
   Button: {fileID: 914204511601471831}
+  Answer: {fileID: 0}
 --- !u!1 &4228176288899039019
 GameObject:
   m_ObjectHideFlags: 0
