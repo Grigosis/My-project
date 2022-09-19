@@ -55,7 +55,7 @@ namespace DS.Windows
 
         public void OnNodeSelected(ANENode node)
         {
-            EditorWindow.GetEditor().RequestEditObject(node.NodeData);
+            EditorWindow.GetEditor().RequestEditObject(node.NodeData, node.OnEditorFinished);
         }
         
         public void OnNodeDeselected(ANENode node)

@@ -79,7 +79,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
         
         
 
-        public void UpdateUI()
+        public override void UpdateUI()
         {
             CombinatorOnOnChanged(Combinator);
             
@@ -137,15 +137,10 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
             }
         }
 
-        public override void OnUnselected()
+        public void BuildCombinator()
         {
-            base.OnUnselected();
-            UpdateUI();
-            BuildCombinator();
+            (Graph.Presentation as DialogANEPresentation)?.BuildCombinator(Data);
         }
-
-        
-
 
         public void OnSubNodeNullify(VisualElement view, CombinatorData onDelete)
         {
@@ -158,185 +153,26 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
             rw.SetData(null);
         }
 
-        
-
-
-
         protected override void VisibilityChanged(ChangeEvent<bool> evt)
         {
             //base.VisibilityChanged(evt);
             
         }
-
-        public void BuildCombinator()
+        
+        public override void OnEditorFinished(object data)
         {
-            Debug.LogError("BuildCombinator");
-            BuildCombinator(Data);
+            BuildCombinator();
+            base.OnEditorFinished(data);
+            UpdateUI();
         }
-        public void BuildCombinator(CombinatorData forObj)
-        {
-            var top = GetTopMostParent(Graph, forObj).Data;
-            BuildCombinator(top, Graph);
-        }
+        
         
         private void TextVisibilityChanged(ChangeEvent<bool> evt)
         {
             contentText.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);
         }
 
-        
-        
-        #region Combinator
-        
-        public static CombinatorANENode GetTopMostParent(ANEGraph graph, CombinatorData data)
-        {
-            var top = (CombinatorANENode) graph.NodesAndData.Get(data);
-            while (true)
-            {
-                var other = top.InputPort.GetOther();
-                if (other != null)
-                {
-                    var node = graph.NodesAndData.Get(other.Data);
-                    if (node is CombinatorANENode cnode)
-                    {
-                        top = cnode;
-                        continue;
-                    }
-                }
-                
-                break;
-            }
 
-            return top;
-        }
-        
-        
-        
-
-        public static void BuildCombinator(CombinatorData root, ANEGraph graph)
-        {
-            try
-            {
-                var presentation = graph.Presentation as DialogANEPresentation;
-                var combinator = CombinatorBuilder.Build(root, typeof(string), new CombinatorBuilderRules(new QuestContext(), graph));
-                combinator.SetLiveUpdates(true);
-                Debug.LogError("Builded Combinator:" + combinator.RawValue);
-            }
-            catch (Exception e)
-            {
-                var set = new HashSet<CombinatorData>();
-                root.GetAllChildNodes(set);
-                set.Add(root);
-                
-                foreach (var cs in set)
-                {
-                    AttachCombinator(graph, cs, null);
-                }
-                
-                Debug.LogWarning("Cant build graph:" + e);
-            }
-            
-            UpdateUIRecusively(root, graph);
-        }
-
-        public static void AttachCombinator(ANEGraph graph, CombinatorData data, ICombinator combi)
-        {
-            var node = graph.NodesAndData.Get(data);
-            if (node == null)
-            {
-                Debug.LogError("Node not found:" + node);
-                return;
-            }
-
-            if (node is CombinatorANENode nodee)
-            {
-                nodee.SetCombinator(combi);
-            }
-            else
-            {
-                Debug.LogError("WTF?");
-            }
-        }
-        
-        public static void UpdateUIRecusively(CombinatorData root, ANEGraph graph)
-        {
-            var set = new HashSet<CombinatorData>();
-            root.GetAllChildNodes(set);
-            set.Add(root);
-
-            foreach (var scriptable in set)
-            {
-                var node = graph.NodesAndData.Get(scriptable) as CombinatorANENode;
-                if (node == null)
-                {
-                    Debug.LogError($"No Node {scriptable}");
-                    continue;
-                }
-                    
-                node.UpdateUI();
-            }
-        }
-
-        #endregion  
-        
-        
-
-        public override void OnPortsConnected(ExtendedPort output, ExtendedPort input)
-        {
-            if (input == output)
-            {
-                Debug.LogWarning($"OnPortsSelfConnected : {input.Data} => {output.Data}");
-                return;
-            }
-
-            if (input.Data is CombinatorData child && output.Data is CombinatorData root)
-            {
-                
-                if (!root.Nodes.Contains(child))
-                {
-                    root.Nodes.Add(child);
-                    BuildCombinator();
-                }
-            }
-            else
-            {
-                //throw new Exception($"Wrong output/input ({output.Data} | {input.Data})");s
-            }
-        }
-        
-        public override void OnPortsDisconnected(ExtendedPort output, ExtendedPort input)
-        {
-            Debug.LogWarning($"OnPortsDisconnected");
-            if (input.Data is CombinatorData child && output.Data is CombinatorData root)
-            {
-                if (root.Nodes.Contains(child))
-                {
-                    Debug.LogWarning($"Remove connection : {root} => {child}");
-                    root.Nodes.Remove(child);
-                    var node = Graph.NodesAndData.Get(root) as CombinatorANENode;
-                    if (node == null)
-                    {
-                        Debug.LogWarning($"Unable to find node: {root}");
-                    }
-                    else
-                    {
-                        var view = node.Data2ToPorts.Get(child);
-                        node.OnSubNodeNullify(view, child);
-                    }
-                    
-                    BuildCombinator(child);
-                    BuildCombinator(root);
-                }
-                else
-                {
-                    Debug.LogWarning($"Remove already removed : {root} => {child}");
-                }
-            }
-            else
-            {
-                Debug.LogWarning($"Wrong output/input ({output.Data} | {input.Data})");
-            }
-        }
         
         public override void ConnectPorts()
         {

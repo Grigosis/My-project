@@ -94,6 +94,10 @@ namespace Assets.Scripts.AbstractNodeEditor
         }
 
         public abstract void RestoreNode(ANENodeState group, ANEGroup groupNode);
+
+
+        public abstract void OnPortsConnected(ExtendedPort output, ExtendedPort input);
+        public abstract void OnPortsDisconnected(ExtendedPort output, ExtendedPort input);
     }
 
     

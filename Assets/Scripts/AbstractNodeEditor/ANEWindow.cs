@@ -3,6 +3,7 @@ using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
 using SecondCycleGame.Assets.Scripts.ObjectEditor;
 using Slime;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,7 +16,7 @@ namespace DS.Windows
     {
         private ANEGraph graphView;
 
-        private readonly string defaultFileName = "DialoguesFileName";
+        private readonly string defaultFileName = "Quest";
 
         private static TextField fileNameTextField;
         private Button saveButton;
@@ -30,6 +31,19 @@ namespace DS.Windows
         }
 
         private ObjectEditorWrapper editor;
+        
+        
+        [OnOpenAsset]
+        //Handles opening the editor window when double-clicking project files
+        public static bool OnOpenAsset(int instanceID, int line)
+        {
+            
+            var obj = EditorUtility.InstanceIDToObject(instanceID);
+            Debug.Log(obj + " " +line);
+            return false;
+        }
+
+        
         
         private void OnEnable()
         {
@@ -77,12 +91,13 @@ namespace DS.Windows
 
         private void Save()
         {
-            graphView.Save("Assets/Database/Dialogs", "TestGraph");
+            
+            graphView.Save("Assets/Database/Dialogs", fileNameTextField.value);
         }
 
         private void Load()
         {
-            graphView.Load("Assets/Database/Dialogs", "TestGraph");
+            graphView.Load("Assets/Database/Dialogs", fileNameTextField.value);
         }
 
         private void Clear()
@@ -133,7 +148,7 @@ namespace DS.Windows
             {
                 FinishEdit();
                 
-                Debug.LogError($"RequestEditObject [{objectToEdit}]");
+                Debug.LogError($"RequestEditObject [{objectToEdit}] {onEditorFinished==null}");
                 ObjectToEdit = objectToEdit;
                 OnEditorFinished = onEditorFinished;
 
@@ -144,6 +159,7 @@ namespace DS.Windows
             
             public void FinishEdit()
             {
+                Debug.LogError($"FinishEdit");
                 if (OnEditorFinished != null)
                 {
                     try

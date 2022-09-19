@@ -4,12 +4,17 @@ using UnityEngine.UIElements;
 
 namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 {
-    public abstract class DefaultANENode<DATA> : ANENode
+    public interface IDefaultANENode
+    {
+        public ExtendedPort InputPort { get; }
+    }
+    
+    public abstract class DefaultANENode<DATA> : ANENode, IDefaultANENode
     {
         protected DATA Data => (DATA)NodeData;
-        
-        public ExtendedPort InputPort;
-        
+
+        public ExtendedPort InputPort { get; set; }
+
         protected VisualElement root;
         protected Toggle visibilityBtn;
         
@@ -36,7 +41,8 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
         protected virtual ExtendedPort CreateInputPort()
         {
             var inputPortC = this.Q<VisualElement>("input-port-container");
-            ExtendedPort titlePort = ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, OnPortsConnected, OnPortsDisconnected);
+            
+            ExtendedPort titlePort = ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, Graph.Presentation.OnPortsConnected, Graph.Presentation.OnPortsDisconnected);
             inputPortC.Add(titlePort);
             return titlePort;
         }
@@ -46,7 +52,5 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
             root.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);
         }
         
-        public abstract void OnPortsConnected(ExtendedPort input, ExtendedPort output);
-        public abstract void OnPortsDisconnected(ExtendedPort input, ExtendedPort output);
     }
 }

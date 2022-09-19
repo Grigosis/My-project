@@ -55,39 +55,6 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
             contentText.text = txt;
         }
         
-        public override void OnPortsConnected(ExtendedPort output, ExtendedPort input)
-        {
-            if (output.Data is QuestAnswer answer2 && input.Data is CombinatorData combinator)
-            {
-                output.DisconnectOfType<CombinatorData>(Graph, combinator);
-                answer2.CombinatorData = combinator;
-            } 
-            else if (output.Data is QuestAnswer answer && input.Data is QuestDialog dialog)
-            {
-                output.DisconnectOfType<QuestDialog>(Graph, dialog);
-                answer.NextQuestionDialog = dialog;
-            }
-            else
-            {
-                Debug.LogError($"Wrong output/input ({output.Data} | {input.Data})");
-            }
-        }
-        
-        public override void OnPortsDisconnected(ExtendedPort output, ExtendedPort input)
-        {
-            if (output.Data is QuestAnswer answer2 && input.Data is CombinatorData combinator)
-            {
-                answer2.CombinatorData = null;
-            }
-            else if (output.Data is QuestAnswer answer && input.Data is QuestDialog dialog)
-            {
-                answer.NextQuestionDialog = null;
-            }
-            else
-            {
-                Debug.LogError($"Wrong output/input ({output.Data} | {input.Data})");
-            }
-        }
 
         public override void ConnectPorts()
         {

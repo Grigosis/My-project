@@ -152,6 +152,10 @@ namespace Assets.Scripts.AbstractNodeEditor
             mainContainer.style.backgroundColor = defaultBackgroundColor;
         }
 
+        public virtual void OnEditorFinished(object data)
+        {
+            
+        }
         public abstract void ConnectPorts();
     }
 }

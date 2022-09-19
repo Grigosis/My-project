@@ -1,6 +1,7 @@
 ﻿using Combinator;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Views;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Assets.Scripts.AbstractNodeEditor.Views
@@ -19,7 +20,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
 
         protected override ExtendedPort CreatePort(VisualElement container)
         {
-            return ExtendedPort.CreateEPort(ParentData, Orientation.Horizontal, Direction.Output, Port.Capacity.Single, OnConnected, OnDisconnected);
+            return ExtendedPort.CreateEPort(ParentData, Orientation.Horizontal, Direction.Output, Port.Capacity.Single, GraphView.Presentation.OnPortsConnected, GraphView.Presentation.OnPortsDisconnected);
         }
 
         public override void UpdateUI()
@@ -45,6 +46,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
 
         private void OnCombinatorValueChanged(ICombinator obj)
         {
+            Debug.LogError($"OnCombinatorValueChanged:[{obj?.RawValue ?? "NULL"}]");
             if (obj == null)
             {
                 Text.text = "Combinator is NULL";

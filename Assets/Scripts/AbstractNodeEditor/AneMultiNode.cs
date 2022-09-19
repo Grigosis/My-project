@@ -13,8 +13,8 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 {
     public abstract class ANEMultiNode<DATA, DATA2, VIEW> : DefaultANENode<DATA>, IRowListener<DATA2> where DATA : new() where DATA2 : new() where VIEW : RowView<DATA, DATA2>, new()
     {
-        protected DATA Data => (DATA)NodeData;
-        protected DoubleDictionary<DATA2, VIEW> Data2ToPorts = new DoubleDictionary<DATA2, VIEW>();
+        public DATA Data => (DATA)NodeData;
+        public DoubleDictionary<DATA2, VIEW> Data2ToPorts = new DoubleDictionary<DATA2, VIEW>();
         
         //UI
         protected Button addSubnodeButton;
@@ -46,6 +46,14 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
         public virtual void OnSubNodeValueChanged(VisualElement view, DATA2 oldValue, DATA2 newValue)
         {
             var indexOf = view.parent.hierarchy.IndexOf(view);
+
+            Debug.LogError($"OnSubNodeValueChanged [{indexOf}][{view}] [{oldValue}] => [{newValue}]");
+            if (indexOf == -1)
+            {
+                Debug.LogError($"CantFind: [{view}]");
+                return;
+            }
+
             GetSubNodes()[indexOf] = newValue;
             
             if (oldValue != null)
@@ -117,12 +125,12 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
         protected virtual void CreateAnswerView(DATA2 answer, bool isNew)
         {
             VIEW answerView = new VIEW();
-            answerView.Init(Data, answer, this);
+            answerView.Init(Graph, Data, answer, this);
             Data2ToPorts.Add(answer, answerView);
             subnodesContainer.Add(answerView);
         }
 
-        protected virtual void OnEditorFinished(object obj)
+        public override void OnEditorFinished(object obj)
         {
             Debug.LogError("OnEditorFinished:" + obj);
             var view = Data2ToPorts.Get((DATA2)obj);

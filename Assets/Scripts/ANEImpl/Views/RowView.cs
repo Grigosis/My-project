@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.AbstractNodeEditor;
+using DS.Windows;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 
 namespace SecondCycleGame.Assets.Scripts.ANEImpl.Views
@@ -10,7 +12,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Views
         protected DATA Data;
         protected PDATA ParentData;
         protected IRowListener<DATA> Listener;
-        
+        protected ANEGraph GraphView;
         public Label Text;
         public ExtendedPort EPort { get; protected set; }
         
@@ -21,11 +23,12 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Views
             Add(ui);
         }
         
-        public virtual void Init(PDATA pdata, DATA data, IRowListener<DATA> listener)
+        public virtual void Init(ANEGraph graphView, PDATA pdata, DATA data, IRowListener<DATA> listener)
         {
             Data = data;
             ParentData = pdata;
             Listener = listener;
+            GraphView = graphView;
             
             var container = this.Q<VisualElement>("port-container");
             
@@ -58,17 +61,6 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Views
         protected abstract void BindPortData();
 
         protected abstract ExtendedPort CreatePort(VisualElement element);
-
-        protected virtual void OnConnected(ExtendedPort arg1, ExtendedPort arg2)
-        {
-            Listener.OnPortsConnected(arg1, arg2);
-        }
-
-        protected virtual void OnDisconnected(ExtendedPort arg1, ExtendedPort arg2)
-        {
-            Listener.OnPortsDisconnected(arg1, arg2);
-            EPort.Data2 = null;
-        }
 
         public virtual void UpdateUI()
         {

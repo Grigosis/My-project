@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.BattleMap;
 using ClassLibrary1.Inventory;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Random = System.Random;
@@ -348,6 +352,88 @@ namespace Assets.Scripts.Slime.Sugar
         
         public static T GetAttribute<T>(this MemberInfo prop) where T : Attribute => Attribute.GetCustomAttribute(prop, typeof (T)) as T;
 
+
+        public static string TrimCount(this string txt, int count)
+        {
+            if (txt.Length > count) return txt.Substring(0, count);
+            return txt;
+        }
+
+        public static void GetChildrenRecursively(this VisualElement element, Func<VisualElement, bool> action)
+        {
+            foreach (var child in element.Children())
+            {
+                var result = action(child);
+                if (result)
+                {
+                    GetChildrenRecursively(child, action);
+                }
+            }
+        }
+
+
+        private static Regex backupRegex = new Regex("_backup\\d+");
+
+        /*private static string GetOriginalName(string fileName)
+        {
+            var match = backupRegex.Match(fileName);
+            if (match != null)
+            {
+                var matchValue = match.Value;
+                var originalName = fileName.Replace(matchValue, "");
+                return originalName;
+            }
+        }
+        
+        public static void GetNewBackupName(string path, string name)
+        {
+            
+            var files = Directory.GetFiles(path);
+
+            foreach (var file in files)
+            {
+                var fileName = Path.GetFileName(file);
+                var match = backupRegex.Match(fileName);
+                if (match != null)
+                {
+                    var matchValue = match.Value;
+                    var originalName = fileName.Replace(matchValue, "");
+                }
+            }
+            int index = 1;
+            
+            
+            while (true)
+            {
+                if (File.Exists(path + "/" + name + "_" + ))
+                {
+                    
+                }
+            }
+        }*/
+        
+        public static HashSet<ExtendedPort> GetAllPorts (this VisualElement element)
+        {
+            var hashSet = new HashSet<ExtendedPort>();
+            element.GetChildrenRecursively((v) =>
+            {
+                if (v is ExtendedPort extendedPort)
+                {
+                    hashSet.Add(extendedPort);
+                    return false;
+                }
+
+                if (v is Edge e)
+                {
+                    return false;
+                }
+
+                return true;
+            });
+            
+            return hashSet;
+        }
+        
         public static int Sort(MemberInfo a, MemberInfo b)
         {
             if (a.Name == "Id") return -1;

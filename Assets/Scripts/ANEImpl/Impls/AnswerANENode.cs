@@ -20,7 +20,9 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
         
         public void UpdateUI()
         {
-            contentText.text = Data.Text;
+            var headerTxt = Data.Npc ?? Data.DialogId ?? "NULL";
+            contentText.text = Data.Text ?? "EMPTY";
+            header.text = headerTxt.TrimCount(20);
         }
 
         public override void OnUnselected()
@@ -29,17 +31,15 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
             UpdateUI();
         }
 
+        protected override ExtendedPort CreateInputPort()
+        {
+            var inputPortC = this.Q<VisualElement>("input-port-container");
+            ExtendedPort titlePort = ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, Graph.Presentation.OnPortsConnected, Graph.Presentation.OnPortsDisconnected);
+            inputPortC.Add(titlePort);
+            return titlePort;
+        }
+
         public override void ConnectPorts()
-        {
-            
-        }
-
-        public override void OnPortsConnected(ExtendedPort input, ExtendedPort output)
-        {
-            
-        }
-
-        public override void OnPortsDisconnected(ExtendedPort input, ExtendedPort output)
         {
             
         }

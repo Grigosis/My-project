@@ -11,13 +11,22 @@ namespace Combinator
             public object ParseConstant(CombinatorData data, Type shouldBeTypeOf);
             public ISubscription Subscriber(CombinatorData data, ICombinator combinator);
             public void OnCombinatorCreate(CombinatorData data, ICombinator combinator);
+            void OnError(CombinatorData xml);
         }
 
         
 
         public static ICombinator Build(CombinatorData xml, Type parentType, ICombinatorBuilderRules builderRules)
         {
-            return BuildInternal(xml, parentType, builderRules);
+            try
+            {
+                return BuildInternal(xml, parentType, builderRules);
+            }
+            catch (Exception e)
+            {
+                builderRules.OnError(xml);
+                throw e;
+            }
         }
         
         private static ICombinator BuildInternal(CombinatorData xml, Type parentType, ICombinatorBuilderRules builderRules)
@@ -48,6 +57,7 @@ namespace Combinator
                 {
                     if (xml.Nodes != null && xml.Nodes.Count > 0)
                     {
+                        builderRules.OnError(xml);
                         throw new Exception("SubNodes are not allowed for this node");
                     }
                 
@@ -88,6 +98,7 @@ namespace Combinator
                 {
                     if (xml.Nodes != null && xml.Nodes.Count > 0)
                     {
+                        builderRules.OnError(xml);
                         throw new Exception("SubNodes are not allowed for this node");
                     }
                 

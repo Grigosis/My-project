@@ -6,6 +6,7 @@ using Combinator;
 using DS.Windows;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
 {
@@ -49,6 +50,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
             
             if (!Context.Subscribables.TryGetValue(dataValue, out var subscribable))
             {
+                OnError(data);
                 throw new Exception($"Not found context [{dataValue}]");
             }
 
@@ -59,7 +61,22 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
         {
             if (Graph != null)
             {
-                CombinatorANENode.AttachCombinator(Graph, data, combinator);
+                DialogANEPresentation.AttachCombinator(Graph, data, combinator);
+            }
+        }
+
+        public void OnError(CombinatorData xml)
+        {
+            var node = Graph.NodesAndData.Get(xml);
+            if (node == null)
+            {
+                Debug.LogError("Node not found:" + node);
+                return;
+            }
+
+            if (node is CombinatorANENode nodee)
+            {
+                nodee.style.backgroundColor = new StyleColor(Color.red);
             }
         }
     }

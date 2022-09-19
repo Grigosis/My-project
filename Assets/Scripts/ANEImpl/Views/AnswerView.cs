@@ -1,4 +1,5 @@
-﻿using ROR.Core.Serialization;
+﻿using DS.Windows;
+using ROR.Core.Serialization;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Views;
 using UnityEditor.Experimental.GraphView;
@@ -19,12 +20,12 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
 
         protected override ExtendedPort CreatePort(VisualElement element)
         {
-            return ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, OnConnected, OnDisconnected);
+            return ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, GraphView.Presentation.OnPortsConnected, GraphView.Presentation.OnPortsDisconnected);
         }
 
-        public override void Init(QuestDialog pdata, QuestAnswer data, IRowListener<QuestAnswer> listener)
+        public override void Init(ANEGraph graph, QuestDialog pdata, QuestAnswer data, IRowListener<QuestAnswer> listener)
         {
-            base.Init(pdata, data, listener);
+            base.Init(graph, pdata, data, listener);
             UpdateUI();
         }
 
