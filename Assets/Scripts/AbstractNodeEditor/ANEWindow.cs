@@ -122,6 +122,7 @@ namespace DS.Windows
         
         private void Load(string file)
         {
+            file = file.Replace(".JSON", "");
             fileNameTextField.value = file.Replace("Assets/Database/Dialogs/", "").Replace(".JSON", "");
             graphView.Load(file);
         }
