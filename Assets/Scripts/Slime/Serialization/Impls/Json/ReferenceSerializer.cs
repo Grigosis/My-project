@@ -32,7 +32,6 @@ namespace ROR.Core.Serialization.Json
         {
             if (linkable == null) return;
 
-            Debug.LogError("AddObject:" + linkable + " " + linkable.GUID);
             if (linkable.GUID == null)
             {
                 linkable.GUID = GenerateGuid();

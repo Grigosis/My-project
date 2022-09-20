@@ -20,6 +20,7 @@ namespace Assets.Scripts.AbstractNodeEditor
 
         protected ANENode(string uiFile) : base(uiFile)
         {
+            
         }
 
         public int Group { get; set; }
@@ -124,6 +125,11 @@ namespace Assets.Scripts.AbstractNodeEditor
 
         private void DisconnectPorts(VisualElement container)
         {
+            if (container == null)
+            {
+                return;
+            }
+            
             foreach (Port port in container.Children())
             {
                 if (!port.connected)
@@ -131,7 +137,7 @@ namespace Assets.Scripts.AbstractNodeEditor
                     continue;
                 }
 
-                Graph.DeleteElements(port.connections);
+                port.DisconnectAll();
             }
         }
 

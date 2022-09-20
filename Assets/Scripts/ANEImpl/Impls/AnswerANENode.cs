@@ -34,7 +34,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
         protected override ExtendedPort CreateInputPort()
         {
             var inputPortC = this.Q<VisualElement>("input-port-container");
-            ExtendedPort titlePort = ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, Graph.Presentation.OnPortsConnected, Graph.Presentation.OnPortsDisconnected);
+            ExtendedPort titlePort = ExtendedPort.CreateEPort(Graph, Data, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, Graph.Presentation.OnPortsConnected, Graph.Presentation.OnPortsDisconnected);
             inputPortC.Add(titlePort);
             return titlePort;
         }

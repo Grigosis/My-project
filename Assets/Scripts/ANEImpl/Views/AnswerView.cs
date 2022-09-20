@@ -20,7 +20,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
 
         protected override ExtendedPort CreatePort(VisualElement element)
         {
-            return ExtendedPort.CreateEPort(Data, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, GraphView.Presentation.OnPortsConnected, GraphView.Presentation.OnPortsDisconnected);
+            return ExtendedPort.CreateEPort(GraphView, Data, Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, GraphView.Presentation.OnPortsConnected, GraphView.Presentation.OnPortsDisconnected);
         }
 
         public override void Init(ANEGraph graph, QuestDialog pdata, QuestAnswer data, IRowListener<QuestAnswer> listener)

@@ -47,10 +47,10 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
         {
             var indexOf = view.parent.hierarchy.IndexOf(view);
 
-            Debug.LogError($"OnSubNodeValueChanged [{indexOf}][{view}] [{oldValue}] => [{newValue}]");
+            //Debug.LogError($"OnSubNodeValueChanged [{indexOf}][{view}] [{oldValue}] => [{newValue}]");
             if (indexOf == -1)
             {
-                Debug.LogError($"CantFind: [{view}]");
+                //Debug.LogError($"CantFind: [{view}]");
                 return;
             }
 
@@ -132,14 +132,20 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 
         public override void OnEditorFinished(object obj)
         {
-            Debug.LogError("OnEditorFinished:" + obj);
-            var view = Data2ToPorts.Get((DATA2)obj);
-            if (view != null)
+            if (obj is DATA2 data)
             {
-                view.UpdateUI();
-            }
+                var view = Data2ToPorts.Get(data);
+                if (view != null)
+                {
+                    view.UpdateUI();
+                }
 
-            UpdateUI();
+                UpdateUI();
+            }
+            else
+            {
+                Debug.LogWarning($"OnEditorFinished wrong data [{obj}]");
+            }
         }
     }
 }

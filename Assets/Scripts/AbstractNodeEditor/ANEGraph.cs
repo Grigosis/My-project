@@ -49,6 +49,9 @@ namespace DS.Windows
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
+
+            OnElementsDeleted();
+            
             presentation.CreateContextMenu();
             Clear();
         }
@@ -135,16 +138,119 @@ namespace DS.Windows
             return localMousePosition;
         }
 
+        private void OnElementsDeleted()
+        {
+            deleteSelection = (operationName, askUser) =>
+            {
+                
+                
+                List<ANEGroup> groupsToDelete = new List<ANEGroup>();
+                List<ANENode> nodesToDelete = new List<ANENode>();
+                List<Edge> edgesToDelete = new List<Edge>();
+
+                foreach (GraphElement selectedElement in selection)
+                {
+                    if (selectedElement is ANENode node)
+                    {
+                        nodesToDelete.Add(node);
+                        continue;
+                    }
+
+                    if (selectedElement is Edge edge)
+                    {
+                        edgesToDelete.Add(edge);
+                        continue;
+                    }
+
+                    if (selectedElement is ANEGroup group)
+                    {
+                        groupsToDelete.Add(group);
+                        continue;
+                    }
+                }
+                
+                Debug.Log($"OnElementsDeleted {nodesToDelete.Count} {groupsToDelete.Count} {edgesToDelete.Count}");
+
+                foreach (ANEGroup groupToDelete in groupsToDelete)
+                {
+                    List<ANEGroup> groupNodes = new List<ANEGroup>();
+
+                    foreach (GraphElement groupElement in groupToDelete.containedElements)
+                    {
+                        if (!(groupElement is ANENode))
+                        {
+                            continue;
+                        }
+
+                        ANEGroup groupNode = (ANEGroup) groupElement;
+                        groupNodes.Add(groupNode);
+                    }
+
+                    groupToDelete.RemoveElements(groupNodes);
+
+                    RemoveGroup(groupToDelete);
+
+                    RemoveElement(groupToDelete);
+                }
+
+                DeleteElements(edgesToDelete);
+
+                foreach (ANENode nodeToDelete in nodesToDelete)
+                {
+                    //if (nodeToDelete.Group != null)
+                    //{
+                    //    nodeToDelete.Group.RemoveElement(nodeToDelete);
+                    //}
+
+                    RemoveUngroupedNode(nodeToDelete);
+
+                    nodeToDelete.DisconnectAllPorts();
+
+                    RemoveElement(nodeToDelete);
+                }
+            };
+        }
+        
+        private void RemoveGroup(ANEGroup group)
+        {
+            
+        }
+        
+        public void RemoveUngroupedNode(ANENode node)
+        {
+            node.DisconnectAllPorts();
+            Debug.Log($"RemoveUngroupedNode {node.NodeData}");
+            NodesAndData.Remove(node);
+        }
+        
+        public override EventPropagation DeleteSelection()
+        {
+            return base.DeleteSelection();
+        }
+
         public void Clear()
         {
             Presentation.OnCreatedNew();
             NodesAndData.Clear();
             Groups.Clear();
-            graphElements.ForEach(graphElement => RemoveElement(graphElement));
+    
+            while (true)
+            {
+                int count = 0;
+                graphElements.ForEach(graphElement =>
+                {
+                    count++;
+                    RemoveElement(graphElement);
+                });
+                if (count == 0)
+                {
+                    break;
+                }
+            }
         }
         
         
-        public void Save(string folder, string fileName)
+        public void Save(string fileName)
         {
             var referenceSerializer = new ReferenceSerializer();
             ANEGraphState graphData = new ANEGraphState();
@@ -174,15 +280,24 @@ namespace DS.Windows
             graphData.ReferenceSerializer = referenceSerializer;
 
             var t1 = JsonUtility.ToJson(graphData);
-            File.WriteAllText($"{folder}/{fileName}.JSON", t1);
-            Debug.LogError(t1);
+
+            var backup = "Assets/Database/Dialogs/Backups";
             
+            File.WriteAllText($"{backup}/{Path.GetFileNameWithoutExtension(fileName)}_backup_{DateTime.Now.ToString("yyyy_MM_dd__HH_mm_ss")}.JSON", t1);
+            
+            File.WriteAllText($"{fileName}.JSON", t1);
+            if (!Directory.Exists(backup))
+            {
+                Directory.CreateDirectory(backup);
+            }
+            
+            Debug.Log("File saved");
         }
         
-        public void Load(string folder, string fileName)
+        public void Load(string fileName)
         {
             Clear();
-            var result1 = File.ReadAllText($"{folder}/{fileName}.JSON");
+            var result1 = File.ReadAllText($"{fileName}.JSON");
             
             var graphData = JsonUtility.FromJson<ANEGraphState>(result1);
             var serializer = graphData.ReferenceSerializer;

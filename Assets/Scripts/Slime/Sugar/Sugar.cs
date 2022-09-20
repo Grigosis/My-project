@@ -326,7 +326,6 @@ namespace Assets.Scripts.Slime.Sugar
         {
             if (IsMethodCompatibleWithDelegate<T>(method))
             {
-                Debug.LogWarning($"F:Found method [{method.Name}/{typeof(T).Name}]");
                 var function = (T) (object) Delegate.CreateDelegate(typeof (T), method);
                 funcMap.Add(method.Name, function);
                 return true;
@@ -370,47 +369,6 @@ namespace Assets.Scripts.Slime.Sugar
                 }
             }
         }
-
-
-        private static Regex backupRegex = new Regex("_backup\\d+");
-
-        /*private static string GetOriginalName(string fileName)
-        {
-            var match = backupRegex.Match(fileName);
-            if (match != null)
-            {
-                var matchValue = match.Value;
-                var originalName = fileName.Replace(matchValue, "");
-                return originalName;
-            }
-        }
-        
-        public static void GetNewBackupName(string path, string name)
-        {
-            
-            var files = Directory.GetFiles(path);
-
-            foreach (var file in files)
-            {
-                var fileName = Path.GetFileName(file);
-                var match = backupRegex.Match(fileName);
-                if (match != null)
-                {
-                    var matchValue = match.Value;
-                    var originalName = fileName.Replace(matchValue, "");
-                }
-            }
-            int index = 1;
-            
-            
-            while (true)
-            {
-                if (File.Exists(path + "/" + name + "_" + ))
-                {
-                    
-                }
-            }
-        }*/
         
         public static HashSet<ExtendedPort> GetAllPorts (this VisualElement element)
         {

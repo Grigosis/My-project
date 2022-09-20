@@ -20,7 +20,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
 
         protected override ExtendedPort CreatePort(VisualElement container)
         {
-            return ExtendedPort.CreateEPort(ParentData, Orientation.Horizontal, Direction.Output, Port.Capacity.Single, GraphView.Presentation.OnPortsConnected, GraphView.Presentation.OnPortsDisconnected);
+            return ExtendedPort.CreateEPort(GraphView, ParentData, Orientation.Horizontal, Direction.Output, Port.Capacity.Single, GraphView.Presentation.OnPortsConnected, GraphView.Presentation.OnPortsDisconnected);
         }
 
         public override void UpdateUI()
@@ -46,7 +46,6 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
 
         private void OnCombinatorValueChanged(ICombinator obj)
         {
-            Debug.LogError($"OnCombinatorValueChanged:[{obj?.RawValue ?? "NULL"}]");
             if (obj == null)
             {
                 Text.text = "Combinator is NULL";

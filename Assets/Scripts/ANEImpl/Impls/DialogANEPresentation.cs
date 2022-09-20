@@ -152,6 +152,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
         public T GetTopMostParent<T>(object data) where T : class, IDefaultANENode
         {
             var top = Graph.NodesAndData.Get(data) as T;
+            if (top == null) return null;
             while (true)
             {
                 var other = top.InputPort.GetOther();
@@ -178,8 +179,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
             {
                 roots = new HashSet<VisualElement>();
             }
-
-            Debug.Log("UpdateUIRecusively");
+            
             node.UpdateUI();
             var ports = node.GetAllPorts();
             foreach (var port in ports)
@@ -200,18 +200,19 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
         
         public void BuildCombinator(CombinatorData forObj)
         {
-            var top = GetTopMostParent<CombinatorANENode>(forObj).Data;
-            BuildCombinator(top, Graph);
+            var top = GetTopMostParent<CombinatorANENode>(forObj);
+            if (top != null)
+            {
+                BuildCombinator(top.Data, Graph);
+            }
         }
 
         public void BuildCombinator(CombinatorData root, ANEGraph graph)
         {
             try
             {
-                Debug.LogError("BuildCombinator");
                 var combinator = CombinatorBuilder.Build(root, typeof(string), new CombinatorBuilderRules(new QuestContext(), graph));
                 combinator.SetLiveUpdates(true);
-                Debug.LogError("Builded Combinator:" + combinator.RawValue);
             }
             catch (Exception e)
             {

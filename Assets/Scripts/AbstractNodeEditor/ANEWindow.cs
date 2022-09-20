@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
 using SecondCycleGame.Assets.Scripts.ObjectEditor;
 using Slime;
@@ -37,11 +38,31 @@ namespace DS.Windows
         //Handles opening the editor window when double-clicking project files
         public static bool OnOpenAsset(int instanceID, int line)
         {
-            
-            var obj = EditorUtility.InstanceIDToObject(instanceID);
-            Debug.Log(obj + " " +line);
-            return false;
+            //var obj = EditorUtility.InstanceIDToObject(instanceID);
+            var path = AssetDatabase.GetAssetPath(instanceID);
+            var extension = Path.GetExtension(path).ToLower();
+            if (extension == ".json")
+            {
+                bool windowIsOpen = EditorWindow.HasOpenInstances<ANEWindow>();
+
+                
+                ANEWindow window;
+                if (!windowIsOpen)
+                {
+                    window = EditorWindow.CreateWindow<ANEWindow>();
+                }
+                else
+                {
+                    window = EditorWindow.GetWindow<ANEWindow>();
+                    
+                }
+                EditorWindow.FocusWindowIfItsOpen<ANEWindow>();
+                window.Load(path);
+            }
+            Debug.LogError("OnOpenAsset:"+path + " " +line);
+            return true;
         }
+        
 
         
         
@@ -91,13 +112,18 @@ namespace DS.Windows
 
         private void Save()
         {
-            
-            graphView.Save("Assets/Database/Dialogs", fileNameTextField.value);
+            graphView.Save($"Assets/Database/Dialogs/{fileNameTextField.value}");
         }
 
         private void Load()
         {
-            graphView.Load("Assets/Database/Dialogs", fileNameTextField.value);
+            Load($"Assets/Database/Dialogs/{fileNameTextField.value}");
+        }
+        
+        private void Load(string file)
+        {
+            fileNameTextField.value = file.Replace("Assets/Database/Dialogs/", "").Replace(".JSON", "");
+            graphView.Load(file);
         }
 
         private void Clear()

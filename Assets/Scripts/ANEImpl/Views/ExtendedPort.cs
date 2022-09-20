@@ -24,11 +24,11 @@ namespace Assets.Scripts.AbstractNodeEditor
     
     public class ExtendedPort : Port
     {
-        
-        protected ExtendedPort(Orientation portOrientation, Direction portDirection, Capacity portCapacity, Type type) : base(portOrientation, portDirection, portCapacity, type)
+        private GraphView GraphView;
+        protected ExtendedPort(GraphView graphView, Orientation portOrientation, Direction portDirection, Capacity portCapacity, Type type) : base(portOrientation, portDirection, portCapacity, type)
         {
             DebugName = new Random().NextString(8);
-            
+            GraphView = graphView;
         }
         
 
@@ -85,15 +85,19 @@ namespace Assets.Scripts.AbstractNodeEditor
 
         public override void DisconnectAll()
         {
+            var edgeToDelete = new List<Edge>();
             foreach (var edge in connections)
             {
                 DisconnectInternal(edge);
+                edgeToDelete.Add(edge);
             }
+
+            GraphView.DeleteElements(edgeToDelete);
             
             base.DisconnectAll();
         }
 
-        public static ExtendedPort CreateEPort(object data, Orientation orientation, Direction direction, Port.Capacity capacity, Action<ExtendedPort, ExtendedPort> onConnected, Action<ExtendedPort, ExtendedPort> onDisconnected = null,string text = "")
+        public static ExtendedPort CreateEPort(GraphView graphView, object data, Orientation orientation, Direction direction, Port.Capacity capacity, Action<ExtendedPort, ExtendedPort> onConnected, Action<ExtendedPort, ExtendedPort> onDisconnected = null,string text = "")
         {
             if (data == null)
             {
@@ -101,7 +105,7 @@ namespace Assets.Scripts.AbstractNodeEditor
             }
             
             DefaultEdgeConnectorListener listener = new DefaultEdgeConnectorListener();
-            ExtendedPort ele = new ExtendedPort(orientation, direction, capacity, typeof(bool))
+            ExtendedPort ele = new ExtendedPort(graphView, orientation, direction, capacity, typeof(bool))
             {
                 m_EdgeConnector = new EdgeConnector<Edge>(listener)
             };
