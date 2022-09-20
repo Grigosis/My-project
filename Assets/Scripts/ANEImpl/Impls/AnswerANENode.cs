@@ -18,9 +18,26 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
     {
         public AnswerANENode(string path) : base(path) { }
         
-        public void UpdateUI()
+        public override void UpdateUI()
         {
-            var headerTxt = Data.Npc ?? Data.DialogId ?? "NULL";
+            string headerTxt;
+
+            if (string.IsNullOrEmpty(Data.Npc))
+            {
+                if (string.IsNullOrEmpty(Data.DialogId))
+                {
+                    headerTxt = "NULL";
+                }
+                else
+                {
+                    headerTxt = Data.DialogId;
+                }
+            }
+            else
+            {
+                headerTxt = Data.Npc;
+            }
+            
             contentText.text = Data.Text ?? "EMPTY";
             header.text = headerTxt.TrimCount(20);
         }
@@ -41,7 +58,13 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
 
         public override void ConnectPorts()
         {
-            
+            if (Data.NextQuestionDialog != null)
+            {
+                var node = Graph.NodesAndData.Get(Data.NextQuestionDialog);
+                var dialogNodeInfo = node as DialogAneNode;
+                var edge = InputPort.ConnectTo(dialogNodeInfo.InputPort);
+                Graph.AddElement(edge);
+            }
         }
     }
 }

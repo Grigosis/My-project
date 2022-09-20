@@ -12,11 +12,11 @@ namespace ROR.Core.Serialization
     [Serializable]
     public class NPCAnswer : QuestAnswer
     {
-        [ComboBoxEditor("QuestContext.Npcs")]
+        //[ComboBoxEditor("QuestContext.Npcs")]
         [SerializeField] 
         public string Npc;
         
-        [ComboBoxEditor("QuestContext.Npcs")]
+        //[ComboBoxEditor("QuestContext.Npcs")]
         [SerializeField] 
         public string DialogId;
     }
