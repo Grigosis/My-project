@@ -8,8 +8,6 @@ using Assets.Scripts.Slime.Core.Algorythms;
 using Assets.Scripts.Sugar;
 using ROR.Lib;
 using UnityEngine;
-using Vector2 = System.Numerics.Vector2;
-using Vector3 = System.Numerics.Vector3;
 
 namespace ROR.Core.Serialization
 {
