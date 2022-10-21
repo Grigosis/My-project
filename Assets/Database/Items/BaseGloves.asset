@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d7ffcb93937ba4dbb7f5a612c66659, type: 3}
   m_Name: BaseGloves
   m_EditorClassIdentifier: 
-  Id: 
+  Id: Item/BaseGloves
   Name: 
   Icon: {fileID: 21300000, guid: df473d3798a02d545a18de196427db74, type: 3}
   Description: 

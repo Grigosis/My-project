@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d7ffcb93937ba4dbb7f5a612c66659, type: 3}
   m_Name: BaseBoots
   m_EditorClassIdentifier: 
-  Id: 
+  Id: Item/BaseBoots
   Name: 
   Icon: {fileID: 21300000, guid: 386263386bac42a42bff460073873191, type: 3}
   Description: 

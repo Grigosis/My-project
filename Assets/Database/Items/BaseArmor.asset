@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d7ffcb93937ba4dbb7f5a612c66659, type: 3}
   m_Name: BaseArmor
   m_EditorClassIdentifier: 
-  Id: 
+  Id: Item/BaseArmor
   Name: 
   Icon: {fileID: 21300000, guid: b9bea4d31bcd0094b9d66ac873630e43, type: 3}
   Description: 

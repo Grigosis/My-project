@@ -34,9 +34,9 @@ namespace DS.Windows
         private ObjectEditorWrapper editor;
         
         
-        [OnOpenAsset]
+        //[OnOpenAsset]
         //Handles opening the editor window when double-clicking project files
-        public static bool OnOpenAsset(int instanceID, int line)
+        public static bool OnOpenAsset2(int instanceID, int line)
         {
             //var obj = EditorUtility.InstanceIDToObject(instanceID);
             var path = AssetDatabase.GetAssetPath(instanceID);

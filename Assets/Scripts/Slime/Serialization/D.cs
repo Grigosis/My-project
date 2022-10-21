@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using Assets.Scripts.Slime.Core.Algorythms;
 using Assets.Scripts.Sugar;
 using ROR.Lib;
+using UnityEditor;
 using UnityEngine;
 
 namespace ROR.Core.Serialization
@@ -200,7 +201,28 @@ namespace ROR.Core.Serialization
 
         private void LoadAll(string folder)
         {
-            Debug.Log("InitDefinitions:" + AbsolutePathToResources+ExtraPath+folder);
+            
+            var obj1 = AssetDatabase.LoadAssetAtPath<ItemDefinition>("Assets/Database/Items/BaseArmor.asset");
+            var obj2 = AssetDatabase.LoadAssetAtPath<ItemDefinition>("Assets/Database/Items/BaseBoots.asset");
+            var obj3 = AssetDatabase.LoadAssetAtPath<ItemDefinition>("Assets/Database/Items/BaseGloves.asset");
+            var obj4 = AssetDatabase.LoadAssetAtPath<ItemDefinition>("Assets/Database/Items/BaseWeapon.asset");
+            var objects = new ItemDefinition[]
+            {
+                obj1,
+                obj2,
+                obj3,
+                obj4
+            };
+            
+            Debug.Log($"{objects.Length}");
+            foreach (var o in objects)
+            {
+                if (o is Definition definition)
+                {
+                    Register(definition);
+                }
+            }
+            /*Debug.Log("InitDefinitions:" + AbsolutePathToResources+ExtraPath+folder);
             var files = Directory.GetFiles(AbsolutePathToResources+ExtraPath+folder, "*.xml", SearchOption.AllDirectories);
             var list = new List<Definition>();
             
@@ -227,8 +249,7 @@ namespace ROR.Core.Serialization
             foreach (var d in list)
             {
                 Register(d);
-            }
-            
+            }*/
         }
 
 
