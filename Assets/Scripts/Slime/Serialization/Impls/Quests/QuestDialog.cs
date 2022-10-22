@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Sugar;
@@ -11,6 +12,7 @@ using SecondCycleGame.Assets.Scripts.ObjectEditor;
 using Slime;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
 namespace ROR.Core.Serialization
@@ -30,6 +32,10 @@ namespace ROR.Core.Serialization
         [SerializeField]
         public string Text;
         
+        [Multiline]
+        [SerializeField]
+        public string Sounds;
+        
         [SerializeField]
         [ComboBoxEditor("F.QuestionArgsFx")]
         public string TextArgsFx;
@@ -45,6 +51,21 @@ namespace ROR.Core.Serialization
         [HideInInspector]
         [SerializeField]
         public List<string> AnswersGUIDS = new List<string>();
+
+        
+        
+        
+        public void AttachSounds()
+        {
+            var lines = Sounds.Split("\r\n", "\n");
+            //new Thread(new ThreadStart(() =>
+            //{
+                foreach (var line in lines)
+                {
+                    Sugar.PlaySound(line);
+                }
+            //})).Start();
+        }
 
         public override string ToString()
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core.Algorythms;
+using BlockEditor;
 using Combinator;
 using ROR.Core.Serialization.Json;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
@@ -48,6 +49,10 @@ namespace ROR.Core.Serialization
         [SerializeField]
         public String Script;
         
+        [HideInInspector]
+        [NonSerialized]
+        public Action Scriptable;
+        
         public ICombinator<bool> BuildCombinator(QuestContext context)
         {
             ICombinator<bool> ret = (ICombinator<bool>) CombinatorBuilder.Build(CombinatorData, typeof(bool), new CombinatorBuilderRules(context, null));
@@ -85,6 +90,31 @@ namespace ROR.Core.Serialization
         {
             CombinatorDataGuid = CombinatorData?.GUID;
             NextQuestionDialogGuid = NextQuestionDialog?.GUID;
+        }
+
+        public bool CompileScript()
+        {
+            Scriptable = null;
+            if (Script != null)
+            {
+                var script = new ScriptManager.Script("Test", Script);
+                var list = new List<ScriptManager.Script>() { script };
+                try
+                {
+                    ScriptManager.CompileAndCreateFunctions(list);
+                    Scriptable = (Action) script.Invoker;
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -7,6 +7,12 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a5c4aa24955ba525c2f2e948953b436f3a5c3172d0dd62e7949326edf46347fd/CSharpScript.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/My project/Assets/RoslynCSharp/Examples/Scripts/MazeCrawler.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/My project/Assets/RoslynCSharp/Examples/Scripts/MazeCrawlerExample.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/My project/Assets/RoslynCSharp/Scripts/RoslynCSharp.Compiler/Runtime/RoslynCSharpCompiler.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -15,14 +21,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "settings.editor.selected.configurable": "configurable.group.build",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.1.24f1\Editor\Unity.exe" />
@@ -53,7 +60,7 @@
       <updated>1666283891819</updated>
       <workItem from="1666283897613" duration="1416000" />
       <workItem from="1666352527047" duration="4077000" />
-      <workItem from="1666357300604" duration="3391000" />
+      <workItem from="1666357300604" duration="16207000" />
     </task>
     <servers />
   </component>

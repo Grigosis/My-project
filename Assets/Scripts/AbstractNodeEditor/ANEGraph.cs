@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Sugar;
+using BlockEditor;
 using ROR.Core.Serialization;
 using ROR.Core.Serialization.Json;
 using RPGFight.Library;
@@ -293,6 +295,39 @@ namespace DS.Windows
             
             Debug.Log("File saved");
         }
+
+        private void LoadScriptsOneByOne(ReferenceSerializer serializer)
+        {
+            foreach (var obj in serializer.ObjectsForSerialize)
+            {
+                if (obj is QuestAnswer answer)
+                {
+                    answer.CompileScript();
+                }
+            }
+        }
+        
+        private void LoadScripts(ReferenceSerializer serializer)
+        {
+            var scripts = new Dictionary<ScriptManager.Script, QuestAnswer>();
+            foreach (var obj in serializer.ObjectsForSerialize)
+            {
+                if (obj is QuestAnswer answer)
+                {
+                    if (!string.IsNullOrEmpty(answer.Script))
+                    {
+                        var script = new ScriptManager.Script("node_"+answer.Guid, answer.Script);
+                        scripts.Add(script, answer);
+                    } 
+                }
+            }
+
+            ScriptManager.CompileAndCreateFunctions(scripts.Keys.ToList());
+            foreach (var kv in scripts)
+            {
+                kv.Value.Scriptable = (Action) kv.Key.Invoker;
+            }
+        }
         
         public void Load(string fileName)
         {
@@ -308,6 +343,8 @@ namespace DS.Windows
             {
                 Presentation.CreateGroup(group.Name, group.Id, group.Position);
             }
+
+            LoadScriptsOneByOne(serializer);
 
             foreach (var obj in serializer.ObjectsForSerialize)
             {

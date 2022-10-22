@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor.Views;
+using Assets.Scripts.Slime.Sugar;
 using ROR.Core.Serialization;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using UnityEngine;
@@ -31,13 +32,13 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
 
         private void AnswersVisibilityChanged(ChangeEvent<bool> evt)
         {
-            //answersContainer.visible = evt.newValue;
-            subnodesContainer.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);
+            subnodesContainer.SetHidden(!evt.newValue);
+            Data.AttachSounds();
         }
         
         private void TextVisibilityChanged(ChangeEvent<bool> evt)
         {
-            contentText.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);
+            contentText.SetHidden(!evt.newValue);
         }
 
         protected override List<QuestAnswer> GetSubNodes()

@@ -66,6 +66,10 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Views
         {
         }
         
+        public virtual void OnEditorFinished(DATA editedObject)
+        {
+        }
+        
         private void OnClickedDelete()
         {
             Listener.OnSubNodeDelete(this, Data);

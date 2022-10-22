@@ -1,0 +1,17 @@
+using System;
+//using System.Collections.Generic;
+//using Assets.Scripts.AbstractNodeEditor;
+//using Assets.Scripts.Library;
+//using Assets.Scripts.Slime.Core.Algorythms.Fx;
+//using Assets.Scripts.Slime.Sugar;
+//using ClassLibrary1;
+using UnityEngine;
+//using SecondCycleGame.Scripts.Slime.Core;
+//using static SecondCycleGame.Scripts.Slime.Core.DialogFunctions;
+
+public class Script {
+
+<YOUR CODE HERE>
+
+}
+

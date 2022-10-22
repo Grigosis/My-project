@@ -1,0 +1,7 @@
+.success {
+    background-color: rgba(13, 144, 5, 255);
+}
+
+.failure {
+    background-color: rgba(164, 19, 19, 255);
+}

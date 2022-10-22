@@ -4,12 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.BattleMap;
 using ClassLibrary1.Inventory;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UIElements;
 using Random = System.Random;
 
@@ -445,6 +449,108 @@ namespace Assets.Scripts.Slime.Sugar
         public static void SetHidden(this VisualElement element, bool isHidden)
         {
             element.style.display = new StyleEnum<DisplayStyle>(isHidden ? StyleKeyword.None : StyleKeyword.Auto);
+        }
+
+        
+        
+        
+        public static void SetStyleSheet(this VisualElement ve, string name, bool enabled)
+        {
+            StyleSheet styleSheet = (StyleSheet) EditorGUIUtility.Load(name);
+            //Debug.Log("SetStyleSheet:" + styleSheet);
+            
+            if (enabled)
+            {
+                ve.styleSheets.Add(styleSheet);
+                
+            }
+            else
+            {
+                ve.styleSheets.Remove(styleSheet);
+            }
+            
+            for (int i = 0; i < ve.styleSheets.count; i++)
+            {
+                Debug.Log(" Styles:" + ve.styleSheets[i]);
+            }
+        }
+
+        /// <summary>
+        /// Только для редактора. Оч костыльно
+        /// </summary>
+        /// <param name="path"></param>
+        public static void PlaySound(string path)
+        {
+            var clip = Sugar.LoadClip($"file:///{Environment.CurrentDirectory}/{path}");
+            PlayClip2(clip);
+            Thread.Sleep((int)(clip.length * 1000));
+        }
+        
+        public static void PlayClip2(AudioClip clip, int startSample = 0, bool loop = false)
+        {
+            System.Reflection.Assembly unityEditorAssembly = typeof(AudioImporter).Assembly;
+            System.Type audioUtilClass = unityEditorAssembly.GetType("UnityEditor.AudioUtil");
+            System.Reflection.MethodInfo method = audioUtilClass.GetMethod(
+                "PlayPreviewClip",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public,
+                null,
+                new System.Type[] { typeof(AudioClip), typeof(int), typeof(bool) },
+                null
+            );
+            method.Invoke(
+                null,
+                new object[] { clip, startSample, loop }
+            );
+        }
+        
+        public static void PlayClip(AudioClip clip) {
+            Assembly unityEditorAssembly = typeof(AudioImporter).Assembly;
+            Type audioUtilClass = unityEditorAssembly.GetType("UnityEditor.AudioUtil");
+            MethodInfo method = audioUtilClass.GetMethod(
+                "PlayClip",
+                BindingFlags.Static | BindingFlags.Public,
+                null,
+                new System.Type[] {
+                    typeof(AudioClip)
+                },
+                null
+            );
+            method.Invoke(
+                null,
+                new object[] {
+                    clip
+                }
+            );
+        }
+        
+        public static AudioClip LoadClip(string path)
+        {
+            AudioClip clip = null;
+            using (UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.WAV))
+            {
+                uwr.SendWebRequest();
+ 
+                // wrap tasks in try/catch, otherwise it'll fail silently
+                try
+                {
+                    while (!uwr.isDone)
+                    {
+                        Thread.Sleep(10);
+                    }
+ 
+                    if (uwr.isNetworkError || uwr.isHttpError) Debug.Log($"{uwr.error}");
+                    else
+                    {
+                        clip = DownloadHandlerAudioClip.GetContent(uwr);
+                    }
+                }
+                catch (Exception err)
+                {
+                    Debug.Log($"{err.Message}, {err.StackTrace}");
+                }
+            }
+ 
+            return clip;
         }
         
     }

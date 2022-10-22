@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 
-namespace Assets.Scripts.Sugar
+namespace Assets.Scripts
 {
     class Measure : IDisposable
     {

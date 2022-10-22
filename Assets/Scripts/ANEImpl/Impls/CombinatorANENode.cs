@@ -169,7 +169,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
         
         private void TextVisibilityChanged(ChangeEvent<bool> evt)
         {
-            contentText.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);
+            contentText.SetHidden(!evt.newValue);
         }
 
 

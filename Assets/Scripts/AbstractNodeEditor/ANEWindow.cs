@@ -34,7 +34,7 @@ namespace DS.Windows
         private ObjectEditorWrapper editor;
         
         
-        //[OnOpenAsset]
+        [OnOpenAsset]
         //Handles opening the editor window when double-clicking project files
         public static bool OnOpenAsset2(int instanceID, int line)
         {
@@ -58,9 +58,10 @@ namespace DS.Windows
                 }
                 EditorWindow.FocusWindowIfItsOpen<ANEWindow>();
                 window.Load(path);
+                return true;
             }
             Debug.LogError("OnOpenAsset:"+path + " " +line);
-            return true;
+            return false;
         }
         
 
@@ -68,16 +69,23 @@ namespace DS.Windows
         
         private void OnEnable()
         {
-            var button = new Button();
-            button.text = "Push me23333";
+            VisualElement leftPanel = new VisualElement();
+            leftPanel.style.left = new StyleLength(0f);
+            leftPanel.style.right = new StyleLength(0f);
+            leftPanel.style.top = new StyleLength(0f);
+            leftPanel.style.bottom = new StyleLength(0f);
+            leftPanel.style.backgroundColor = new StyleColor(new Color(0.2f,0.2f,0.2f));
+            leftPanel.style.width = new StyleLength(StyleKeyword.Auto);
+            leftPanel.style.height = new StyleLength(StyleKeyword.Auto);
             
             graphView = new ANEGraph(this, new DialogANEPresentation());
             graphView.StretchToParentSize();
+            graphView.style.position = new StyleEnum<Position>(Position.Relative);
             
-            
-            splitView = new SplitView(0, 200, TwoPaneSplitViewOrientation.Horizontal);
-            splitView.Add(button);
+            splitView = new SplitView(0, 350, TwoPaneSplitViewOrientation.Horizontal);
+            splitView.Add(leftPanel);
             splitView.Add(graphView);
+            
             
             rootVisualElement.Add(splitView);
             
@@ -107,7 +115,7 @@ namespace DS.Windows
 
             rootVisualElement.AddStyleSheets("DialogueSystem/DSVariables.uss");
 
-            editor = new ObjectEditorWrapper(splitView);
+            editor = new ObjectEditorWrapper(leftPanel);
         }
 
         private void Save()
