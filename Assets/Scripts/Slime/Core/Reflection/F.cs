@@ -42,6 +42,8 @@ namespace Assets.Scripts.Slime.Core
         {
             Debug.LogWarning("F:Init");
             AIFunctions.AddScriptFunctions(typeof(AIFunctions));
+
+
             
             //RegisterMulti<CombinatorScriptable, string, string>("Concat", CombinatorFunctions.Concat);
             //RegisterMulti<CombinatorScriptable, double, double>("Mlt", CombinatorFunctions.Mlt);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Assets.Scripts.Sugar;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;

@@ -5,9 +5,9 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 {
     public interface IRowListener<DATA>
     {
-        public void OnSubNodeDelete(VisualElement view, DATA onDelete);
-        public void OnSubNodeValueChanged(VisualElement view, DATA oldValue, DATA newValue);
-        public void OnEditRequest(VisualElement view, DATA onDelete);
-        public void OnMoveRequest(VisualElement view, DATA onDelete, int direction);
+        void OnSubNodeDelete(VisualElement view, DATA onDelete);
+        void OnSubNodeValueChanged(VisualElement view, DATA oldValue, DATA newValue);
+        void OnEditRequest(VisualElement view, DATA onDelete);
+        void OnMoveRequest(VisualElement view, DATA onDelete, int direction);
     }
 }

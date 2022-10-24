@@ -38,7 +38,7 @@ namespace Assets.Scripts.Slime.GUI
 
         private void Update()
         {
-            CheckConsistency();
+            //CheckConsistency();
         }
 
         public void CheckConsistency()
@@ -151,10 +151,10 @@ namespace Assets.Scripts.Slime.GUI
         public void Awake()
         {
             Doll.Init(DollSettings);
-            Doll.Bag.Add(new ItemStack(D.Instance.Get<EquipmentDefinition>("Item/Slime-BaseWeapon"), null, 1), 0, true);
-            Doll.Bag.Add(new ItemStack(D.Instance.Get<EquipmentDefinition>("Item/Slime-BaseArmor"), null, 1), 1, true);
-            Doll.Bag.Add(new ItemStack(D.Instance.Get<EquipmentDefinition>("Item/Slime-BaseBoots"), null, 1), 2, true);
-            Doll.Bag.Add(new ItemStack(D.Instance.Get<EquipmentDefinition>("Item/Slime-BaseGloves"), null, 1), 3, true);
+            Doll.Bag.Add(new ItemStack(D.Instance.Get<EquipmentDefinition>("Item/BaseWeapon"), null, 1), 0, true);
+            Doll.Bag.Add(new ItemStack(D.Instance.Get<EquipmentDefinition>("Item/BaseArmor"), null, 1), 1, true);
+            Doll.Bag.Add(new ItemStack(D.Instance.Get<EquipmentDefinition>("Item/BaseBoots"), null, 1), 2, true);
+            Doll.Bag.Add(new ItemStack(D.Instance.Get<EquipmentDefinition>("Item/BaseGloves"), null, 1), 3, true);
 
             new InventoryPrinter(Doll.Bag, "Bag");
             new InventoryPrinter(Doll.Equipped, "Doll");

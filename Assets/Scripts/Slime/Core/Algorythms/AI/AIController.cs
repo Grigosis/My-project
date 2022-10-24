@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Slime.Core.Algorythms.Logic;
-using Assets.Scripts.Sugar;
 using ROR.Core;
 using SecondCycleGame;
 using Debug = UnityEngine.Debug;

@@ -146,6 +146,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
                 var view = Data2ToPorts.Get(data);
                 if (view != null)
                 {
+                    view.OnEditorFinished(data);
                     view.UpdateUI();
                 }
 

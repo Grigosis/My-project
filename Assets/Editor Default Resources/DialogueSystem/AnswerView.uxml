@@ -1,10 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="/Assets/Editor Default Resources/Test.uss" />
     <ui:VisualElement style="flex-wrap: nowrap; flex-direction: row; width: auto; height: auto; flex-grow: 0; align-items: stretch; justify-content: space-between; min-height: 32px;">
         <ui:Button text="X" display-tooltip-when-elided="true" name="delete-btn" style="width: 16px; height: 16px; position: absolute;" />
-        <ui:Label display-tooltip-when-elided="true" name="row-text" style="-unity-text-align: upper-left; white-space: normal; left: 60px; top: 0; position: relative; flex-wrap: wrap; flex-direction: column; margin-left: 0; margin-right: 0; width: auto; right: 60px; bottom: 0; margin-bottom: 6px;" />
+        <ui:Label display-tooltip-when-elided="true" name="row-text" style="-unity-text-align: upper-left; white-space: normal; left: 60px; top: 0; position: relative; flex-wrap: wrap; flex-direction: column; margin-left: 0; margin-right: 0; width: auto; right: 70px; bottom: 0; margin-bottom: 6px;" />
         <ui:VisualElement name="port-container" style="position: absolute; right: 0; top: 0; width: 60px; height: 30px;" />
         <ui:Button text="E" display-tooltip-when-elided="true" name="edit-btn" style="width: 16px; height: 16px; position: absolute; left: 36px;" />
         <ui:Button text="V" display-tooltip-when-elided="true" name="move-down" style="width: 12px; height: 12px; position: absolute; left: 18px; top: 16px;" />
         <ui:Button text="^" display-tooltip-when-elided="true" name="move-up" style="width: 12px; height: 12px; position: absolute; left: 18px; top: 0;" />
+        <ui:Button text="S" display-tooltip-when-elided="true" name="script-btn" style="width: 16px; height: 16px; position: absolute; left: auto; right: 50px;" />
     </ui:VisualElement>
 </ui:UXML>

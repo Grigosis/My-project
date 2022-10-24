@@ -22,7 +22,7 @@ namespace SecondCycleGame.Assets.Scripts.ObjectEditor
             
             textField.value = m_property.GetValue(o);
             textField.label = m_property.Name;
-            textField.choices = m_property.Variants;
+            //textField.choices = m_property.Variants;
             textField.RegisterValueChangedCallback(OnChanged);
             e.Add(ui);
         }

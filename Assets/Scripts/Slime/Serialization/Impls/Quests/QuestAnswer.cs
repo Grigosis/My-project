@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
 using Assets.Scripts.AbstractNodeEditor;
-using Assets.Scripts.Slime.Core;
 using Assets.Scripts.Slime.Core.Algorythms;
+using BlockEditor;
 using Combinator;
 using ROR.Core.Serialization.Json;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
 using SecondCycleGame.Assets.Scripts.ObjectEditor;
-using Slime;
-using UnityEditor;
 using UnityEngine;
 
 namespace ROR.Core.Serialization
@@ -48,6 +44,14 @@ namespace ROR.Core.Serialization
         [HideInInspector]
         [SerializeField]
         public string CombinatorDataGuid;
+        
+        [Multiline]
+        [SerializeField]
+        public String Script;
+        
+        [HideInInspector]
+        [NonSerialized]
+        public Action Scriptable;
         
         public ICombinator<bool> BuildCombinator(QuestContext context)
         {
@@ -86,6 +90,31 @@ namespace ROR.Core.Serialization
         {
             CombinatorDataGuid = CombinatorData?.GUID;
             NextQuestionDialogGuid = NextQuestionDialog?.GUID;
+        }
+
+        public bool CompileScript()
+        {
+            Scriptable = null;
+            if (Script != null)
+            {
+                var script = new ScriptManager.Script("Test", Script);
+                var list = new List<ScriptManager.Script>() { script };
+                try
+                {
+                    ScriptManager.CompileAndCreateFunctions(list);
+                    Scriptable = (Action) script.Invoker;
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

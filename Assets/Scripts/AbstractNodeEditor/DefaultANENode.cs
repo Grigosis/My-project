@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.AbstractNodeEditor;
+using Assets.Scripts.Slime.Sugar;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 
@@ -49,7 +50,7 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
         
         protected virtual void VisibilityChanged(ChangeEvent<bool> evt)
         {
-            root.style.display = new StyleEnum<DisplayStyle>(evt.newValue ? StyleKeyword.None : StyleKeyword.Auto);
+            root.SetHidden(!evt.newValue);
         }
         
     }

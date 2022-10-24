@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using Assets.Scripts.Sugar;
+using Assets.Scripts;
 
 namespace ROR.Core.Serialization
 {
