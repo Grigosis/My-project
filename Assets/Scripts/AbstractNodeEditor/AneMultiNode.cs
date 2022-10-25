@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.AbstractNodeEditor.Impls;
+using Assets.Scripts.Slime.Sugar;
 using RPGFight.Library;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Views;
@@ -34,7 +35,14 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
             if (rw == null) return;
             if (rw.EPort.connected)
             {
-                Graph.DeleteElements(rw.EPort.connections);
+                List<Edge> connections = new List<Edge>(rw.EPort.connections);
+                Debug.Log($"Delete connections {connections}");
+                try {
+                    Graph.DeleteElements(connections);
+                } catch (System.InvalidOperationException e) {
+                    Debug.LogError($"{connections} / {rw.EPort.connections}");
+                    Debug.LogError(e.StackTrace);
+                }
             }
             Graph.RemoveElement(rw.EPort);
             
@@ -47,7 +55,8 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
         {
             var indexOf = view.parent.hierarchy.IndexOf(view);
 
-            //Debug.LogError($"OnSubNodeValueChanged [{indexOf}][{view}] [{oldValue}] => [{newValue}]");
+            Debug.LogError($"OnSubNodeValueChanged [{indexOf}][{view}] [{oldValue}] => [{newValue}]");
+            Debug.LogWarning($"[{Sugar.ToString(GetSubNodes())}] [{Sugar.ToString(Data2ToPorts.Keys1)}]");
             if (indexOf == -1)
             {
                 //Debug.LogError($"CantFind: [{view}]");

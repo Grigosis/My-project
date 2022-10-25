@@ -54,6 +54,7 @@ namespace Assets.Scripts.AbstractNodeEditor
             Debug.Log("Connect");
             if (!connections.Contains(edge))
             {
+                Debug.Log($"Connect call ({edge})");
                 base.Connect(edge);
                 if (edge.input.direction == Direction.Input)
                 {
@@ -74,6 +75,7 @@ namespace Assets.Scripts.AbstractNodeEditor
 
         private void DisconnectInternal(Edge edge)
         {
+            Debug.Log($"Disconnect internal {edge}");
             if (edge.input.direction == Direction.Input)
             {
                 OnDisconnected?.Invoke((ExtendedPort)edge.output, (ExtendedPort)edge.input);
@@ -84,17 +86,20 @@ namespace Assets.Scripts.AbstractNodeEditor
             }
         }
 
-        public override void DisconnectAll()
-        {
+        public override void DisconnectAll() {
+            List<Edge> connections = new List<Edge>(this.connections);
+
             var edgeToDelete = new List<Edge>();
+            Debug.Log($"Start disconnect all : {connections} ({DebugName})");
             foreach (var edge in connections)
             {
                 DisconnectInternal(edge);
                 edgeToDelete.Add(edge);
             }
+            Debug.Log($"End disconnect all : {connections} ({DebugName})");
 
             GraphView.DeleteElements(edgeToDelete);
-            
+
             base.DisconnectAll();
         }
 

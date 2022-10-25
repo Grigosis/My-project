@@ -305,6 +305,14 @@ namespace Assets.Scripts.Slime.Sugar
             return settings;
         }
 
+        public static string ToString<T>(ICollection<T> collection) {
+            string ret = $"({collection.GetType().Name})[{collection.Count}]{{";
+            foreach(T t in collection) {
+                ret += $"({t})";
+            }
+            return ret + "}";
+        }
+
 
 
         #region Reflection
@@ -553,5 +561,15 @@ namespace Assets.Scripts.Slime.Sugar
             return clip;
         }
         
+        public static T GetParentForType<T>(VisualElement self) where T : VisualElement {
+            VisualElement.Hierarchy h = self.hierarchy;
+            while (h != null && h.parent != null) {
+                if(h.parent is T) {
+                    return h.parent as T;
+                }
+                h = h.parent.hierarchy;
+            }
+            return null;
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.AbstractNodeEditor.Impls;
+using Assets.Scripts.AbstractNodeEditor.Views;
 using Assets.Scripts.Slime.Sugar;
 using Combinator;
 using DS.Windows;
@@ -102,7 +103,34 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
                 output.DisconnectOfType<QuestDialog>(Graph, dialog);
                 answer.NextQuestionDialog = dialog;
             } 
-            else
+            else if (output.Data is CombinatorData root && input.Data is CombinatorData child) 
+            {
+                if (!root.Nodes.Contains(child)) {
+                    Debug.LogWarning($"Add connection : {root} => {child}");
+                    root.Nodes.Add(child);
+
+                    var node = Graph.NodesAndData.Get(root) as CombinatorANENode;
+                    if (node == null) {
+                        Debug.LogWarning($"Unable to find node: {root}");
+                    } else {
+                        var outView = Sugar.GetParentForType<CombinatorRowView>(output);
+                        if(outView == null) {
+                            Debug.LogWarning($"Cannot find output view {output}");
+                        } else {
+                            outView.SetData(child);
+                        }
+
+                    }
+
+                    BuildCombinator(child);
+                    BuildCombinator(root);
+
+                } 
+                else {
+                    Debug.LogWarning($"Add already added : {root} => {child}");
+                }
+            } 
+            else 
             {
                 Debug.LogError($"Wrong output/input ({output.Data} | {input.Data})");
             }
