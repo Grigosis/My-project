@@ -51,6 +51,7 @@ namespace Assets.Scripts.AbstractNodeEditor
 
         public override void Connect(Edge edge)
         {
+            Debug.Log("Connect");
             if (!connections.Contains(edge))
             {
                 base.Connect(edge);
@@ -192,6 +193,16 @@ namespace Assets.Scripts.AbstractNodeEditor
                     view.RemoveElement(edge);
                 }
             }
+        }
+
+        public Edge GetEdge(ExtendedPort extendedPort)
+        {
+            foreach (var edge in connections)
+            {
+                if (edge.input == extendedPort || edge.output == extendedPort) return edge;
+            }
+
+            return null;
         }
     }
 }

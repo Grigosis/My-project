@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core.Algorythms;
 using BlockEditor;
+using ClassLibrary1.Logic;
 using Combinator;
 using ROR.Core.Serialization.Json;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
@@ -53,6 +54,10 @@ namespace ROR.Core.Serialization
         [NonSerialized]
         public Action Scriptable;
         
+        [HideInInspector]
+        [SerializeField]
+        public bool HideLink;
+        
         public ICombinator<bool> BuildCombinator(QuestContext context)
         {
             ICombinator<bool> ret = (ICombinator<bool>) CombinatorBuilder.Build(CombinatorData, typeof(bool), new CombinatorBuilderRules(context, null));
@@ -73,7 +78,9 @@ namespace ROR.Core.Serialization
         [HideInInspector]
         [SerializeField] 
         public string Guid;
-        
+
+
+
         public void GetLinks(HashSet<Linkable> links)
         {
             links.Add(CombinatorData);

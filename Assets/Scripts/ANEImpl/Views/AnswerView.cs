@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Slime.Sugar;
 using BlockEditor;
 using DS.Windows;
 using ROR.Core.Serialization;
 using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using SecondCycleGame.Assets.Scripts.ANEImpl.Views;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -28,8 +30,8 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
             base.OnEditorFinished(editedObject);
             editedObject.CompileScript();
         }
-        
-       
+
+
 
         protected override ExtendedPort CreatePort(VisualElement element)
         {
@@ -41,7 +43,26 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
             base.Init(graph, pdata, data, listener);
             ScriptBtn = this.Q<Button>("script-btn");
             ScriptBtn.clicked += ScriptBtnOnClicked;
+            
+            EPort.OnConnected += EPortOnOnConnected;
             UpdateUI();
+        }
+
+        private void EPortOnOnConnected(ExtendedPort arg1, ExtendedPort arg2)
+        {
+            Debug.Log($"EPortOnOnConnected {arg1} {arg2}");
+            var edge = arg1.GetEdge(arg2);
+            if (edge == null)
+            {
+                Debug.Log($"Edge not found {arg1} {arg2}");
+                return;
+            }
+            
+            
+            edge.showInMiniMap = true;
+            edge.SetHidden(true);
+            arg1.AddToClassList("port-hidable");   
+            arg2.AddToClassList("port-hidable");  
         }
 
         private void ScriptBtnOnClicked()

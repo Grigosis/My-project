@@ -5,3 +5,7 @@
 .failure {
     background-color: rgba(164, 19, 19, 255);
 }
+
+.port-hidable {
+    background-color: rgba(15, 80, 255, 255) !important; 
+}

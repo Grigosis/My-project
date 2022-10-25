@@ -20,7 +20,7 @@ namespace ClassLibrary1.Inventory
     public class Doll
     {
         public FixedInventory Equipped;
-        public InfiniteInventory Bag = new InfiniteInventory(float.PositiveInfinity);
+        public FixedInventory Bag = new FixedInventory(float.PositiveInfinity, 80);
         private InfiniteInventory transaction = new InfiniteInventory(float.PositiveInfinity);
         public DollSettings Settings;
         public void Init(DollSettings settings)

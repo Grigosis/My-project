@@ -51,8 +51,23 @@ namespace ROR.Core.Serialization
         [HideInInspector]
         [SerializeField]
         public List<string> AnswersGUIDS = new List<string>();
-
         
+        [HideInInspector] 
+        public bool CanReturnBack;
+        
+        
+        public HashSet<QuestDialog> GetConnectedDialogsDialogTree(QuestDialog dialog, HashSet<QuestDialog> set)
+        {
+            foreach (var questAnswer in dialog.Answers)
+            {
+                if (questAnswer.NextQuestionDialog == null) continue;
+                if (!set.Add(questAnswer.NextQuestionDialog)) continue;
+
+                GetConnectedDialogsDialogTree(questAnswer.NextQuestionDialog, set);
+            }
+
+            return set;
+        }
         
         
         public void AttachSounds()
