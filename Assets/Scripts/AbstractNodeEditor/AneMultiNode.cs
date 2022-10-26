@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.AbstractNodeEditor.Impls;
 using Assets.Scripts.Slime.Sugar;

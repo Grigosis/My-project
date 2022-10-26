@@ -146,7 +146,7 @@ namespace Assets.Scripts.AbstractNodeEditor.Impls
         {
             var rw = (view as CombinatorRowView);
             if (rw == null) return;
-            rw.EPort.DisconnectAll();
+            //rw.EPort.DisconnectAll();
 
             
             Data2ToPorts.Remove(onDelete);
