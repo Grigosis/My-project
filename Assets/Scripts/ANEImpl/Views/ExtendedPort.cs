@@ -90,13 +90,11 @@ namespace Assets.Scripts.AbstractNodeEditor
             List<Edge> connections = new List<Edge>(this.connections);
 
             var edgeToDelete = new List<Edge>();
-            Debug.Log($"Start disconnect all : {connections} ({DebugName})");
             foreach (var edge in connections)
             {
                 DisconnectInternal(edge);
                 edgeToDelete.Add(edge);
             }
-            Debug.Log($"End disconnect all : {connections} ({DebugName})");
 
             GraphView.DeleteElements(edgeToDelete);
 
@@ -167,6 +165,14 @@ namespace Assets.Scripts.AbstractNodeEditor
                     if (connection != edge)
                       this.m_EdgesToDelete.Add((GraphElement) connection);
                   }
+                }
+                if(edge.input.capacity == Port.Capacity.Multi && edge.output.capacity == Port.Capacity.Multi) {//remove duplicate connection
+                    foreach (Edge connection in edge.input.connections) {
+                        if (connection != edge && edge.output.connections.Contains(connection)) {
+                            //Если имеется порт, вход и выход которого совпадают с edge, удаляем его и добавляем edge. Возможно лучше просто не добавлять?
+                            this.m_EdgesToDelete.Add((GraphElement)connection);
+                        }
+                    }
                 }
                 if (this.m_EdgesToDelete.Count > 0)
                   graphView.DeleteElements((IEnumerable<GraphElement>) this.m_EdgesToDelete);

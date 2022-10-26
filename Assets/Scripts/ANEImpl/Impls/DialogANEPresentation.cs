@@ -125,7 +125,7 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
                     BuildCombinator(child);
                     BuildCombinator(root);
 
-                } 
+                }
                 else {
                     Debug.LogWarning($"Add already added : {root} => {child}");
                 }
