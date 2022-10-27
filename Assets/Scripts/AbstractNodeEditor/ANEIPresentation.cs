@@ -44,7 +44,12 @@ namespace Assets.Scripts.AbstractNodeEditor
             });
             Graph.AddManipulator(manipulator);
         }
-        
+
+        protected void AppendToMenu(Action<ContextualMenuPopulateEvent> action) {
+            ContextualMenuManipulator manipulator = new ContextualMenuManipulator(menuEvent => action(menuEvent));
+            Graph.AddManipulator(manipulator);
+        }
+
         public void CreateNode(Type type, Type typeOfNode, Vector2 position, ANEGroup group)
         {
             var obj = Activator.CreateInstance(type);

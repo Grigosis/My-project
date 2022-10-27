@@ -8,11 +8,12 @@ using SecondCycleGame.Assets.Scripts.ANEImpl.Views;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Slime.Helper;
 using Object = UnityEngine.Object;
 
 namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
 {
-    public abstract class ANEMultiNode<DATA, DATA2, VIEW> : DefaultANENode<DATA>, IRowListener<DATA2> where DATA : new() where DATA2 : new() where VIEW : RowView<DATA, DATA2>, new()
+    public abstract class ANEMultiNode<DATA, DATA2, VIEW> : DefaultANENode<DATA>, IHideableConnectionContainer, IRowListener<DATA2> where DATA : new() where DATA2 : new() where VIEW : RowView<DATA, DATA2>, new()
     {
         public DATA Data => (DATA)NodeData;
         public DoubleDictionary<DATA2, VIEW> Data2ToPorts = new DoubleDictionary<DATA2, VIEW>();
@@ -155,6 +156,14 @@ namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
             else
             {
                 Debug.LogWarning($"OnEditorFinished wrong data [{obj}]");
+            }
+        }
+
+        public virtual void UpdateConnectionVisible() {
+            if(typeof(IHideableConnectionContainer).IsAssignableFrom(typeof(VIEW))) {
+                foreach(var view in Data2ToPorts.Keys2) {
+                    (view as IHideableConnectionContainer).UpdateConnectionVisible();
+                }
             }
         }
     }

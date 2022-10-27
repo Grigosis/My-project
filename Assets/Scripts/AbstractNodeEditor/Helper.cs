@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Linq;
+using Assets.Scripts.AbstractNodeEditor;
 using Assets.Scripts.Slime.Core;
+using Assets.Scripts.Slime.Sugar;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -243,6 +246,36 @@ namespace Slime
             x.stringValue = v;
             EditorGUI.EndProperty();
             position.y += EditorGUIUtility.singleLineHeight;
+        }
+
+        public interface IHideableConnectionContainer {
+            void UpdateConnectionVisible();
+        }
+
+        public class HideConnectionHelper {
+            private Edge edge;
+            private ExtendedPort port1;
+            private ExtendedPort port2;
+
+            public static bool GlobalShowAllConnections = false;//???
+
+            public HideConnectionHelper(Edge edge, ExtendedPort port1, ExtendedPort port2) {
+                this.edge = edge;
+                this.port1 = port1;
+                this.port2 = port2;
+                //edge.showInMiniMap = true;
+            }
+
+            public void SetConnectionHide(bool hidden) {
+                edge.SetHidden(hidden && !GlobalShowAllConnections);
+                if (hidden) {
+                    port1.AddToClassList("port-hidable");
+                    port2.AddToClassList("port-hidable");
+                } else {
+                    port1.RemoveFromClassList("port-hidable");
+                    port2.RemoveFromClassList("port-hidable");
+                }
+            }
         }
     }
 }

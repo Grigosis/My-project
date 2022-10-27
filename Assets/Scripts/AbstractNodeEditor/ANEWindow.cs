@@ -22,7 +22,7 @@ namespace DS.Windows
         private static TextField fileNameTextField;
         private Button saveButton;
         private Button miniMapButton;
-        private Button togglePortsVisibleButton;
+        private Button toggleConnectionsVisibleButton;
 
         private SplitView splitView;
 
@@ -104,14 +104,14 @@ namespace DS.Windows
 
             miniMapButton = Helper.CreateButton("Minimap", () => ToggleMiniMap());
 
-            togglePortsVisibleButton = Helper.CreateButton("Show ports", () => TogglePortsVisible());
+            toggleConnectionsVisibleButton = Helper.CreateButton("Show ports", () => ToggleConnectionsVisible());
 
             toolbar.Add(fileNameTextField);
             toolbar.Add(saveButton);
             toolbar.Add(loadButton);
             toolbar.Add(clearButton);
             toolbar.Add(miniMapButton);
-            toolbar.Add(togglePortsVisibleButton);
+            toolbar.Add(toggleConnectionsVisibleButton);
 
             toolbar.AddStyleSheets("DialogueSystem/DSToolbarStyles.uss");
 
@@ -150,9 +150,10 @@ namespace DS.Windows
             miniMapButton.ToggleInClassList("ds-toolbar__button__selected");
         }
 
-        private void TogglePortsVisible() {
-            togglePortsVisibleButton.ToggleInClassList("ds-toolbar__button__selected");
-            Debug.LogError($"Toggle ports visible!!! {togglePortsVisibleButton.ClassListContains("ds-toolbar__button__selected")}");
+        private void ToggleConnectionsVisible() {
+            toggleConnectionsVisibleButton.ToggleInClassList("ds-toolbar__button__selected");
+
+            graphView.ToggleConnectionsVisible();
         }
 
         public static void UpdateFileName(string newFileName)

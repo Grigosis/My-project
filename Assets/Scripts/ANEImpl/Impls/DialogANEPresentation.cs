@@ -11,6 +11,7 @@ using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Slime.Helper;
 using Object = UnityEngine.Object;
 using Random = System.Random;
 
@@ -43,6 +44,25 @@ namespace SecondCycleGame.Assets.Scripts.ANEImpl.Impls
             AppendToMenu("Add Dialog", (actionEvent, position) => CreateNode(typeof(QuestDialog), typeof(DialogAneNode), position, null));
             AppendToMenu("Add Combinator", (actionEvent, position) => CreateNode(typeof(CombinatorData), typeof(CombinatorANENode), position, null));
             AppendToMenu("Create Group", (actionEvent, position) => CreateGroup("Unnamed group", new Random().Next(), position));
+            AppendToMenu((menuEvent) => {
+                if(menuEvent.target is Edge target) {
+                    menuEvent.menu.AppendAction("Show | Hide Port", (action) => ToggleConnectionVisible(target));
+                }
+            });
+        }
+
+        private void ToggleConnectionVisible(Edge edge) {
+            ExtendedPort o = edge.output as ExtendedPort;
+            Debug.Log($"Toggle Connection Visible! {o.Data}");
+            if(o.Data is QuestAnswer answer) {
+                answer.HideLink = !answer.HideLink;
+                var view = Sugar.GetParentForType<AnswerView>(o);
+                if(view != null) {
+                    view.UpdateConnectionVisible();
+                } else {
+                    Debug.LogError("Cannot find AnswerView ()");
+                }
+            }
         }
 
         public override void RestoreNode(ANENodeState group, ANEGroup groupNode)

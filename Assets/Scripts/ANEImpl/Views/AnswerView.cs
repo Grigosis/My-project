@@ -11,13 +11,15 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Slime.Helper;
 
 namespace Assets.Scripts.AbstractNodeEditor.Views
 {
-    public class AnswerView : RowView<QuestDialog, QuestAnswer>
-    {
+    public class AnswerView : RowView<QuestDialog, QuestAnswer>, IHideableConnectionContainer {
         public AnswerView() : base("Assets/Editor Default Resources/DialogueSystem/AnswerView.uxml") { } 
         public Button ScriptBtn;
+
+        private HideConnectionHelper hideConnectionHelper;
 
         protected override void BindPortData()
         {
@@ -55,14 +57,12 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
             if (edge == null)
             {
                 Debug.Log($"Edge not found {arg1} {arg2}");
+                hideConnectionHelper = null;
                 return;
             }
-            
-            
-            edge.showInMiniMap = true;
-            edge.SetHidden(true);
-            arg1.AddToClassList("port-hidable");   
-            arg2.AddToClassList("port-hidable");  
+
+            hideConnectionHelper = new HideConnectionHelper(edge, arg1, arg2);
+            hideConnectionHelper.SetConnectionHide(Data.HideLink);
         }
 
         private void ScriptBtnOnClicked()
@@ -101,5 +101,10 @@ namespace Assets.Scripts.AbstractNodeEditor.Views
             }
         }
 
+        public void UpdateConnectionVisible() {
+            if(hideConnectionHelper != null) {
+                hideConnectionHelper.SetConnectionHide(Data.HideLink);
+            }
+        }
     }
 }

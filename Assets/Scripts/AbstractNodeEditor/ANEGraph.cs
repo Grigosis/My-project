@@ -9,11 +9,13 @@ using BlockEditor;
 using ROR.Core.Serialization;
 using ROR.Core.Serialization.Json;
 using RPGFight.Library;
+using SecondCycleGame.Assets.Scripts.AbstractNodeEditor;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Slime.Helper;
 using Object = UnityEngine.Object;
 
 namespace DS.Windows
@@ -78,6 +80,16 @@ namespace DS.Windows
             miniMap.visible = !miniMap.visible;
             
             elementsRemovedFromStackNode += ElementsRemovedFromStackNode;
+        }
+
+        public void ToggleConnectionsVisible() {
+            HideConnectionHelper.GlobalShowAllConnections = !HideConnectionHelper.GlobalShowAllConnections;
+            
+            foreach(var node in NodesAndData.Keys2) {
+                if(node is IHideableConnectionContainer n) {
+                    n.UpdateConnectionVisible();
+                }
+            }
         }
 
         private void ElementsRemovedFromStackNode(StackNode arg1, IEnumerable<GraphElement> arg2)
