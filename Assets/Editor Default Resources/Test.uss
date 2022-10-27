@@ -7,5 +7,6 @@
 }
 
 .port-hidable {
+    --port-color: rgba(15, 80, 255, 255) !important; 
     background-color: rgba(15, 80, 255, 255) !important; 
 }

@@ -268,12 +268,17 @@ namespace Slime
 
             public void SetConnectionHide(bool hidden) {
                 edge.SetHidden(hidden && !GlobalShowAllConnections);
+                Debug.Log($"{port1.portColor}");
                 if (hidden) {
-                    port1.AddToClassList("port-hidable");
-                    port2.AddToClassList("port-hidable");
+                    port1.portColor = new Color(15f / 255, 80f / 255, 255f / 255, 1f);
+                    port2.portColor = new Color(15f / 255, 80f / 255, 255f / 255, 1f);
+                    //port1.AddToClassList("port-hidable");
+                    //port2.AddToClassList("port-hidable");
                 } else {
-                    port1.RemoveFromClassList("port-hidable");
-                    port2.RemoveFromClassList("port-hidable");
+                    port1.portColor = new Color(240 / 255f, 240 / 255f, 240 / 255f, 1f);
+                    port2.portColor = new Color(240 / 255f, 240 / 255f, 240 / 255f, 1f);
+                    //port1.RemoveFromClassList("port-hidable");
+                    //port2.RemoveFromClassList("port-hidable");
                 }
             }
         }
