@@ -19,7 +19,7 @@ namespace SecondCycleGame.Assets.Scripts.mictan {
             context = new QuestContext();
 
             var dialog = new QuestDialog();
-            dialog.Text = "Как ты сегодня";
+            dialog.Text = "Как ты сегодня\r\n###\r\nХорошо или плохо?";
             dialog.TextArgsFx = "SIMPLE";
             var dialogComb1 = new CombinatorData();
             dialogComb1.Fx = "Constant";

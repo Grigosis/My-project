@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ClassLibrary1;
 using ClassLibrary1.Logic;
@@ -7,17 +8,36 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestDialogBehaviour : MonoBehaviour
-{
+public class QuestDialogBehaviour : MonoBehaviour {
+    private static string[] Delimiter = { "\r\n###\r\n" };
+
+    private string[] Texts = new string[0];
+    private int CurrentText = 0;
+
+    private bool _ShowAnswers = false;
+    private bool ShowAnswers {
+        get => _ShowAnswers;
+        set {
+            if(_ShowAnswers != value) {
+                _ShowAnswers = value;
+                foreach(var b in AnswerBehaviours) {
+                    ControlAnswerVisible(b);
+                }
+                NextText.gameObject.SetActive(!value);
+            }
+        }
+    }
+
     public Image Background;
     public TextMeshProUGUI text;
     public GameObject AnswersContainer;
+    public Button NextText;
     public GameObject AnswerPrefab;
 
     public QuestDialog Dialog;
     public QuestContext QuestContext;
     
-    public List<QuestAnswerBehaviour> AnswerBehaviours;
+    private List<QuestAnswerBehaviour> AnswerBehaviours = new List<QuestAnswerBehaviour>();
 
 
 
@@ -39,9 +59,25 @@ public class QuestDialogBehaviour : MonoBehaviour
         }
     }
 
+    public void OnNextTextClick() {
+        int newText = CurrentText + 1;
+        if(newText >= Texts.Length) {
+            Debug.LogError($"Text Idx Owerflow {CurrentText} -> {newText} (length = {Texts.Length})");
+            return;
+        }
+        CurrentTextChange(newText);
+    }
+
     private void OnQuestionChange() {
-        text.text = Dialog.Text;
+        Texts = Dialog.Text.Split(Delimiter, StringSplitOptions.None);
+        CurrentTextChange(0);
         OnAnswersChange();
+    }
+
+    private void CurrentTextChange(int currentText) {
+        CurrentText = currentText;
+        text.text = Texts[CurrentText];
+        ShowAnswers = CurrentText >= Texts.Length - 1;
     }
 
     private void OnAnswersChange() {
@@ -60,7 +96,9 @@ public class QuestDialogBehaviour : MonoBehaviour
         }
         if(newAnswers.Count > lengthForUpdate) {
             for(int i = lengthForUpdate; i < newAnswers.Count; i++) {
-                AnswerBehaviours.Add(AddAnswerBehaviour(newAnswers[i]));
+                QuestAnswerBehaviour behaviour = AddAnswerBehaviour(newAnswers[i]);
+                AnswerBehaviours.Add(behaviour);
+                ControlAnswerVisible(behaviour);
             }
         } else if(AnswerBehaviours.Count > lengthForUpdate) {
             for (int i = AnswerBehaviours.Count - 1; i >= lengthForUpdate; i--) {
@@ -83,5 +121,9 @@ public class QuestDialogBehaviour : MonoBehaviour
         behaviour.Parent = null;
         behaviour.transform.SetParent(null);
         Destroy(behaviour.gameObject);
+    }
+
+    private void ControlAnswerVisible(QuestAnswerBehaviour behaviour) {
+        behaviour.gameObject.SetActive(ShowAnswers);
     }
 }
