@@ -29,6 +29,9 @@ public class QuestAnswerBehaviour : MonoBehaviour
 
     public void OnClick() {
         Debug.LogWarning($"answer selected1 {Answer}");
+        if(Answer.Scriptable != null || Answer.CompileScript()) {
+            Answer.Scriptable();
+        }
         Parent.OnAnswerClicked(this); 
     }
 }

@@ -19,7 +19,8 @@ namespace SecondCycleGame.Assets.Scripts.mictan {
             context = new QuestContext();
 
             var dialog = new QuestDialog();
-            dialog.Text = "Как ты сегодня\r\n###\r\nХорошо или плохо?";
+            dialog.Text = "Как ты сегодня\r\n###\r\nХорошо или плохо...?\r\n###\r\nАлитоитпоичтичит итчпотичопитде отячлаи пчяидот яати.";
+            dialog.Sounds = "/Assets/Resources/Sounds/sample-9s.wav\n/Assets/Resources/Sounds/sample-12s.wav\n/Assets/Resources/Sounds/sample-15s.wav";
             dialog.TextArgsFx = "SIMPLE";
             var dialogComb1 = new CombinatorData();
             dialogComb1.Fx = "Constant";

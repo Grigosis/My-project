@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Slime.Sugar;
 using ClassLibrary1;
 using ClassLibrary1.Logic;
 using ROR.Core.Serialization;
@@ -11,6 +12,7 @@ using UnityEngine.UI;
 public class QuestDialogBehaviour : MonoBehaviour {
     private static string[] Delimiter = { "\r\n###\r\n" };
 
+    private AudioClip[] Audios = new AudioClip[0];
     private string[] Texts = new string[0];
     private int CurrentText = 0;
 
@@ -33,6 +35,7 @@ public class QuestDialogBehaviour : MonoBehaviour {
     public GameObject AnswersContainer;
     public Button NextText;
     public GameObject AnswerPrefab;
+    public AudioSource Audio;
 
     public QuestDialog Dialog;
     public QuestContext QuestContext;
@@ -70,6 +73,17 @@ public class QuestDialogBehaviour : MonoBehaviour {
 
     private void OnQuestionChange() {
         Texts = Dialog.Text.Split(Delimiter, StringSplitOptions.None);
+        if(Dialog.Sounds != null && Dialog.Sounds.Length > 0) {
+            var lines = Dialog.Sounds.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            Audios = new AudioClip[lines.Length];
+            for(int i = 0; i < lines.Length; i++) {
+                if(lines[i].Length > 0) {
+                    Audios[i] = Sugar.LoadClip($"file:///{Environment.CurrentDirectory}/{lines[i]}");
+                }
+            }
+        } else {
+            Audios = new AudioClip[0];
+        }
         CurrentTextChange(0);
         OnAnswersChange();
     }
@@ -78,6 +92,15 @@ public class QuestDialogBehaviour : MonoBehaviour {
         CurrentText = currentText;
         text.text = Texts[CurrentText];
         ShowAnswers = CurrentText >= Texts.Length - 1;
+        //TODO try/catch?
+        if (Audio.isPlaying) {
+            Audio.Stop();//???
+        }
+        if (Audios.Length > currentText) {
+            if(Audios[currentText] != null) {
+                Audio.PlayOneShot(Audios[currentText]);
+            }
+        }
     }
 
     private void OnAnswersChange() {
