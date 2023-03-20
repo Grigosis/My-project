@@ -1,0 +1,14 @@
+GridBackground
+{
+	--grid-background-color: var(--ds-colors-grid-light-grey-1);
+	--line-color: var(--ds-colors-grid-light-grey-2);
+	--thick-line-color: var(--ds-colors-grid-light-grey-3);
+	--spacing: var(--ds-metrics-grid-25);
+}
+
+.success {
+    background-color: rgba(92, 154, 79, 255) !important;
+}
+.failure {
+    background-color: rgba(255, 81, 81, 255) !important;
+}

@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d7ffcb93937ba4dbb7f5a612c66659, type: 3}
+  m_Name: BaseArmor
+  m_EditorClassIdentifier: 
+  Id: Item/BaseArmor
+  Name: 
+  Icon: {fileID: 21300000, guid: b9bea4d31bcd0094b9d66ac873630e43, type: 3}
+  Description: 
+  Type: 
+  ItemTypes: 0
+  StackSize: 1
+  Weight: 1
+  Sellable: 1
+  Storable: 1
+  Equipable: 1
+  GearFlags: 64
+  Attributes:
+    HP_NOW: 10
+    HP_MAX: 10
+    HP_MAX_MLT: 0
+    HP_REGEN: 0
+    EP_NOW: 0
+    EP_MAX: 0
+    EP_MAX_MLT: 0
+    EP_REGEN: 0
+    HIT_CLOSE_RANGE: 0.1
+    HIT_FAR_RANGE: 0.1
+    DODGE_CLOSE_RANGE: 0.1
+    DODGE_FAR_RANGE: 0.1
+    CRIT_CHANCE: 0
+    CRIT_MLT: 0
+    MOVESPEED: 3
+    MOVESPEED_MLT: 0
+    INITIATIVE: 3
+    STATS:
+      STR: 1
+      AGI: 1
+      END: 1
+      INT: 1
+      WIL: 1
+      PER: 1
+    PERKS:
+      CLOSE_WEAPON: 0
+      RANGED_WEAPON: 0
+      SCI_WEAPON: 0
+      HACKING: 0
+      TECH: 0
+      MEDICINE: 0
+    UNLOCKABLE_PERKS:
+      CLOSE_WEAPON: 0
+      RANGED_WEAPON: 0
+      SCI_WEAPON: 0
+      HACKING: 0
+      TECH: 0
+      MEDICINE: 0
+    CRUSH:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    PIERCE:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    CUT:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    FIRE:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    COLD:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    POISON:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0
+    GRAVI:
+      ATK_MIN_ABS: 0
+      ATK_MAX_ABS: 0
+      ATK_MIN_MLT: 0
+      ATK_MAX_MLT: 0
+      DEF_ABS: 0
+      DEF_MLT: 0
+      SPECIAL_1: 0
+      SPECIAL_2: 0

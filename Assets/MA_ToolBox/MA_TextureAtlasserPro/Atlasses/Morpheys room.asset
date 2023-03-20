@@ -1,0 +1,751 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8662045215915732152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Morph lantern
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 769.62006
+    y: 2.5316467
+    width: 267.02173
+    height: 264.21564
+  guiRect:
+    serializedVersion: 2
+    x: 768
+    y: 0
+    width: 256
+    height: 256
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 1552.3916
+    y: 330.77747
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 1696.3916
+    y: 186.77748
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 1568.3916
+    y: 202.77748
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 99e30544f79b79c4683334d0bcc2a1e0, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 15f31a57a26879f44be9085d8c0ca0c7, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 80f84855c9d87e2489e3d573405a19bb, type: 3}
+  modelGroups:
+  - name: Morph lantern
+    meshes:
+    - {fileID: -8196278828272827766, guid: c5fe5440deb0d6543996fd08cd88da6f, type: 3}
+--- !u!114 &-8180541307245336467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Sleap treat
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 1531.2604
+    y: 0
+    width: 510.8573
+    height: 521.7498
+  guiRect:
+    serializedVersion: 2
+    x: 1536
+    y: 0
+    width: 512
+    height: 512
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 2048.3918
+    y: 613.7005
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 2320.3918
+    y: 341.7005
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 2064.3918
+    y: 357.7005
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 7100c03942a90d2469eb43b03da54710, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 9fa2bfe2766ffc54aaeef40a3bb77e5e, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: aa7eb7ff8a86465499e27bea6354b064, type: 3}
+  modelGroups:
+  - name: Sleap treat
+    meshes:
+    - {fileID: 8840986720017847791, guid: ff86f0fc8936016478587da6929953db, type: 3}
+--- !u!114 &-6978866431840829336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Morph bed
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 1024.9995
+    y: 4.6875
+    width: 510.8573
+    height: 521.7498
+  guiRect:
+    serializedVersion: 2
+    x: 1024
+    y: 0
+    width: 512
+    height: 512
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 1936.3916
+    y: 586.77747
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 2208.3916
+    y: 314.77747
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 1952.3916
+    y: 330.77747
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 9e7c6fd81cb0a02448680dbec074c4cf, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: acda2696a110d914da1437eaff6ee29d, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 3ea4e337174159e409aada3ff2bbe49e, type: 3}
+  modelGroups:
+  - name: Morph bed
+    meshes:
+    - {fileID: -9091382608003920323, guid: 20e9fb96b1114d941aea3f333aa6cb95, type: 3}
+--- !u!114 &-4963135996859287755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Sink M
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 508.82288
+    y: 514.7053
+    width: 510.8573
+    height: 521.7498
+  guiRect:
+    serializedVersion: 2
+    x: 512
+    y: 512
+    width: 512
+    height: 512
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 1092.8444
+    y: 974.18646
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 1364.8444
+    y: 702.18646
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 1108.8444
+    y: 718.18646
+    width: 32
+    height: 32
+  textureGroups:
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: abce54cc46c0646488eb097e5bca80a5, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: 7e983db5d61e36e4695ddd57aea959ac, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: af45b1760ec962c42825b9c386f5b004, type: 3}
+  modelGroups:
+  - name: Sink M
+    meshes:
+    - {fileID: -6940665088759197227, guid: cb96536f52fd1b84aa0257e318492b86, type: 3}
+--- !u!114 &-664799948730888169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Water bottle
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 1537.1427
+    y: 523.5288
+    width: 510.8573
+    height: 521.7498
+  guiRect:
+    serializedVersion: 2
+    x: 1536
+    y: 512
+    width: 512
+    height: 512
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 1952.2075
+    y: 369.54706
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 2224.2075
+    y: 97.54706
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 1968.2075
+    y: 113.54706
+    width: 32
+    height: 32
+  textureGroups:
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: 01fcc19cb98c5e34fa4c1be430647093, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: 2e5196b1ea21bad408b1b507b3d00c05, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: d9a262cc93a204d45b904a2c57849221, type: 3}
+  modelGroups:
+  - name: Water bottle
+    meshes:
+    - {fileID: -4633444044135843446, guid: d041cd25b3d6b5846ac400ef611b83a3, type: 3}
+--- !u!114 &-591618515075328185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: M sedative
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 521.7762
+    y: 0.2098999
+    width: 267.02173
+    height: 264.21564
+  guiRect:
+    serializedVersion: 2
+    x: 512
+    y: 0
+    width: 256
+    height: 256
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 1296.3916
+    y: 330.77747
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 1440.3916
+    y: 186.77748
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 1312.3916
+    y: 202.77748
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: c03f262f7e21f464cace77688dfe0139, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 56dc80d6c62ee8a4dab6f7c06d37577a, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 180fc0d564a14984bb11e91ea9ff189e, type: 3}
+  modelGroups:
+  - name: M sedative
+    meshes:
+    - {fileID: -5944273842276417225, guid: 7abe9dad41342014287dfe0eaba4f3ff, type: 3}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 892d1a7aeb4cc284dbf62e69e125db52, type: 3}
+  m_Name: Morpheys room
+  m_EditorClassIdentifier: 
+  textureQuads:
+  - {fileID: 7055954241128536377}
+  - {fileID: -664799948730888169}
+  - {fileID: 5778613524413524549}
+  - {fileID: -8180541307245336467}
+  - {fileID: -6978866431840829336}
+  - {fileID: -591618515075328185}
+  - {fileID: 5611350453631569753}
+  - {fileID: -4963135996859287755}
+  - {fileID: 1429871798995398529}
+  - {fileID: -8662045215915732152}
+  - {fileID: 5470701862798087235}
+  - {fileID: 7947351955281888549}
+  - {fileID: 2275536097644585607}
+  selectedTextureQuad: {fileID: 1429871798995398529}
+  showTextures: 1
+  exportSettings: {fileID: 11400000, guid: 9c485c5a941d75343907331341bb373c, type: 2}
+  textureAtlasSize: {x: 2048, y: 2048}
+  textureGroupRegistration:
+  - name: Albedo
+  - name: Normal
+  - name: Occlusion
+--- !u!114 &1429871798995398529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Butcher android
+  m_EditorClassIdentifier: 
+  isSelected: 1
+  rect:
+    serializedVersion: 2
+    x: 0
+    y: 1020.12836
+    width: 1016.9794
+    height: 1023.7903
+  guiRect:
+    serializedVersion: 2
+    x: 0
+    y: 1024
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 692.6667
+    y: 2139.5
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 1220.6666
+    y: 1611.5
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 708.6667
+    y: 1627.5
+    width: 32
+    height: 32
+  textureGroups:
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: 5480e6d7b7dc4124f8e0a0fb13f37518, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: 8d18cc248dc501547b7ccbb456b8ff67, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: 4d9045979ee5db14aadfa9f8a18c908a, type: 3}
+  modelGroups:
+  - name: Butcher android
+    meshes:
+    - {fileID: 8029968604250138725, guid: af9498a2b346ff34babb9720c56b4dbc, type: 3}
+--- !u!114 &2275536097644585607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Packed android
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 1031.0206
+    y: 1024.2097
+    width: 1016.9794
+    height: 1023.7903
+  guiRect:
+    serializedVersion: 2
+    x: 1024
+    y: 1024
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 2473.9133
+    y: 1602.487
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 3001.9133
+    y: 1074.487
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 2489.9133
+    y: 1090.487
+    width: 32
+    height: 32
+  textureGroups:
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: 976588c19d147e540b2e67af24502bed, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: ba097da6fc8dd15468fccb5f0b4e0174, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: c32d29e332b34fe47877b6c39e41efaf, type: 3}
+  modelGroups:
+  - name: Packed android
+    meshes:
+    - {fileID: -2839306496682189011, guid: 857d3f3fad910a348a94e45ccd119334, type: 3}
+--- !u!114 &5470701862798087235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Morph screen
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 503.94843
+    y: 254.77042
+    width: 267.02173
+    height: 264.21564
+  guiRect:
+    serializedVersion: 2
+    x: 512
+    y: 256
+    width: 256
+    height: 256
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 1332.7957
+    y: 1295.175
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 1476.7957
+    y: 1151.175
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 1348.7957
+    y: 1167.175
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 3e8a6826e0df2f44284e0207fddb2983, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: efe038c82c6ec694ab5a3eaeb5d29e84, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 604d738b4e007e1449bbbee6e6315655, type: 3}
+  modelGroups:
+  - name: Morph screen
+    meshes:
+    - {fileID: -6940665088759197227, guid: 5fbf85d12159470409bfd4724228e66f, type: 3}
+--- !u!114 &5611350453631569753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Ash bag
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 1032.3518
+    y: 520.58765
+    width: 510.8573
+    height: 521.7498
+  guiRect:
+    serializedVersion: 2
+    x: 1024
+    y: 512
+    width: 512
+    height: 512
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 2337.1233
+    y: 1214.2206
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 2609.1233
+    y: 942.2205
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 2353.1233
+    y: 958.2205
+    width: 32
+    height: 32
+  textureGroups:
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: 221530aa6f53e5043a0c9140e9527da8, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: ee238a1929d73474da56a1b1ae393f6f, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: 23625b20b7af99d40b00523e1bc0db50, type: 3}
+  modelGroups:
+  - name: Ash bag
+    meshes:
+    - {fileID: 5713680939003522319, guid: 3bffc3938e2e42a4bb9176b47d28dd98, type: 3}
+--- !u!114 &5778613524413524549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Medical table
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 0
+    y: 517.6465
+    width: 510.8573
+    height: 521.7498
+  guiRect:
+    serializedVersion: 2
+    x: 0
+    y: 512
+    width: 512
+    height: 512
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 912.3916
+    y: 1098.7775
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 1184.3916
+    y: 826.77747
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 928.3916
+    y: 842.77747
+    width: 32
+    height: 32
+  textureGroups:
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: aee622c536730a148a2ca60d07503a93, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: 28566f5c88e279347b6cbfd5ecb99d4d, type: 3}
+  - name: New TextureGroup
+    texture: {fileID: 2800000, guid: ab745c0e61bd6e644a5feadc0b854462, type: 3}
+  modelGroups:
+  - name: Medical table
+    meshes:
+    - {fileID: -6940665088759197227, guid: d2d27e12f90b8b24eb61526f28442c46, type: 3}
+--- !u!114 &7055954241128536377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Chair 1
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 510.8573
+    height: 521.7498
+  guiRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 512
+    height: 512
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 912.3916
+    y: 586.77747
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 1184.3916
+    y: 314.77747
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 928.3916
+    y: 330.77747
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: fea41b7b9f99b06498f29adf3c478b7a, type: 3}
+  - name: Normal
+    texture: {fileID: 0}
+  - name: Occlusion
+    texture: {fileID: 0}
+  modelGroups:
+  - name: Chair 1
+    meshes:
+    - {fileID: 3243281128305261846, guid: 8ad24eca161c21c419ee8ee56ece2a36, type: 3}
+--- !u!114 &7947351955281888549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Wire M
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 769.62006
+    y: 250.29282
+    width: 267.02173
+    height: 264.21564
+  guiRect:
+    serializedVersion: 2
+    x: 768
+    y: 256
+    width: 256
+    height: 256
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 1220.8444
+    y: 462.18646
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 1364.8444
+    y: 318.18646
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 1236.8444
+    y: 334.18646
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: abf32d4acaf493c42bbc2aac60ac3e38, type: 3}
+  - name: Normal
+    texture: {fileID: 0}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: ede9145a273f00a48951bb4b9695d0ef, type: 3}
+  modelGroups:
+  - name: Wire M
+    meshes:
+    - {fileID: -2353701670073306776, guid: 6377a2d7317dc3d468f322180d1bfe94, type: 3}

@@ -1,0 +1,6 @@
+		public <RETURN_TYPE> <FX_NAME> (<ARGS>) {
+		
+<YOUR CODE HERE>
+
+		}
+		

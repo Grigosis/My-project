@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DefinitionList>
+	<Definition xsi:type="SkillDefinition" Id="Skill/Slime-SimpleMove" Icon="Icons/Icon3" IsRangedAttack="false" HitChanceMlt="1"  AP="0"
+	UnityTargetSelector="UnityMovementTargetSelector"
+	TargetSelector="MovementTargetSelector"
+	Implementation="DefaultMove">
+      <Attacks>
+        <Attack Name="CRUSH" Percent="0.5" />
+        <Attack Name="FIRE" Percent="0.5" />
+      </Attacks>
+    </Definition>
+    <Definition xsi:type="SkillDefinition" Id="Skill/Slime-SimpleAttack" Icon="Icons/Icon1" IsRangedAttack="false" HitChanceMlt="1"  AP="3"
+	UnityTargetSelector="UnityUnitTargetSelector"
+	TargetSelector="UnitTargetSelector"
+	TargetRanger="SingleUnitTargetRanger"
+	Implementation="DefaultAttack">
+      <Attacks>
+        <Attack Name="CRUSH" Percent="0.5" />
+        <Attack Name="FIRE" Percent="0.5" />
+      </Attacks>
+    </Definition>
+	<Definition xsi:type="SkillDefinition" Id="Skill/Slime-SplashAttack" Icon="Icons/Icon2" IsRangedAttack="true" HitChanceMlt="0.7"  MinRange="3" MaxRange="6" AP="5"
+	UnityTargetSelector="UnityCellTargetSelector" 
+	TargetSelector="CellTargetSelector" 
+	TargetRanger="SplashCellTargetRanger"
+	Implementation="DefaultAttack"
+	SplashProvider="SquareSplash"
+	>
+      <Attacks>
+        <Attack Name="CRUSH" Percent="1.5" />
+      </Attacks>
+    </Definition>
+	
+	<Definition xsi:type="SkillDefinition" Id="Skill/Slime-SelfDetonate" Icon="Icons/Icon4" IsRangedAttack="false" HitChanceMlt="0.7" AP="5"
+	UnityTargetSelector="UnityUnitTargetSelector" 
+	TargetSelector="SelfTargetSelector" 
+	TargetRanger="SplashCellTargetRanger"
+	Implementation="DefaultAttack"
+	SplashProvider="SquareSplash"
+	SplashRange = "3"
+	>
+      <Attacks>
+        <Attack Name="CRUSH" Percent="1.5" />
+      </Attacks>
+    </Definition>
+	
+  </DefinitionList>
+</Definitions>

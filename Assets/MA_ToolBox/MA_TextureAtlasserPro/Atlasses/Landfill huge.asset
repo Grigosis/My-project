@@ -1,0 +1,807 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8737218539748976610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Road damage
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 3070.5977
+    y: 1016.3877
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 3072
+    y: 1024
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 5607.6343
+    y: 1494.627
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 6135.6343
+    y: 966.62695
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 5623.6343
+    y: 982.62695
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: aa9c195b2804ec94faf84161352f9c4b, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 838fd36f4f0325648b6709b288370719, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 509a131ee9607ed429e48df0308038f5, type: 3}
+  modelGroups:
+  - name: Road damage
+    meshes:
+    - {fileID: -8634060567236447461, guid: 5b69cffca9fda7b44889df6691599df2, type: 3}
+--- !u!114 &-7993807970966151848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Cargo crate
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 1026.0868
+    y: 4.3477783
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 1024
+    y: 0
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 3316.1562
+    y: 1270.627
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 3844.1562
+    y: 742.62695
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 3332.1562
+    y: 758.62695
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 3fa9300d12e9922499c0b27e2eaea77c, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 19834e657595f5542b8088f40ffe0f7c, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 3c1f134c7f2845f4c96b6c8b00bd10fd, type: 3}
+  modelGroups:
+  - name: Cargo crate
+    meshes:
+    - {fileID: 508690243030761216, guid: ea6a04b32b843824a912566c796c26ee, type: 3}
+--- !u!114 &-6631006707333474299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Truck head
+  m_EditorClassIdentifier: 
+  isSelected: 1
+  rect:
+    serializedVersion: 2
+    x: 0
+    y: 3059.3025
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 0
+    y: 3072
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 2414.1418
+    y: 2941.7576
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 2942.1418
+    y: 2413.7576
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 2430.1418
+    y: 2429.7576
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 10ff8749ec1dcc0469f989e63c127794, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: a5348b8d5b2b36742b38327f2cef4071, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: b14263b3e27fbc24ba2354c43648c5c8, type: 3}
+  modelGroups:
+  - name: Truck head
+    meshes:
+    - {fileID: 7673246021391805175, guid: e28eaae5aed6ae04b842a76ecc44dd0f, type: 3}
+--- !u!114 &-6495104510198186821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Road
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 2042.8098
+    y: 1027.9261
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 2048
+    y: 1024
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 3448.8513
+    y: 1264.1925
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 3976.8513
+    y: 736.1925
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 3464.8513
+    y: 752.1925
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: f5080aa8ef1478e4f881ea6e91b6331a, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: e5e83cdb248c3514c93b1eace9531f5e, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 8c59baf6f225a414890679401e2ffc8b, type: 3}
+  modelGroups:
+  - name: Road
+    meshes:
+    - {fileID: -8634060567236447461, guid: 455881cb628ddc5489e654d3b0de9548, type: 3}
+--- !u!114 &-3198967734793482384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Truck head
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 0
+    y: 3059.3025
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 0
+    y: 3072
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 1947.7511
+    y: 2632.7656
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 2475.751
+    y: 2104.7656
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 1963.7511
+    y: 2120.7656
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: f6606701ac0658b4e8eeaf7669e427e9, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: a5348b8d5b2b36742b38327f2cef4071, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: b14263b3e27fbc24ba2354c43648c5c8, type: 3}
+  modelGroups:
+  - name: Truck head
+    meshes:
+    - {fileID: 7673246021391805175, guid: e28eaae5aed6ae04b842a76ecc44dd0f, type: 3}
+--- !u!114 &-1868048999236297461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Truck trailer
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 1035.8147
+    y: 3059.3025
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 1024
+    y: 3072
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 3438.1418
+    y: 2941.7576
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 3966.1418
+    y: 2413.7576
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 3454.1418
+    y: 2429.7576
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 9b02d4b12528cda428238e1ca49c8c6b, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 950d1bb4b260a144495626ffc7d9cef4, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: dc6900579b047ad4db602fec2343c7e1, type: 3}
+  modelGroups:
+  - name: Truck trailer
+    meshes:
+    - {fileID: 7673246021391805175, guid: c851183907de6b8459f21c12a570111b, type: 3}
+--- !u!114 &-1570239669206057612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Bike
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 9.88916
+    y: 0
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 2753.0254
+    y: 270.62677
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 3281.0254
+    y: -257.37323
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 2769.0254
+    y: -241.37323
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: f2a7953df555b7a4b8f2ae34d5200907, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 35d855ff4ed5d1c429c89d73b41c3e0e, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: da1eb11eaa669c4478ac021ec71eed52, type: 3}
+  modelGroups:
+  - name: Bike
+    meshes:
+    - {fileID: 4435810101804256117, guid: d4c6f55447ee57a4da499fd7e856574c, type: 3}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 892d1a7aeb4cc284dbf62e69e125db52, type: 3}
+  m_Name: Landfill huge
+  m_EditorClassIdentifier: 
+  textureQuads:
+  - {fileID: -1570239669206057612}
+  - {fileID: 2744512361838992671}
+  - {fileID: 1334859162566416777}
+  - {fileID: 2793259121541826272}
+  - {fileID: -7993807970966151848}
+  - {fileID: -3198967734793482384}
+  - {fileID: -8737218539748976610}
+  - {fileID: 3668751099611317229}
+  - {fileID: 1207798126084344617}
+  - {fileID: -6495104510198186821}
+  - {fileID: 3384255558853166631}
+  - {fileID: 5306126954095239928}
+  - {fileID: -6631006707333474299}
+  - {fileID: -1868048999236297461}
+  selectedTextureQuad: {fileID: -6631006707333474299}
+  showTextures: 1
+  exportSettings: {fileID: 11400000, guid: 9c485c5a941d75343907331341bb373c, type: 2}
+  textureAtlasSize: {x: 4096, y: 4096}
+  textureGroupRegistration:
+  - name: Albedo
+  - name: Normal
+  - name: Occlusion
+--- !u!114 &1207798126084344617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Travel house
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 0
+    y: 2043.311
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 0
+    y: 2048
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 2224.7437
+    y: 1357.0247
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 2752.7437
+    y: 829.02466
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 2240.7437
+    y: 845.02466
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: af12834436896e543964087c564d0080, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 5b17712c7d6869347a37a64c111bb3fd, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: a6fe28425f627c64ea5b07fef327b779, type: 3}
+  modelGroups:
+  - name: Travel house
+    meshes:
+    - {fileID: -7923135114094986688, guid: b8ad801a39eb0564ca69beb06e1a18b8, type: 3}
+--- !u!114 &1334859162566416777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Force wall
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 3070.5977
+    y: 0
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 3072
+    y: 0
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 4646.7646
+    y: 1314.1052
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 5174.7646
+    y: 786.1052
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 4662.7646
+    y: 802.1052
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 2440cd97f7f41fb4692c8cb3bc659f5b, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 7b07261a693ada24c9fb045c95aa5d4d, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 6d92af3eede04e04cab5e2be21d2662f, type: 3}
+  modelGroups:
+  - name: Force wall
+    meshes:
+    - {fileID: -1568401386191786261, guid: bfa73dba0bd2c814a935be8e9cc00770, type: 3}
+--- !u!114 &2744512361838992671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: House bridge
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 4.3477783
+    y: 1008.69543
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 0
+    y: 1024
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 2753.0254
+    y: 1294.6267
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 3281.0254
+    y: 766.6268
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 2769.0254
+    y: 782.6268
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 6e992bd5564ddcd43a6a1b58c7a5f988, type: 3}
+  - name: Normal
+    texture: {fileID: 0}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: af504f88ac11f18448e90855740184f2, type: 3}
+  modelGroups:
+  - name: House bridge
+    meshes:
+    - {fileID: -5256325360034464633, guid: 8796302f1c539a542b3ef6f42d1a8643, type: 3}
+--- !u!114 &2793259121541826272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Force tower
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 2047.8259
+    y: 0
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 2048
+    y: 0
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 4340.1562
+    y: 1270.627
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 4868.1562
+    y: 742.62695
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 4356.1562
+    y: 758.62695
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 97cd2642d9da2e64b9519a9c46b1ce1d, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: a3985459d794d08468afd0c2f5faae79, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: e1b0a691c5edf2746ac1991d7b7601c9, type: 3}
+  modelGroups:
+  - name: Force tower
+    meshes:
+    - {fileID: -4633444044135843446, guid: e731f9fc9dd9d2944ae5b1fc64715be8, type: 3}
+--- !u!114 &3384255558853166631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Police car
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 1023.57874
+    y: 1016.3878
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 1024
+    y: 1024
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 3316.1562
+    y: 2294.627
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 3844.1562
+    y: 1766.627
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 3332.1562
+    y: 1782.627
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: b6538267287608c4e8b4451ea993375e, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: f1138c3fddeeea94db5daffccd8101df, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 4fc7e1379880495449ee5960ba8d66a9, type: 3}
+  modelGroups:
+  - name: Police car
+    meshes:
+    - {fileID: -8939787358426426140, guid: 349921b3af53d18449c5362315399bdd, type: 3}
+--- !u!114 &3668751099611317229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Travel house big
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 1031.271
+    y: 2051.0032
+    width: 1025.4023
+    height: 1036.6975
+  guiRect:
+    serializedVersion: 2
+    x: 1024
+    y: 2048
+    width: 1024
+    height: 1024
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 3438.1418
+    y: 1917.7576
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 3966.1418
+    y: 1389.7576
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 3454.1418
+    y: 1405.7576
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: a5e966f372159604a9400d7ee0e007da, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 7f6e9205a24f31c40bdfe2bfb554ba50, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: 2a9588e5760963e4db16b55f8ae40a8c, type: 3}
+  modelGroups:
+  - name: Travel house big
+    meshes:
+    - {fileID: -6940665088759197227, guid: 50c20931065a5c44a86f3d228573f28e, type: 3}
+--- !u!114 &5306126954095239928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad07a78750c7644b710e19e1a23d4a, type: 3}
+  m_Name: Huge landfill pile
+  m_EditorClassIdentifier: 
+  isSelected: 0
+  rect:
+    serializedVersion: 2
+    x: 2049.302
+    y: 2000.4392
+    width: 2041.1274
+    height: 2034.0222
+  guiRect:
+    serializedVersion: 2
+    x: 2048
+    y: 2016
+    width: 2048
+    height: 2048
+  debugMode: 0
+  dragRectHeight:
+    serializedVersion: 2
+    x: 4936.2446
+    y: 4117.8013
+    width: 64
+    height: 16
+  dragRectWidth:
+    serializedVersion: 2
+    x: 5976.2446
+    y: 3077.801
+    width: 16
+    height: 64
+  dragRectPos:
+    serializedVersion: 2
+    x: 4952.2446
+    y: 3093.801
+    width: 32
+    height: 32
+  textureGroups:
+  - name: Albedo
+    texture: {fileID: 2800000, guid: 8820b23a3b3ed454da39ef9657eec24a, type: 3}
+  - name: Normal
+    texture: {fileID: 2800000, guid: 9c162004b8c6cf040b46a35dba23bfc9, type: 3}
+  - name: Occlusion
+    texture: {fileID: 2800000, guid: eed8f86eed8bff646b67f7e0c36db7b2, type: 3}
+  modelGroups:
+  - name: Huge landfill pile
+    meshes:
+    - {fileID: -7283790219099396027, guid: 884a864a070d5254ebac2a5863fceb04, type: 3}

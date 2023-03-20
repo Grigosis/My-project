@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="Radio.uss" />
+    <ui:VisualElement style="min-width: 300px; min-height: auto; background-color: rgba(130, 130, 130, 0.45); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); padding-left: 3px; padding-right: 3px; padding-top: 3px; padding-bottom: 3px;">
+        <ui:VisualElement style="flex-direction: row; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-left-color: rgb(53, 58, 18); border-right-color: rgb(53, 58, 18); border-top-color: rgb(53, 58, 18); border-bottom-color: rgb(53, 58, 18);">
+            <ui:VisualElement name="input-port-container" style="width: 40px; height: 20px;" />
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="type-out" style="left: 20px; top: 0; bottom: 0; position: absolute; -unity-text-align: middle-left; -unity-font-style: bold;" />
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="header-label" style="right: 100px; bottom: 0; position: absolute; left: 100px; top: 0; -unity-text-align: middle-center;" />
+            <ui:Toggle name="visibility-btn" style="right: 0; top: 0; position: absolute;" />
+            <ui:Toggle name="graph" style="right: 20px; top: 0; position: absolute;" />
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="type-in" style="left: auto; top: 0; bottom: 0; position: absolute; -unity-text-align: middle-right; right: 40px; -unity-font-style: bold;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="root">
+            <ui:Label text="Label" display-tooltip-when-elided="true" name="content-text" style="-unity-text-align: upper-center; font-size: 16px; padding-left: 3px; padding-right: 3px; padding-top: 3px; padding-bottom: 3px;" />
+            <ui:VisualElement>
+                <ui:VisualElement name="subnodes-container" />
+                <ui:Button text="Add" display-tooltip-when-elided="true" name="add-subnode" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

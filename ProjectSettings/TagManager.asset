@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Top
+    uniqueID: 3050582249
+    locked: 0
+  - name: DragLayer
+    uniqueID: 512147389
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

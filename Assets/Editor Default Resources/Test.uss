@@ -1,0 +1,12 @@
+.success {
+    background-color: rgba(13, 144, 5, 255);
+}
+
+.failure {
+    background-color: rgba(164, 19, 19, 255);
+}
+
+.port-hidable {
+    --port-color: rgba(15, 80, 255, 255) !important; 
+    background-color: rgba(15, 80, 255, 255) !important; 
+}

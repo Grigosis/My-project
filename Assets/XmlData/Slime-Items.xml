@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DefinitionList>
+    <Definition xsi:type="EquipmentDefinition" Id="Item/Slime-BaseWeapon" Name="Slime-BaseWeapon" Icon="Icons/Icon1" ItemTypes="0" StackSize="1" Weight="1" Sellable="true" Storable="true" Equipable="true" GearFlags="64">
+      <Attributes CRIT_CHANCE="0.03" CRIT_MLT="1">
+        <CRUSH ATK_MIN_ABS="10" ATK_MAX_ABS="20" ATK_MIN_MLT="0" ATK_MAX_MLT="0" DEF_ABS="0" DEF_MLT="0" SPECIAL_1="0" SPECIAL_2="0" />
+        <FIRE ATK_MIN_ABS="10" ATK_MAX_ABS="10" ATK_MIN_MLT="0" ATK_MAX_MLT="0" DEF_ABS="0" DEF_MLT="0" SPECIAL_1="0" SPECIAL_2="0" />
+      </Attributes>
+    </Definition>
+	<Definition xsi:type="EquipmentDefinition" Id="Item/Slime-BaseArmor" Name="Slime-BaseArmor" Icon="Icons/Icon2" ItemTypes="0" StackSize="1" Weight="1" Sellable="true" Storable="true" Equipable="true" GearFlags="64">
+      <Attributes HP_NOW="100" HP_MAX="100">
+        <CRUSH DEF_ABS="1" DEF_MLT="0" />
+        <PIERCE DEF_ABS="1" DEF_MLT="0" />
+        <CUT DEF_ABS="3" DEF_MLT="0.1" />
+        <FIRE DEF_ABS="1" DEF_MLT="0.1" />
+        <COLD DEF_ABS="1" DEF_MLT="0.05" />
+        <POISON DEF_ABS="1" DEF_MLT="0.01" />
+        <GRAVI DEF_ABS="1" DEF_MLT="0.35" />
+      </Attributes>
+    </Definition>
+	<Definition xsi:type="EquipmentDefinition" Id="Item/Slime-BaseBoots" Name="Slime-BaseBoots" Icon="Icons/Icon3" ItemTypes="0" StackSize="1" Weight="1" Sellable="true" Storable="true" Equipable="true" GearFlags="64">
+	  <Attributes  MOVESPEED="3" MOVESPEED_MLT="0.25" INITIATIVE="4">
+        <CRUSH DEF_ABS="1" />
+        <PIERCE DEF_ABS="1" />
+        <CUT DEF_ABS="3"/>
+        <FIRE DEF_ABS="1" />
+        <COLD DEF_ABS="1" />
+        <POISON DEF_ABS="1" />
+        <GRAVI DEF_ABS="1" />
+      </Attributes>
+    </Definition>
+	<Definition xsi:type="EquipmentDefinition" Id="Item/Slime-BaseGloves" Name="Slime-BaseGloves" Icon="Icons/Icon4" ItemTypes="0" StackSize="1" Weight="1" Sellable="true" Storable="true" Equipable="true" GearFlags="64">
+      <Attributes EP_NOW="3" EP_MAX="3" HIT_CLOSE_RANGE="0.1" HIT_FAR_RANGE="0.05" />
+    </Definition>
+  </DefinitionList>
+</Definitions>

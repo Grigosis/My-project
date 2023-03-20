@@ -1,0 +1,170 @@
+using System.Collections.Generic;
+using Assets.Scripts.AbstractNodeEditor;
+using Assets.Scripts.AbstractNodeEditor.Impls;
+using Assets.Scripts.Slime.Sugar;
+using RPGFight.Library;
+using SecondCycleGame.Assets.Scripts.ANEImpl.Impls;
+using SecondCycleGame.Assets.Scripts.ANEImpl.Views;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+using UnityEngine.UIElements;
+using static Slime.Helper;
+using Object = UnityEngine.Object;
+
+namespace SecondCycleGame.Assets.Scripts.AbstractNodeEditor
+{
+    public abstract class ANEMultiNode<DATA, DATA2, VIEW> : DefaultANENode<DATA>, IHideableConnectionContainer, IRowListener<DATA2> where DATA : new() where DATA2 : new() where VIEW : RowView<DATA, DATA2>, new()
+    {
+        public DATA Data => (DATA)NodeData;
+        public DoubleDictionary<DATA2, VIEW> Data2ToPorts = new DoubleDictionary<DATA2, VIEW>();
+        
+        //UI
+        protected Button addSubnodeButton;
+        protected VisualElement subnodesContainer;
+
+
+        public ANEMultiNode(string path) : base(path) { }
+
+        
+        
+        protected abstract List<DATA2> GetSubNodes();
+        
+        
+        public virtual void OnSubNodeDelete(VisualElement view, DATA2 onDelete)
+        {
+            var rw = (view as RowView<DATA, DATA2>);
+            if (rw == null) return;
+            if (rw.EPort.connected)
+            {
+                List<Edge> connections = new List<Edge>(rw.EPort.connections);
+                Debug.Log($"Delete connections {connections}");
+                try {
+                    Graph.DeleteElements(connections);
+                } catch (System.InvalidOperationException e) {
+                    Debug.LogError($"{connections} / {rw.EPort.connections}");
+                    Debug.LogError(e.StackTrace);
+                }
+            }
+            Graph.RemoveElement(rw.EPort);
+            
+            GetSubNodes().Remove(onDelete);
+            Data2ToPorts.Remove(onDelete);
+            view.parent.Remove(view);
+        }
+
+        public virtual void OnSubNodeValueChanged(VisualElement view, DATA2 oldValue, DATA2 newValue)
+        {
+            var indexOf = view.parent.hierarchy.IndexOf(view);
+
+            Debug.LogError($"OnSubNodeValueChanged [{indexOf}][{view}] [{oldValue}] => [{newValue}]");
+            Debug.LogWarning($"[{Sugar.ToString(GetSubNodes())}] [{Sugar.ToString(Data2ToPorts.Keys1)}]");
+            if (indexOf == -1)
+            {
+                //Debug.LogError($"CantFind: [{view}]");
+                return;
+            }
+
+            GetSubNodes()[indexOf] = newValue;
+            
+            if (oldValue != null)
+            {
+                Data2ToPorts.Remove(oldValue);
+            }
+            if (newValue != null)
+            {
+                Data2ToPorts.Add(newValue, (VIEW)view);
+            }
+        }
+
+        public virtual void OnEditRequest(VisualElement view, DATA2 onDelete)
+        {
+            Graph.GetEditor().RequestEditObject(onDelete, OnEditorFinished);
+        }
+        
+        public virtual void OnMoveRequest(VisualElement view, DATA2 onDelete, int direction)
+        {
+            var list = GetSubNodes();
+            var i = list.IndexOf(onDelete);
+            if (i == -1) return;
+            if (direction == 0) return;
+
+            int i2;
+
+            if (direction > 0)
+            {
+                if (i+1 >= list.Count) return;
+                i2 = i + 1;
+            } else 
+            {
+                if (i-1 < 0) return;
+                i2 = i - 1;
+            }
+
+            var data2 = list[i2];
+
+            list[i2] = onDelete;
+            list[i] = data2;
+
+            var parent = view.parent.hierarchy;
+            parent.RemoveAt(i);
+            parent.Insert(i2, view);
+
+        }
+
+        public override void CreateGUI()
+        {
+            base.CreateGUI();
+            addSubnodeButton = this.Q<Button>("add-subnode");
+            subnodesContainer = this.Q<VisualElement>("subnodes-container");
+            addSubnodeButton.clickable.clicked += OnAddSubNodeClicked;
+
+            foreach (var answer in GetSubNodes())
+            {
+                CreateAnswerView(answer, false);
+            }
+        }
+        
+        protected virtual void OnAddSubNodeClicked()
+        {
+            var answer = new DATA2();
+            Graph.Presentation.OnNewObjectCreated(answer);
+            GetSubNodes().Add(answer);
+            CreateAnswerView(answer, true);
+        }
+
+        protected virtual void CreateAnswerView(DATA2 answer, bool isNew)
+        {
+            VIEW answerView = new VIEW();
+            answerView.Init(Graph, Data, answer, this);
+            Data2ToPorts.Add(answer, answerView);
+            subnodesContainer.Add(answerView);
+        }
+
+        public override void OnEditorFinished(object obj)
+        {
+            if (obj is DATA2 data)
+            {
+                var view = Data2ToPorts.Get(data);
+                if (view != null)
+                {
+                    view.OnEditorFinished(data);
+                    view.UpdateUI();
+                }
+
+                UpdateUI();
+            }
+            else
+            {
+                Debug.LogWarning($"OnEditorFinished wrong data [{obj}]");
+            }
+        }
+
+        public virtual void UpdateConnectionVisible() {
+            if(typeof(IHideableConnectionContainer).IsAssignableFrom(typeof(VIEW))) {
+                foreach(var view in Data2ToPorts.Keys2) {
+                    (view as IHideableConnectionContainer).UpdateConnectionVisible();
+                }
+            }
+        }
+    }
+}
