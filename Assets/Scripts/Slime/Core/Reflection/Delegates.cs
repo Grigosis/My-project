@@ -1,9 +1,0 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.Slime.Core.Algorythms;
-using Assets.Scripts.Slime.Core.Algorythms.Data;
-using SecondCycleGame;
-
-namespace Assets.Scripts.Slime.Core
-{
-    public delegate float AIFunction(Battle battle, AIController controller, BattleMapCell targetSelector, float moveAP, Dictionary<string, FxParam> args);
-}
